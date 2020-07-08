@@ -1,0 +1,157 @@
+﻿
+
+@{
+    ViewData["Title"] = ViewBag.Tittle;
+    Layout = null;
+}
+
+<div class="row" style="background-color:white">
+    @{if (ViewBag.err != null)
+        {
+            <div class="col-md-12">
+                <a href="#" class="alert-danger">
+                    <i class="fa fa-warning fa-2x" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>@ViewBag.err
+                </a>
+            </div>
+        }
+    }
+    <div class="col-md-12">
+        <h4 style="padding-bottom:1em" class="text-center">@ViewBag.Tittle</h4>
+        <hr />
+    </div>
+    <form asp-action="daftarpersontwo" id="formdkol">
+        <div class="row">
+            <div class="form-group col-sm-4 form-inline">
+                <link href="~/DatePicker/persian-datepicker.min.css" rel="stylesheet" />
+                <div style="display:block;padding-bottom:0.5em">
+                    <span style="padding-left:1em"> از تاریخ</span>
+                    <input id="fdate" autocomplete="off" name="fdate" class="form-control DateText" type="text" value="@ViewBag.fdate" />
+                </div>
+                <div style="display:block">
+                    <span style="padding-left:1em"> تا تاریخ</span>
+                    <input id="tdate" autocomplete="off" name="tdate" class="form-control DateText" type="text" value="@ViewBag.tdate" />
+                </div>
+            </div>
+            <div class="form-group col-sm-5">
+                <div style="display:block;padding-bottom:0.5em">
+                    <select name="gid" class="form-control" id="gid">
+                        <option value="0">گروه بندی نشده</option>
+                        <option value="1">گروه بندی </option>
+                    </select>
+                </div>
+
+                <div style="display:block;padding-bottom:0.5em">
+                    <select asp-items="@ViewBag.listanbar" name="anbar" id="anbaru" class="form-control">
+                        <option value="0">فروشگاه را انتخاب کنید</option>
+                    </select>
+                </div>
+                <div style="display:block;padding-bottom:0.5em">
+                    <select asp-items="@ViewBag.pid" name="pid" id="pid" class="form-control myselect2">
+                        <option value="0">شخص را انتخاب کنید</option>
+                    </select>
+                </div>
+                <div style="display:block;padding-bottom:0.5em">
+                    <select asp-items="@ViewBag.Kol" name="idkol1" id="idkol1" class="form-control myselect2">
+                        <option value="0">حساب 1 انتخاب کنید</option>
+                    </select>
+                </div>
+                <div style="display:block;padding-bottom:0.5em">
+                    <select asp-items="@ViewBag.Kol" name="idkol2" id="idkol2" class="form-control myselect2">
+                        <option value="0">حساب 2 انتخاب کنید</option>
+                    </select>
+                </div>
+                <div style="display:block;padding-bottom:0.5em">
+                    <select name="isfact" class="form-control" id="isfact">
+                        <option value="0">بدون گردش فاکتور</option>
+                        <option value="1">با گردش فاکتور</option>
+                    </select>
+                </div>
+
+
+            </div>
+            <div class="form-group col-sm-3 form-inline">
+                <div style="display:block">
+                    <input type="hidden" name="typec" value="@ViewBag.id" />
+                    <input type='hidden' id="hftypec" name='print' value="0" />
+                    <a class="btn btn-success" onclick="sendprint(2 , 'formdkol')">تهیه گزارش</a>
+                    <a class="btn btn-primary" onclick="sendprint(1 , 'formdkol')">
+                        <i class="fa fa-print"></i>
+                    </a>
+                    <iframe id="txtArea1" style="display:none"></iframe>
+                    <a class="btn btn-warning" href="#" id="exp">
+                        <i class="fa fa-file-excel"></i>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </form>
+    <div id="table">
+
+    </div>
+</div>
+<div class="modal fade" id="MyModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl " role="document">
+        <div class="modal-content" style="overflow-x:scroll">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTittle2">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ModalBody2">
+                ...
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(function () {
+        $('select').select2();
+    });
+    function sendprint(typec, frm) {
+        $("#hftypec").val(typec)
+        if (typec == 1) {
+            var tmp = "<form target='_blank' action='/GozareshDaftar/Printdaftarpersontwo' id='frmtmp'></form>";
+            $('body').append(tmp);
+            $("#frmtmp").append("<input type='hidden' name='fdate' value='" + $("#fdate").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='tdate' value='" + $("#tdate").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='pid' value='" + $("#pid").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='idkol1' value='" + $("#idkol1").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='idkol2' value='" + $("#idkol2").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='gid' value='" + $("#gid").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='isfact' value='" + $("#isfact").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='anbar' value='" + $("#anbaru").val() + "'>");
+            $("#frmtmp").submit();
+            $("#frmtmp").remove();
+
+        }
+        else {
+            $("#" + frm).attr("target", "_self");
+            $(".loading").show();
+            $.ajax({
+                url: $("#formdkol").attr("action"),
+                data: $("#formdkol").serialize(),
+                type: "Get"
+            }).done(function (result) {
+                $("#table").html(result);
+                var colCount = 0;
+                $(".loading").hide();
+                $('.myselect2').select2();
+                //     $('.tablesorter-childRow td').hide();
+                     $(".mytable").tablesorter({
+                         theme: 'blue',
+                // initialize zebra and filter widgets
+                         widgets: ["filter", "math"],
+                         widgetOptions: {
+                             math_mask: '#,##0.##',
+                             filter_reset: '.reset'
+                         }
+                     })
+            });
+        }
+    }
+
+</script>

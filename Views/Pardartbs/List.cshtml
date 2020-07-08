@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewData["Title"] = "اسناد انتقالی";
+    Layout = null;
+}
+@if(!string.IsNullOrEmpty(ViewBag.err))
+{
+<div class="alert alert-danger">@ViewBag.err</div>
+}
+<table id="myTable" class="table table-responsive mytable">
+    <thead>
+        <tr>
+            <th data-role="ردیف" class="group-false">
+            </th>
+            <th data-role="تاریخ" class="group-false">
+                تاریخ
+            </th>
+            <th data-role="حساب بدهکار" class="group-false">
+                بدهکار
+            </th>
+            <th data-role="حساب بستانکار" class="group-word">
+                بستانکار
+            </th>
+            <th class="sorter-currency group-false" data-role="مبلغ">
+                مبلغ
+            </th>
+            <th data-role="توضیحات" class="group-false">
+                توضیحات
+            </th>
+            <th data-role="فروشگاه" class="group-false filter-select" data-placeholder="فروشگاه">
+                فروشگاه
+            </th>
+            <th class="filter-false">تنظیمات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            decimal sumu = 0; int count = 0;
+            if (ViewBag.listk != null)
+            {
+                foreach (var item in ViewBag.listk)
+                {
+                    count += 1;
+                    if (item.Mablagh != null)
+                    {
+                        sumu = sumu + Convert.ToDecimal(item.Mablagh);
+                    }
+        <tr>
+            <td>
+                @count
+            </td>
+            <td>
+                @item.Datec
+            </td>
+            <td>
+                @item.Namekamelbed
+                @item.codekolbed @item.Codemoinbed @item.Codetafbed
+                @item.Namekolbed  @item.Namemoinbed @item.Nametafbed
+
+            </td>
+            <td>
+                @item.Namekamelbes
+                @item.Codekolbes @item.Codemoinbes @item.Codetafbes
+                @item.Namekolbes @item.Namemoinbes @item.Nametafbes
+
+            </td>
+            <td>
+                @string.Format("{0:n0}", (item.Mablagh != null ? item.Mablagh : 0)) ریال
+            </td>
+            <td>
+                @item.Note
+            </td>
+            <td>
+                @item.Nameanbar
+            </td>
+            <td class="text-center">
+                <div class="dropdown">
+                    <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="mb-2 mr-2 dropdown-toggle btn btn-info"><i class="fa fa-cog"></i></button>
+
+                    <div class="dropdown-menu">
+                        <a href="#" onclick="Details(@item.Mid)" class="dropdown-item">
+                            نمایش سند
+                        </a>
+                        <a href="#" class="dropdown-item" onclick="Edit(@item.Mid)">
+                            ویرایش
+                        </a>
+                        <a href="#" onclick="Delete(@item.Mid)" class="dropdown-item">
+                            حذف
+                        </a>
+                    </div>
+                </div>
+            </td>
+        </tr>
+                }
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>تعداد ردیف</td>
+            <td data-math="col-count"></td>
+            <td colspan="2"> جمع کل</td>
+            <td data-math="col-sum">above-sum</td>
+            <td colspan="3"></td>
+        </tr>
+    </tfoot>
+</table>

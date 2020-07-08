@@ -1,0 +1,222 @@
+﻿
+
+@{
+    ViewData["Title"] = "ثبت زیر سند";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+@{ if (!string.IsNullOrEmpty(ViewBag.err))
+    {
+        <div class="alert alert-danger">@ViewBag.err</div>
+    }
+}
+<div style="background-color:white">
+    <span style="padding-left:1em">
+        شماره سند : <span style="color:#f79434">@ViewBag.nosanad</span>
+    </span>
+    <span style="padding-left:1em">
+        تاریخ سند : <span style="color:#f79434">@ViewBag.datec</span>
+    </span>
+    <span style="padding-left:1em">
+        نوع سند :
+        @{
+            if (ViewBag.typec == "0")
+            {
+                <span style="color:#f79434">@string.Format("{0}", "ویرایشی")</span>
+            }
+            else if (ViewBag.typec == "1")
+            {
+                <span style="color:#f79434">@string.Format("{0}", "موقت")</span>
+            }
+            else if (ViewBag.typec == "2")
+            {
+                <span style="color:#f79434">@string.Format("{0}", "دائم")</span>
+            }
+        }
+    </span>
+    <span style="padding-left:1em">
+        عنوان سند : <span style="color:#f79434">@ViewBag.titlesanad</span>
+    </span>
+    <hr />
+    <form asp-action="savesubsanad" id="actionformsanad">
+        <input type="hidden" name="mid" id="hfmid" />
+        <input type="hidden" value="0" name="typesave" id="hftypesanad" />
+        <input type="hidden" value="@ViewBag.nosanad" name="nosanad" id="hfnosanad" />
+        <div class="row">
+            <div class="col-md-2" style="padding:0.1em">
+                <span style="display:block">فروشگاه</span>
+                <select asp-items="@ViewBag.listanbar" class="form-control" name="idanbar" id="selanbar"></select>
+            </div>
+            <div class="col-md-3" style="padding:0.1em">
+                <span style="display:block">کد حساب </span>
+                <div class="autocomplete">
+                    <input onkeypress="handle(event,'txtperson')" id="txtmoin" type="text" class="form-control" name="namemoin">
+                </div>
+                <span class="spanzir" id="namemoin">*</span>
+                <input type="hidden" name="moinid" id="hfmoinid" />
+                <input type="hidden" name="tafid" id="hftafid" />
+            </div>
+            <div class="col-md-2" style="padding:0.1em">
+                <span style="display:block">عنوان شخص</span>
+                <div class="autocomplete form-group">
+                    <input onkeypress="handle(event,'txtnote')" id="txtperson" type="text" class="form-control" name="nameperson">
+                </div>
+                <input type="hidden" id="hfpersonid" name="pid" />
+            </div>
+            <div class="col-md-3" style="padding:0.1em">
+                <span style="display:block">توضیحات</span>
+                <div class="form-group">
+                    <input  onkeypress="handle(event,'txtnofish')" id="txtnote" type="text" class="form-control" name="note">
+                </div>
+            </div>
+            <div class="col-md-1" style="padding:0.1em">
+                <span style="display:block">ش رسید</span>
+                <div class="form-group">
+                    <input id="txtnofish" onkeypress="handle(event,'txtbed')"  type="text" class="form-control" name="nofish">
+                </div>
+            </div>
+
+            <div class="col-md-2" style="padding:0.1em">
+                <span style="display:block">بدهکار</span>
+                <div class="form-group">
+                    <input  onkeypress="handle(event,'txtbes')" id="txtbed" type="text" class="form-control TextBoxn" name="bed">
+                </div>
+            </div>
+            <div class="col-md-2" style="padding:0.1em">
+                <span style="display:block">بستانکار</span>
+                <div class="form-group">
+                    <input id="txtbes" type="text" onkeypress="handle(event,'pbtn')" class="form-control TextBoxn" name="bes">
+                </div>
+            </div>
+            <div class="col-md-2 form-inline">
+
+                <a href="#" id="pbtn" style="padding-left:1em" onclick="savesanad()" class="pbtnHI">
+                    <i class="fa fa-save" aria-hidden="true" data-toggle="tooltip" title="ذخیره ردیف "></i>
+                </a>
+                <a href="#" id="pbtnnew" style="padding-right:1em" onclick="newrow()" class="pbtnHI">
+                    <i class="fa fa-plus" aria-hidden="true" data-toggle="tooltip" title="ردیف جدید"></i>
+                </a>
+            </div>
+        </div>
+    </form>
+    <hr />
+    <div id="table"></div>
+</div>
+
+
+
+
+<script>
+    $(document).ready(function () {
+        //var d = $('.table-responsive-lg');
+        //d.scrollTop(10000);
+        loadcoding();
+        getmyfrmsanad();
+    })
+    function savesanad() {
+        $.post($("#actionformsanad").attr("action"), $("#actionformsanad").serialize(), function (data) {
+            if (data.msg == "") {
+                getmyfrmsanad();
+            }
+            else {
+                $(".errmsg").html(data.msg);
+                $(".errdetail").html(data.err);
+                $("#err").modal('show');
+            }
+        });
+    }
+    function getmyfrmsanad() {
+        newrow();
+        $.ajax({
+            url: "/Sanadtbs/list?nosanad=" + $("#hfnosanad").val(),
+            type: "Get"
+        }).done(function (result) {
+            $("#txtmoin").focus();
+            $("#table").html(result);
+            $(".mytable").tablesorter({
+                theme: 'blue',
+                widthFixed: true,                // initialize zebra and filter widgets
+                widgets: ["zebra", "filter", "math"],
+                widgetOptions: {
+                    math_mask: '#,##0.',
+                    filter_reset: '.reset'
+                }
+            });
+
+        });
+    }
+    function Edit(id) {
+            var mform = new FormData();
+            mform.append("mid", id);
+            $("#hfmid").val(id);
+            $.ajax({
+                type: "POST",
+                url: "/Sanadtbs/getrow",
+                contentType: false,
+                processData: false,
+                data: mform,
+                dataType:"json",
+                beforeSend: function () {
+                    $(".loading").show();
+                },
+                success: function (result) {
+                     
+                    var res = result;// jQuery.parseJSON(result);
+                    $("#hftypesanad").val("1");
+                    $("#txtmoin").focus();
+                    $("#txtmoin").val(res["codekol"] + '-' + res["codemoin"]);
+                    $("#txttaf").val(res["codetaf"]);
+                    $("#txtperson").val(res["namekamel"]);
+                    $("#txtnote").val(res["note"]);
+                    $("#txtbed").val(res["bed"]);
+                    $("#txtbes").val(res["bes"]);
+                    $("#txtnofish").val(res["fish"]);
+                    $("#selanbar").val(res["idanbar"]);
+                    $("#hfmoinid").val(res["moinid"]);
+                    $("#hftafid").val(res["tafid"]);
+                    $("#hfpersonid").val(res["pid"]);
+                    $("#namemoin").html(res["namemoin"] + ' - ' + res["namekol"]);
+                    $("#nametaf").html(res["nametaf"]);
+                },
+                complete: function () {
+                    $(".loading").hide();
+                }
+            });
+
+        };
+    function Delete(id) {
+        var s = confirm('ایا مطمئن هستید ؟ ');
+        if (s) {
+            $(".loading").show();
+            $.post("/Sanadtbs/Delete?id=" + id, function (data) {
+                $(".loading").hide();
+                if (data.msg == "") {
+                    getmyfrmsanad();
+                }
+                else {
+                    $(".errmsg").html(data.msg);
+                    $(".errdetail").html(data.err);
+                    $("#err").modal('show');
+                }
+            });
+        }
+    };
+    function newrow() {
+            $("#txtmoin").focus();
+            $("#hftypesanad").val("0");
+            $("#txtmoin").val("");
+            $("#txttaf").val("");
+            $("#txtperson").val("");
+            $("#txtbed").val("");
+            $("#txtbes").val("");
+            $("#hfmoinid").val("");
+            $("#hftafid").val("");
+            $("#hfmid").val("");
+            $("#hfpersonid").val("");
+            $("#namemoin").empty();
+            $("#nametaf").empty();
+            $("#txtperson").empty();
+        }
+
+</script>

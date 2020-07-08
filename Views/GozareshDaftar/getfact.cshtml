@@ -1,0 +1,44 @@
+﻿
+@{
+    Layout = null;
+}
+@{if (!string.IsNullOrEmpty(ViewBag.err))
+    {
+        <div class="alert-danger">@ViewBag.err</div>
+    }
+}
+<table class="table table-striped">
+    <tr>
+        <td>ردیف</td>
+        <td>نام کالا</td>
+        <td>تعداد اصلی</td>
+        <td>واحد جز </td>
+        <td>مبلغ هر واحد</td>
+        <td>مبلغ کل</td>
+        <td>تخفیف</td>
+        <td>نوع</td>
+    </tr>
+    @{
+        if (ViewBag.list != null)
+        {
+            int r = 0;
+            foreach (var item in ViewBag.list)
+            {
+                r = r + 1;
+                <tr @(item.act == 0 ? "class='text-danger'" : "")>
+                    <td>@r</td>
+                    <td>@item.Namekala</td>
+                    <td>@string.Format("{0} {1}", item.Tedad1, @item.Vahedkala1)</td>
+                    <td>@string.Format("{0} {1}", item.Tedadv, @item.Vahedkala)</td>
+                    <td>@string.Format("{0:n0}", item.Price??0)  ریال</td>
+                    <td>@string.Format("{0:n0}", item.Pricekol??0)  ریال </td>
+                    <td>
+                        <span style="display:block" class="text-center">@Html.Raw(string.Format("{0:0}", item.dtakh)) %</span>
+                        <span style="display:block" class="text-center"> @Html.Raw(string.Format("{0:n0}", item.takhfif))ریال</span>
+                    </td>
+                    <td>@(item.act == 0 ? "غیر قطعی" : "قطعی")</td>
+                </tr>
+            }
+        }
+    }
+</table>

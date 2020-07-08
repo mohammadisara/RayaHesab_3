@@ -1,0 +1,29 @@
+﻿@model RayaHesab.Models.Mointb
+
+<div class="row">
+    <div class="col-md-12 DRight">
+        <form asp-action="Create" id="actionform">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Kid" class="control-label">عنوان کل</label>
+                <select asp-for="Kid"    onchange="maxcode($(this).val());"  id="selkol" onkeypress="handle(event,'cmoin')"  
+                        class="form-control" asp-items="ViewBag.Klistid"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codemoin" class="control-label">کد معین</label>
+                <input asp-for="Codemoin" value="@ViewBag.maxid" id="cmoin" onkeypress="handle(event,'nmoin')"  class="form-control"  oninvalid="this.setCustomValidity('کد معین را وارد کنید')" oninput="setCustomValidity('')" required />
+                <span asp-validation-for="Codemoin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Namemoin" class="control-label">نام معین</label>
+                <input asp-for="Namemoin" id="nmoin" onkeypress="handle(event,'btn')"  class="form-control" oninvalid="this.setCustomValidity('نام معین را وارد کنید')" oninput="setCustomValidity('')" required  />
+                <span asp-validation-for="Namemoin" class="text-danger"></span>
+            </div>
+<hr />
+            <div class="form-group">
+                <input type="button" onclick="submitmoin()" id="btn" value="ثبت" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

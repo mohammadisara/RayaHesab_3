@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewData["Title"] = "دفتر معین";
+    Layout = null;
+}
+
+<div class="row" style="background-color:white">
+    @{if (ViewBag.err != null)
+        {
+            <div class="col-md-12">
+                <a href="#" class="alert-danger">
+                    <i class="fa fa-warning fa-2x" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>@ViewBag.err
+                </a>
+            </div>
+        }
+    }
+    <div class="col-md-12">
+        <h4 style="padding-bottom:1em" class="text-center">@ViewBag.Tittle</h4>
+        <hr />
+    </div>
+    <table id="myTable" class="table">
+        <thead>
+            <tr>
+                <th>
+                    شماره سند
+                </th>
+                <th>
+                    تاریخ سند
+                </th>
+                <th>
+                    توضیحات
+                </th>
+                <th class="sorter-currency">
+                    بدهکار
+                </th>
+                <th class="sorter-currency">
+                    بستانکار
+                </th>
+                <th class="sorter-currency">
+                    مانده
+                </th>
+                <th class="filter-select" data-placeholder="ماهیت حساب">
+                    ماهیت حساب
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ decimal m = 0, bed = 0, bes = 0;
+                string s = "بد";
+                int r = 0;
+            }
+            @if (ViewBag.list != null)
+            {
+                @foreach (var item in ViewBag.list)
+                {
+                    r = r + 1;
+                    <tr>
+                        <td>
+                            <a asp-action="Index" title="نمایش سند" target="_blank" asp-controller="Sanadtbs" asp-route-id="@item.Nosanad">@item.Nosanad</a>
+                        </td>
+                        <td>
+                            <a title="نمایش سند" asp-action="Index" target="_blank" asp-controller="Sanadtbs" asp-route-id="@item.Nosanad">@item.Datec</a>
+                        </td>
+                        <td>
+                            @{if (item.Factid != null)
+                                {
+                                    <a title="نمایش فاکتور" asp-action="Index" target="_blank" asp-controller="Factkalatbs"
+                                       asp-route-id="@item.Factid">@item.Note</a>
+                                }
+                                else
+                                {
+                                    @item.Note
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{ if (@item.Bed >= 0)
+                                {
+                                    @string.Format("{0:n0}", @item.Bed)
+                                    bed += (decimal)@item.Bed;
+                                }
+                                else
+                                {
+                                    var line = "0";
+                                    @line
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{ if (@item.Bes >= 0)
+                                {
+                                    @string.Format("{0:n0}", @item.Bes)
+                                    bes += (decimal)@item.Bes;
+                                }
+                                else
+                                {
+                                    var line = "0";
+                                    @line
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{ m = bed - bes;
+                                if (m < 0)
+                                {
+
+                                    s = "بس";
+                                    @Html.Raw("<span style='color:green'>" + string.Format("{0:n0}", System.Math.Abs(m)) + "</span>");
+                                }
+                                else if (m > 0)
+                                {
+                                    s = "بد";
+                                    @Html.Raw("<span style='color:black'>" + string.Format("{0:n0}", m) + "</span>");
+                                }
+                                else
+                                {
+                                    s = "بی حساب";
+                                    @Html.Raw("<span style='color:black'>0</span>");
+                                }
+                            }
+                        </td>
+                        <td>
+                            @s
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+        <tfoot id="tfoot">
+            <tr>
+                <td>تعداد ردیف</td>
+                <td data-math="col-count"></td>
+                <td> جمع کل</td>
+                <td data-math="col-sum">above-sum</td>
+                <td data-math="col-sum">above-sum</td>
+                <td ></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+
+<script>
+
+    $("#exp").click(function () {
+         
+        $("#myTable").table2excel({
+            exclude: ".noExl",
+            name: "Worksheet Name",
+            filename: "SomeFile.xls",//do not include extension
+            fileext: ".xls" // file extension
+        });
+    });
+
+</script>

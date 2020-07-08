@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewData["Title"] = "پنل کاربری";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+<div class="row DMMenu">
+    @*<div class="col-md-12">
+        <br />
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User"><i class="fa fa-home" aria-hidden="true" style="-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);"></i></a></li>
+                <li class="breadcrumb-item active" aria-current="page">&nbsp; گزارشات مالی</li>
+            </ol>
+        </nav>
+    </div>*@
+
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="GozareshDaftar" asp-route-id="1">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-file" style="color:white"></span></div>
+                <p>
+                    گزارش دفتر کل
+                </p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="GozareshDaftar" asp-route-id="2">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-file" style="color:white"></span></div>
+                <p>
+                    گزارش دفتر معین
+                </p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="GozareshDaftar" asp-route-id="3">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-file" style="color:white"></span></div>
+                <p>
+                    گزارش دفتر تفصیلی
+                </p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="GozareshDaftar" asp-route-id="4">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-file" style="color:white"></span></div>
+                <p>
+                    گزارش گردش حساب یک فرد
+                </p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-12"></div>
+
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Tarazkol" asp-controller="GozareshDaftar">
+            @*            <a class="DMMA" asp-action="Taraz" asp-controller="GozareshDaftar" asp-route-id="1">*@
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                <p>
+                    تراز کل
+                </p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Tarazmoin" asp-controller="GozareshDaftar">
+
+            @*<a class="DMMA" asp-action="Taraz" asp-controller="GozareshDaftar" asp-route-id="2">*@
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                <p>
+                    تراز معین
+                </p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Taraztaf" asp-controller="GozareshDaftar">
+
+            @*            <a class="DMMA" asp-action="Taraz" asp-controller="GozareshDaftar" asp-route-id="3">*@
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                <p>
+                    تراز تفصیلی
+                </p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="tarazhesab" asp-controller="GozareshDaftar">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                <p>
+                    مانده اشخاص در سایر حساب ها
+                </p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-12"></div>
+
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="GozareshDaftar" asp-route-id="5">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-file" style="color:white"></span></div>
+                <p>
+                    صورت حساب کلی یک فرد
+                </p>
+            </div>
+        </a>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Taraz" asp-controller="GozareshDaftar" asp-route-id="4">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                <p>
+                    لیست بدهکاران و بستانکاران
+                </p>
+            </div>
+        </a>
+    </div>
+
+
+</div>
+

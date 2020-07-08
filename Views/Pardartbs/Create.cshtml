@@ -1,0 +1,151 @@
+﻿@model RayaHesab.Models.Pardartb
+<form id="formactionpardar" asp-action="Create" 
+      asp-controller="Pardartbs" >
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+    <div class="form-group col-md-4">
+        <label asp-for="Noghabz" class="control-label">شماره قبض</label>
+        <input asp-for="Noghabz" id="txtTitleC" onkeypress="handle(event,'txtmoinB')" class="form-control" />
+        <input asp-for="Idfact" id="hffactidpardar" type="hidden" />
+        <span asp-validation-for="Noghabz" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-4">
+        <label asp-for="Datec" class="control-label">تاریخ</label>
+        <input asp-for="Datec"  value="@ViewBag.datec"  id="txtdate" onkeypress="handle(event,'txtmoinB')" class="form-control DateText" type="text" />
+        <span asp-validation-for="Datec" class="text-danger"></span>
+
+    </div>
+    <div class="form-group col-md-4">
+        <label class="control-label">فروشگاه</label>
+        <select asp-for="Idanbar" asp-items="@ViewBag.listanbar" id="selanbarpardar" class="form-control">
+        </select>
+    </div>
+    </div>
+    <hr />
+    <div class="row">
+    <div class="col-sm-12 headcreate">
+        <input asp-for="Typec" class="form-control" value="0" type="hidden" />
+        <label class="control-label">کدینگ بدهکار</label>
+    </div>
+    <div class="form-group col-sm-6" style="background-color:lightyellow">
+        <label asp-for="Moinbed" style="display:block" class="control-label">کد حساب (کل و معین و تفصیلی)</label>
+        <div class="autocomplete" style="display:block;">
+            <input onkeypress="handle(event,'txtperson')" id="txtmoin" onkeyup="hesabchange()" type="text" class="form-control txtmoinB" >
+        </div>
+        <span class="spanzir" id="namemoin">*</span>
+        <input asp-for="Moinbed" type="hidden" id="hfmoinid" />
+        <input asp-for="Tafbed" type="hidden" id="hftafid" />
+    </div>
+    <div class="form-group col-sm-6" style="background-color:lightyellow">
+        <label style="display:block" asp-for="Pidbed" class="control-label">صاحب حساب</label>
+        <div asp-for="Pid" class="autocomplete form-group" style="display:block">
+            <input id="txtperson" onkeypress="handle(event,'txtmoinS')" type="text" onkeyup="hesabchange()" class="form-control" >
+        </div>
+        <input type="hidden" asp-for="Pidbed" id="hfpersonid" />
+    </div>
+    <div class="col-sm-12 headcreate">
+        <label class="control-label">کدینگ بستانکار</label>
+    </div>
+    <div class="form-group col-sm-6" style="background-color:lightcyan">
+        <label asp-for="Moinbes" style="display:block" class="control-label">کد حساب (کل و معین و تفصیلی)</label>
+        <div class="autocomplete" style="display:block;">
+            <input onkeypress="handle(event,'txtpersonS')" id="txtmoinS" type="text" onkeyup="hesabchange()" class="form-control" >
+        </div>
+        <span class="spanzir" id="namemoinS">*</span>
+        <input asp-for="Moinbes" type="hidden" id="hfmoinidS" />
+        <input asp-for="Tafbes" type="hidden" id="hftafidS" />
+    </div>
+    <div class="form-group col-sm-6" style="background-color:lightcyan">
+        <label style="display:block" asp-for="Pidbes" class="control-label">صاحب حساب</label>
+        <div asp-for="Pid" onkeypress="handle(event,'mab')" class="autocomplete form-group" style="display:block">
+            <input id="txtpersonS" type="text" class="form-control" onkeyup="hesabchange()" >
+        </div>
+        <input type="hidden" asp-for="Pidbes" id="hfpersonidS" />
+    </div>
+    </div>
+    <hr />
+    <div class="row">
+    <div class="form-group col-sm-4">
+        <label asp-for="Mablagh" class="control-label">مبلغ )ریال)</label>
+        <input asp-for="Mablagh" id="mab" onkeypress="handle(event,'not')" class="form-control TNPrice" />
+        <span asp-validation-for="Mablagh" class="text-danger"></span>
+    </div>
+    @*<div class="form-group col-sm-3">
+        <label asp-for="Mablagh" class="control-label">وزن </label>
+        <input asp-for="Mablagh" id="vazn" onkeypress="handle(event,'not')" class="form-control" />
+        <span asp-validation-for="Mablagh" class="text-danger"></span>
+    </div>*@
+    <div class="form-group col-sm-8">
+        <label asp-for="Note" class="control-label">یادداشت</label>
+        <input asp-for="Note" id="not" onkeypress="handle(event,'btn')" class="form-control" />
+        <span asp-validation-for="Note" class="text-danger"></span>
+    </div>
+    </div>
+    <hr />
+    <div class="form-group col-sm-12">
+        <input type="button" onclick="actionrowpardar()" value="ثبت" id="btn" class="btn btn-primary" />
+    </div>
+</form>
+<script>
+    function newrowpardar() {
+        if ($("#bedmandegar").prop('checked')) {
+        }
+        else {
+            $("#txtmoin").val("");
+            $("#txtmoin").removeAttr("disabled");
+            $("#txtperson").removeAttr("disabled");
+            $("#txtperson").val("");
+            $("#hfmoinid").val("");
+            $("#hftafid").val("");
+            $("#hfpersonid").val("");
+        }
+        if ($("#besmandegar").prop('checked')) {
+        }
+        else {
+            $("#txtmoinS").removeAttr("disabled");
+            $("#txtpersonS").removeAttr("disabled");
+            $("#hfmoinidS").val("");
+            $("#txtmoinS").val("");
+            $("#hftafidS").val("");
+            $("#txtpersonS").val("");
+            $("#hfpersonidS").val("");
+        }
+        if ($("#mablaghmandegar").prop('checked')) {
+        }
+        else {
+            $("#mab").val("");
+        }
+        if ($("#notemandegar").prop('checked')) {
+        }
+        else {
+            $("#not").val("");
+        }
+        $("#txtTitleC").val("");
+        $("#txtmoin").select();
+
+
+    }
+    function actionrowpardar() {
+        $("#hffactidpardar").val($("#hffactid").val());
+        if ($("#selanbarpardar").val() == "0") {
+            alert("فروشگاه را انتخاب نمایید");
+            $("#selanbarpardar").select();
+            return false;
+        }
+        $.post($("#formactionpardar").attr("action"), $("#formactionpardar").serialize(), function (data) {
+            if (data.msg == "") {
+                newrowpardar();
+                showsanad();
+                $(".text-success").show(500);
+                setTimeout(function () {
+                    $(".text-success").hide(500);
+                }, 3000);
+            }
+            else {
+                alert(data.msg + " ** " + data.err);
+            }
+        });
+
+    }
+
+</script>

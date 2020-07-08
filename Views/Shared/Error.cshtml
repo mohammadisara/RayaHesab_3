@@ -1,0 +1,16 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">در سیستم خطای ناشناخته رخ داده است</h1>
+<h2 class="text-danger">مشکل در ارتباط با دیتابیس و یا ورود اشتباه می باشد لصفا با پشتیبان تماس حااصل نمایید.</h2>
+
+@if (Model.ShowRequestId)
+{
+    <p>
+        <strong>کد خطا:</strong> <code>@Model.RequestId</code>
+    </p>
+}
+
+<a asp-action="Index" asp-controller="User">بازگشت به منوی اصلی</a>

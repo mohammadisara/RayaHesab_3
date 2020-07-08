@@ -1,0 +1,13 @@
+@font-face {
+    font-family: yekanbakh;
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/yekan-bakh-regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: yekanbakh;
+    font-style: normal;
+    font-weight: bold;
+    src: url('../fonts/yekan-bakh-bold.woff') format('woff');
+}

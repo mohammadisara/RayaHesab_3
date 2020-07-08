@@ -1,0 +1,232 @@
+﻿
+@{
+    ViewData["Title"] = "گردش یک شخص";
+    Layout = null;
+}
+
+@{if (ViewBag.err != null)
+    {
+        <div class="col-md-12">
+            <a href="#" class="alert-danger">
+                <i class="fa fa-warning fa-2x" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>@ViewBag.err
+            </a>
+        </div>
+    }
+}
+<table id="myTable" class="table mytable">
+    <thead>
+        <tr>
+            <th>
+                شماره سند
+            </th>
+            <th>
+                تاریخ سند
+            </th>
+            @if (ViewBag.gid > 0)
+            {
+                <th class="filter-select" data-placeholder="عنوان حساب">
+                    عنوان حساب
+                </th>
+                <th class="filter-select" data-placeholder=" فروشگاه">
+                    فروشگاه
+                </th>
+            }
+            <th>
+                توضیحات
+            </th>
+            <th class="sorter-currency">
+                بدهکار
+            </th>
+            <th class="sorter-currency">
+                بستانکار
+            </th>
+            <th class="sorter-currency">
+                مانده
+            </th>
+            <th class="filter-select" data-placeholder="ماهیت حساب">
+                ماهیت حساب
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ decimal m = 0, bed = 0, bes = 0;
+            string s = "بد";
+            int r = 0;
+        }
+        @if (ViewBag.list != null)
+        {
+            @foreach (var item in ViewBag.list)
+            {
+                r = r + 1;
+                <tr>
+                    <td>
+                        <a href="#" onclick="getsanadfrm(@item.Nosanad)" title="نمایش سند">@item.Nosanad</a>
+
+                    </td>
+                    <td>
+                        <a href="#" onclick="getsanadfrm(@item.Nosanad)" title="نمایش سند">@item.Datec</a>
+                    </td>
+                    @if (ViewBag.gid > 0)
+                    {
+                        <td>
+                            @item.Codehesab @item.Namehesab
+                        </td>
+                        <td>
+                            @item.Nameanbar
+                        </td>
+                    }
+                    <td style="cursor:pointer" @(item.Factid != null ? Html.Raw("onclick='showfact(" + @item.Factid + ");'") : Html.Raw(""))>
+                        <span style="display:block">
+                            @item.Note
+                        </span>
+                        @if (ViewBag.isfact == 1)
+                        {
+                            Int64 qrt = Convert.ToInt64(item.Mid);
+                            <span style="display:block;font-size:12px" id="sp_@qrt">
+                                @{ if (item.Factid != 0 && item.Note.IndexOf("تخفیف") < 0)
+                                    {
+                                        @*<script src="~/lib/jquery/dist/jquery.js"></script>*@
+                                        <script>
+                                                        setfact(@qrt , @item.Factid)
+                                                        function setfact(mid , idfact) {
+                                                                var span = "#sp_"+mid;
+                                                            $.ajax({
+                                                                url: "/GozareshDaftar/getfact?idfact=" + idfact,
+                                                                type: "get"
+                                                            }).done(function (data) {
+                                                                    $(span).html(data);
+                                                                })
+                                                                .fail(function (data) {
+                                                                    debugger;
+                                                                    $(span).html(data.responseText);
+                                                                })
+                                                                ;
+                                                            }
+                                        </script>
+                                    }
+                                }
+
+                            </span>
+                        }
+                    </td>
+                    <td>
+                        @{ if (@item.Bed >= 0)
+                            {
+                                @string.Format("{0:n0}", @item.Bed)
+                                bed += (decimal)@item.Bed;
+                            }
+                            else
+                            {
+                                var line = "0";
+                                @line
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{ if (@item.Bes >= 0)
+                            {
+                                @string.Format("{0:n0}", @item.Bes)
+                                bes += (decimal)@item.Bes;
+                            }
+                            else
+                            {
+                                var line = "0";
+                                @line
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{ m = bed - bes;
+                            if (m < 0)
+                            {
+
+                                s = "بس";
+                                @Html.Raw("<span style='color:green'>" + string.Format("{0:n0}", System.Math.Abs(m)) + "</span>");
+                            }
+                            else if (m > 0)
+                            {
+                                s = "بد";
+                                @Html.Raw("<span style='color:black'>" + string.Format("{0:n0}", m) + "</span>");
+                            }
+                            else
+                            {
+                                s = "بی حساب";
+                                @Html.Raw("<span style='color:black'>0</span>");
+                            }
+                        }
+                    </td>
+                    <td>
+                        @s
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+    <tfoot id="tfoot">
+        <tr>
+            <td>تعداد ردیف</td>
+            <td>@r</td>
+            @*                <td data-math="col-count"></td>*@
+            @if (ViewBag.gid > 0)
+            {
+                <td></td>
+                <td></td>
+            }
+            <td> جمع کل</td>
+            @*<td data-math="col-sum">above-sum</td>
+                <td data-math="col-sum">above-sum</td>*@
+            <td>@string.Format("{0:n0}", bed)</td>
+            <td>@string.Format("{0:n0}", bes)</td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+
+
+@section Scripts{
+
+    <script>
+
+        $("#exp").click(function () {
+
+            $("#myTable").table2excel({
+                exclude: ".noExl",
+                name: "Worksheet Name",
+                filename: "SomeFile.xls",//do not include extension
+                fileext: ".xls" // file extension
+            });
+        });
+
+    </script>
+}
+    @*function setfact(mid , idfact) {
+
+                                                                        var span = "#sp_"+mid;
+                                                                        var mform = new FormData();
+                                                                        mform.append("idfact", idfact);
+                                                                        $.ajax({
+                                                                            url: "/GozareshDaftar/getfact",
+                                                                            data: mform,
+                                                                            processData: false,
+                                                                            contentType: false,
+                                                                            type: "POST",
+                                                                            dataType: "json",
+                                                                            success: function (data) {
+
+                                                                                var srr = "";
+                                                                                for (var i = 0; i < data.length; i++) {
+                                                                                    if (data[i]["act"] != 1)
+                                                                                        srr += "<span style='color:red'><b>غیر قطعی</b></span>";
+                                                                                    srr += "<span style='display:block;'>
+            " + data[i]["Namekala"]
+            + " مقدار / مقدار درخواست : " + data[i]["Tedadv"]
+            + " قیمت : " + formatMoney(data[i]["Price"], 0, "", ",")
+            + " قیمت کل : " + formatMoney(data[i]["Pricekol"], 0, "", ",")
+            + " تخفیف : " + formatMoney(data[i]["takhfif"], 0, "", ",") + "
+        </span>";
+                                                                                }
+                                                                                $(span).html(srr);
+                                                                            }
+                                                                        })
+                                                                    }*@

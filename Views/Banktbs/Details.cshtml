@@ -1,0 +1,75 @@
+﻿@model IEnumerable<RayaHesab.Models.Masterchack>
+@{
+    Layout = null;
+}
+<h4>
+        @ViewBag.bankname
+</h4>
+<br />
+<form asp-action="savecheck">
+    <input name="Bankid" type="hidden" value="@ViewBag.mid" />
+    <div class="row form-group">
+        <div class="col-md-3">
+            <input name="Title" placeholder="عنوان چک" class="form-control"  required/>
+        </div>
+        <div class="col-md-3">
+            <input name="Frombarg" placeholder="از شماره چک"  class="form-control" required />
+        </div>
+        <div class="col-md-3">
+            <input name="Tobarg" placeholder="تا شماره چک"  class="form-control" required />
+        </div>
+        <div class="col-md-3">
+            <input type="submit" value="ذخیره" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+
+<div id="divcheck">
+    <table id="myTable" class="table mytable">
+        <thead>
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    عنوان
+                </th>
+                <th>
+                    از شماره
+                </th>
+                <th>
+                    تا
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ int rowc = 0;
+                foreach (var item in Model)
+                {
+                    rowc = rowc + 1;
+                    <tr>
+                        <td class="text-center">@rowc</td>
+                        <td>
+                            @item.Title
+                        </td>
+                        <td class="text-center">
+                            @item.Frombarg
+                        </td>
+                        <td class="text-center">
+                            @item.Tobarg
+                        </td>
+                        <td class="text-center">
+                                    <a href="#" onclick="Deletecheck(@item.Mid)" class="btn btn-danger">
+                                        حذف
+                                    </a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+
+
+</div>

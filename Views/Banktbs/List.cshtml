@@ -1,0 +1,86 @@
+﻿
+@{
+    Layout = null;
+}
+
+<table id="myTable" class="table mytable">
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th>
+                عنوان
+            </th>
+            <th>
+                شماره حساب
+            </th>
+            <th>
+                نوع حساب
+            </th>
+            <th>
+                کد حساب (کل و معین و تفصیلی)
+            </th>
+            <th>تنظیمات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ if (ViewBag.list != null)
+            {
+                int rowc = 0;
+                foreach (var item in ViewBag.list)
+                {
+                    rowc = rowc + 1;
+                    <tr>
+                        <td class="text-center">@rowc</td>
+                        <td>
+                            @item.Title
+                        </td>
+                        <td class="text-center">
+                            @item.Nohesab
+                        </td>
+                        <td class="text-center">
+                            @{
+                                var type = "";
+                                switch (item.Typec)
+                                {
+                                    case 0: type = "پس انداز"; break;
+                                    case 1: type = "جاری"; break;
+                                    case 2: type = "کوتاه مدت"; break;
+                                    default: break;
+                                }
+                                @type
+                            }
+                        </td>
+                        <td>
+                            @(item.Moin != null ? item.Moin.K.Codekol + " - " + item.Moin.Codemoin + (item.Taf != null ? " - " + @item.Taf.Codetaf : "") : "" )
+                            @(item.Moin != null ? item.Moin.K.Namekol + " - " + item.Moin.Namemoin + (item.Taf != null ? " - " + @item.Taf.Nametaf : "") : "" )
+
+                        </td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="mb-2 mr-2 dropdown-toggle btn btn-info"><i class="fa fa-cog"></i></button>
+
+                                <div class="dropdown-menu">
+                                    @if (item.Typec == 1)
+                                    {
+                                        <a href="#" class="dropdown-item" onclick="checkq(@item.Mid)">
+                                            تعریف دسته چک
+                                        </a>
+                                    }
+                                    <a href="#" class="dropdown-item" onclick="Edit(@item.Mid)">
+                                        ویرایش
+                                    </a>
+                                    <a href="#" onclick="Delete(@item.Mid)" class="dropdown-item">
+                                        حذف
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<script src="~/scripts/script.js"></script>

@@ -1,0 +1,74 @@
+﻿@model RayaHesab.Models.Setuptb
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Setuptb</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Sarbarg)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sarbarg)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fsal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fsal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tsal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tsal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fforosh)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fforosh)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fkharid)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fkharid)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sfforosh)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sfforosh)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sfkharid)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sfkharid)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Pfforosh)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pfforosh)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Bfforosh)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Bfforosh)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Mid">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

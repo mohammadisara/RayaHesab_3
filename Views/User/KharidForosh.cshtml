@@ -1,0 +1,246 @@
+﻿@*
+    0 فاکتور خرید
+    1     فروش بارکدی فعلا
+    1 فاکتور فروش
+    2 پیش فاکتور فروش
+    3 فاکتور تحویلی
+    4 درخواست خرید
+    5 سفارش فروش
+    6 برگشت از خرید
+    7 برگشت از فروش
+    9 فروش نقره
+    10 ورودی واحد ها
+    11 حروجی واحد ها
+
+
+*@
+@{
+    ViewData["Title"] = "پنل کاربری";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+@*@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor*@
+
+
+<div class="row DMMenu">
+    @*<div class="col-md-12">
+        <br />
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User"><i class="fa fa-home" aria-hidden="true" style="-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);"></i></a></li>
+                <li class="breadcrumb-item active" aria-current="page">&nbsp; خرید ، فروش ، انبار</li>
+            </ol>
+        </nav>
+    </div>*@
+    @*@if (@HttpContextAccessor.HttpContext.Session.GetString("a13") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-controller="Anbartbs">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-document" style="color:white"></span></div>
+                    <p>
+                        تعریف انبار
+                    </p>
+                </div>
+            </a>
+        </div>
+    @*}
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("a45") != null)
+    {*@
+        @*<div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-controller="Packtbs">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-document" style="color:white"></span></div>
+                    <p>
+                        تعریف پک کالا
+                    </p>
+                </div>
+            </a>
+        </div>*@
+    @*}
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("a46") != null)
+    {*@
+        @*<div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-controller="SubPacktbs">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-document" style="color:white"></span></div>
+                    <p>
+                        ارتباط پک با کالا
+                    </p>
+                </div>
+            </a>
+        </div>*@
+    @*}
+
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("a14") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-controller="Gorohkalatbs">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-document" style="color:white"></span></div>
+                    <p>
+                        گروه کالا
+                    </p>
+                </div>
+            </a>
+        </div>
+    @*}
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("a15") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-controller="Kalatbs">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-user" style="color:white"></span></div>
+                    <p>
+                        تعریف کالا
+                    </p>
+                </div>
+            </a>
+        </div>
+    @*}
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("a16") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-controller="Facttbs" asp-route-typec="4">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-document" style="color:white"></span></div>
+                    <p>
+                        @* 4 *@
+                        درخواست خرید
+                    </p>
+                </div>
+            </a>
+        </div>
+@*    }*@
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="Facttbs" asp-route-typec="8">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                <p>
+                    @* 8 *@
+                    فاکتور تحویلی خرید
+                </p>
+            </div>
+        </a>
+    </div>
+    @*@if (@HttpContextAccessor.HttpContext.Session.GetString("a17") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-route-typec="0" asp-controller="Facttbs">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-document" style="color:white"></span></div>
+                    <p>
+                        @* 0 *@
+                        فاکتور خرید
+                    </p>
+                </div>
+            </a>
+        </div>
+@*    }*@
+    @*@if (@HttpContextAccessor.HttpContext.Session.GetString("a18") != null)
+        {
+            <div class="col-md-6 col-lg-3">
+                <a class="DMMA" asp-action="Index" asp-controller="FacttbsBarcode">
+                    <div class="SecContent">
+                        <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                        <p>
+                            فروش بارکدی
+                        </p>
+                    </div>
+                </a>
+            </div>
+        }
+        @if (@HttpContextAccessor.HttpContext.Session.GetString("a19") != null)
+        {
+            <div class="col-md-6 col-lg-3">
+                <a class="DMMA" asp-action="Details" asp-controller="FacttbsBarcode">
+                    <div class="SecContent">
+                        <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                        <p>
+                            لیست فروش بارکدی
+                        </p>
+                    </div>
+                </a>
+            </div>
+        }*@
+    @*@if (@HttpContextAccessor.HttpContext.Session.GetString("a20") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-route-typec="1" asp-controller="Facttbs">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                    <p>
+                        @* 1 *@
+                        فاکتور فروش
+                    </p>
+                </div>
+            </a>
+        </div>
+    @*}
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("a21") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-route-typec="2" asp-controller="Facttbs">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                    <p>
+                        @* 2 *@
+                        پیش فاکتور فروش
+                    </p>
+                </div>
+            </a>
+        </div>
+@*    }*@
+    <div class="col-md-6 col-lg-3">
+        <div class="SecContent">
+            @*<a class="DMMA" asp-action="Index" asp-controller="FacttbsBarKharid">*@
+            <a class="DMMA" asp-action="Index" asp-route-typec="6" asp-controller="Facttbs">
+                <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                <p>
+                    برگشت از خرید
+                </p>
+            </a>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="SecContent">
+            @*            <a class="DMMA" asp-action="Index" asp-controller="FacttbsBarSale">*@
+            <a class="DMMA" asp-action="Index" asp-route-typec="7" asp-controller="Facttbs">
+                <div class="DSpan"><span class="icono-calendar" style="color:white"></span></div>
+                <p>
+                    برگشت از فروش
+                </p>
+            </a>
+        </div>
+    </div>
+    @*@if (@HttpContextAccessor.HttpContext.Session.GetString("a22") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-controller="Facttbs" asp-route-typec="5">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                    <p>
+                        @* 5 *@
+                        سفارش فروش
+                    </p>
+                </div>
+            </a>
+        </div>
+@*    }*@
+    @*@if (@HttpContextAccessor.HttpContext.Session.GetString("a48") != null)
+        {*@
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="Facttbs" asp-route-typec="3">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                <p>
+                    @* 3 *@
+                    فاکتور تحویلی فروش
+                </p>
+            </div>
+        </a>
+    </div>
+    @*    }*@
+
+</div>

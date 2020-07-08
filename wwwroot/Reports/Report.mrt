@@ -1,0 +1,534 @@
+{
+  "ReportVersion": "2019.2.1",
+  "ReportGuid": "a46a506993123b3e103f47280d3f2efa",
+  "ReportName": "Report",
+  "ReportAlias": "Report",
+  "ReportFile": "Report.mrt",
+  "ReportCreated": "/Date(1556855580000+0430)/",
+  "ReportChanged": "/Date(1556855580000+0430)/",
+  "EngineVersion": "EngineV2",
+  "CalculationMode": "Interpretation",
+  "ReportUnit": "Centimeters",
+  "PreviewSettings": 268435455,
+  "Dictionary": {
+    "DataSources": {
+      "0": {
+        "Ident": "StiDataTableSource",
+        "Name": "dt",
+        "Alias": "dt",
+        "Columns": {
+          "0": {
+            "Name": "Nosanad",
+            "Index": -1,
+            "NameInSource": "Nosanad",
+            "Alias": "Nosanad",
+            "Type": "System.Int32"
+          },
+          "1": {
+            "Name": "Datec",
+            "Index": -1,
+            "NameInSource": "Datec",
+            "Alias": "Datec",
+            "Type": "System.String"
+          },
+          "2": {
+            "Name": "Note",
+            "Index": -1,
+            "NameInSource": "Note",
+            "Alias": "Note",
+            "Type": "System.String"
+          },
+          "3": {
+            "Name": "Bed",
+            "Index": -1,
+            "NameInSource": "Bed",
+            "Alias": "Bed",
+            "Type": "System.Decimal"
+          },
+          "4": {
+            "Name": "Bes",
+            "Index": -1,
+            "NameInSource": "Bes",
+            "Alias": "Bes",
+            "Type": "System.Decimal"
+          },
+          "5": {
+            "Name": "Raw",
+            "Index": -1,
+            "NameInSource": "Raw",
+            "Alias": "Raw",
+            "Type": "System.String"
+          },
+          "6": {
+            "Name": "s",
+            "Index": -1,
+            "NameInSource": "s",
+            "Alias": "s",
+            "Type": "System.String"
+          },
+          "7": {
+            "Name": "Tittle",
+            "Index": -1,
+            "NameInSource": "Tittle",
+            "Alias": "Tittle",
+            "Type": "System.String"
+          }
+        },
+        "NameInSource": "dt"
+      },
+      "1": {
+        "Ident": "StiDataTableSource",
+        "Name": "ds",
+        "Alias": "ds",
+        "Columns": {
+          "0": {
+            "Name": "Code",
+            "Index": -1,
+            "NameInSource": "Code",
+            "Alias": "Code",
+            "Type": "System.String"
+          },
+          "1": {
+            "Name": "Name",
+            "Index": -1,
+            "NameInSource": "Name",
+            "Alias": "Name",
+            "Type": "System.String"
+          },
+          "2": {
+            "Name": "Bed",
+            "Index": -1,
+            "NameInSource": "Bed",
+            "Alias": "Bed",
+            "Type": "System.Decimal"
+          },
+          "3": {
+            "Name": "Bes",
+            "Index": -1,
+            "NameInSource": "Bes",
+            "Alias": "Bes",
+            "Type": "System.Decimal"
+          },
+          "4": {
+            "Name": "Bednow",
+            "Index": -1,
+            "NameInSource": "Bednow",
+            "Alias": "Bednow",
+            "Type": "System.Decimal"
+          },
+          "5": {
+            "Name": "Besnow",
+            "Index": -1,
+            "NameInSource": "Besnow",
+            "Alias": "Besnow",
+            "Type": "System.Decimal"
+          }
+        },
+        "NameInSource": "ds"
+      }
+    }
+  },
+  "Pages": {
+    "0": {
+      "Ident": "StiPage",
+      "Name": "Page1",
+      "Guid": "a641ad8bae87ebfde78af9358ef1fd44",
+      "Interaction": {
+        "Ident": "StiInteraction"
+      },
+      "Border": ";;2;;;;;solid:Black",
+      "Brush": "solid:Transparent",
+      "Components": {
+        "0": {
+          "Ident": "StiHeaderBand",
+          "Name": "HeaderBand1",
+          "ClientRectangle": "0,0.4,19,0.6",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:Transparent",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Text1",
+              "Guid": "24637673babeb31555cef477029e7792",
+              "ClientRectangle": "0,0,19,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{dt.Tittle}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;14;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0"
+            }
+          }
+        },
+        "1": {
+          "Ident": "StiHeaderBand",
+          "Name": "Headerdt",
+          "ClientRectangle": "0,1.8,19,0.8",
+          "Interaction": {
+            "Ident": "StiInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:Transparent",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Headerdt_Nosanad",
+              "Guid": "6472b24259802e6bdacea5b9cb6128c6",
+              "ClientRectangle": "16.2,0,2.8,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "سند"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "RightToLeft": true,
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Headerdt_Datec",
+              "Guid": "12a28335f2132a806b60a0925a9ab30d",
+              "ClientRectangle": "13.8,0,2.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "تاریخ سند"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "RightToLeft": true,
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Headerdt_Note",
+              "Guid": "aa03a4a9690c74fb019d178fb7fd0882",
+              "ClientRectangle": "9.6,0,4.2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "توضیحات"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "RightToLeft": true,
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Headerdt_Bed",
+              "Guid": "14ed08a5bc8534a9838eb758e2f712f6",
+              "ClientRectangle": "7.4,0,2.2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "بدهکار"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "RightToLeft": true,
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Headerdt_Bes",
+              "Guid": "43d5186a1d9301ef38a135d6d1fe6396",
+              "ClientRectangle": "5,0,2.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "بستانکار"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "RightToLeft": true,
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Headerdt_Raw",
+              "Guid": "fd735ff9213fe5f292bf433e67eabdd3",
+              "ClientRectangle": "2.2,0,2.8,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "مانده"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "RightToLeft": true,
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Headerdt_s",
+              "Guid": "b34fa3c1280449b1c65bac88c8db3f02",
+              "ClientRectangle": "0,0,2.2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "ماهیت"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "RightToLeft": true,
+                "WordWrap": true
+              },
+              "Type": "Expression"
+            }
+          }
+        },
+        "2": {
+          "Ident": "StiDataBand",
+          "Name": "Datadt",
+          "ClientRectangle": "0,3.4,19,0.8",
+          "Interaction": {
+            "Ident": "StiBandInteraction"
+          },
+          "Border": ";;;;;;;solid:Black",
+          "Brush": "solid:Transparent",
+          "Components": {
+            "0": {
+              "Ident": "StiText",
+              "Name": "Datadt_Nosanad",
+              "Guid": "c522f1921312b1d5f4dc1ad799e4b534",
+              "CanGrow": true,
+              "ClientRectangle": "16.2,0,2.8,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{dt.Nosanad}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "RightToLeft": true,
+                "WordWrap": true
+              }
+            },
+            "1": {
+              "Ident": "StiText",
+              "Name": "Datadt_Datec",
+              "Guid": "72086caeb2bf8e3a2f511ecb30d54358",
+              "CanGrow": true,
+              "ClientRectangle": "13.8,0,2.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{dt.Datec}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "RightToLeft": true,
+                "WordWrap": true
+              }
+            },
+            "2": {
+              "Ident": "StiText",
+              "Name": "Datadt_Note",
+              "Guid": "158fa4375d97e5ee25072fb67b6f69e8",
+              "CanGrow": true,
+              "ClientRectangle": "9.6,0,4.2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{dt.Note}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "RightToLeft": true,
+                "WordWrap": true
+              }
+            },
+            "3": {
+              "Ident": "StiText",
+              "Name": "Datadt_Bed",
+              "Guid": "b34321bb338a3cf0e3cd02362d9fe507",
+              "CanGrow": true,
+              "ClientRectangle": "7.4,0,2.2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{dt.Bed}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "RightToLeft": true,
+                "WordWrap": true
+              }
+            },
+            "4": {
+              "Ident": "StiText",
+              "Name": "Datadt_Bes",
+              "Guid": "9b13ee6ec1f0f34f67ca945bb3822bd3",
+              "CanGrow": true,
+              "ClientRectangle": "5,0,2.4,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{dt.Bes}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "RightToLeft": true,
+                "WordWrap": true
+              }
+            },
+            "5": {
+              "Ident": "StiText",
+              "Name": "Datadt_Raw",
+              "Guid": "6cd4a9528c6698c8b9f8bb40525b4242",
+              "CanGrow": true,
+              "ClientRectangle": "2.2,0,2.8,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{dt.Raw}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "RightToLeft": true,
+                "WordWrap": true
+              }
+            },
+            "6": {
+              "Ident": "StiText",
+              "Name": "Datadt_s",
+              "Guid": "25502ebbaf77a6a55bd5bd4d97255383",
+              "CanGrow": true,
+              "ClientRectangle": "0,0,2.2,0.8",
+              "Interaction": {
+                "Ident": "StiInteraction"
+              },
+              "Text": {
+                "Value": "{dt.s}"
+              },
+              "HorAlignment": "Center",
+              "VertAlignment": "Center",
+              "Font": "Tahoma;10;;",
+              "Border": "All;105,105,105;;;;;;solid:105,105,105",
+              "Brush": "solid:Transparent",
+              "TextBrush": "solid:0,0,0",
+              "TextOptions": {
+                "RightToLeft": true,
+                "WordWrap": true
+              }
+            }
+          },
+          "DataSourceName": "dt",
+          "RightToLeft": true
+        }
+      },
+      "PageWidth": 21,
+      "PageHeight": 29.7,
+      "Watermark": {
+        "TextBrush": "solid:50,0,0,0"
+      },
+      "Margins": {
+        "Left": 1,
+        "Right": 1,
+        "Top": 1,
+        "Bottom": 1
+      }
+    }
+  }
+}

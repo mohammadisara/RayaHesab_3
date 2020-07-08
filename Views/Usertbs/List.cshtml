@@ -1,0 +1,127 @@
+﻿
+@{
+    Layout = null;
+}
+
+<table id="myTable" class="table table-striped mytable" style="background-color:white">
+    <thead>
+        <tr>
+            <th>
+                ردیف
+            </th>
+            <th>
+                نام و نام خانوادگی
+            </th>
+            <th>
+                نام کاربری
+            </th>
+            <th>
+                فروشگاه اصلی
+            </th>
+            <th>
+                فروشگاه های مجاز
+            </th>
+            <th>
+                تلفن همراه
+            </th>
+            <th>
+                وضعیت
+            </th>
+            <th class="filter-false"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ if (ViewBag.list != null)
+            {
+                int r = 0;
+                foreach (var item in ViewBag.list)
+                {
+                    r += 1;
+                    <tr>
+                        <td>
+                            @r
+                        </td>
+                        <td>
+                            @item.Firstname  @item.Lastname
+                        </td>
+                        <td>
+                            @item.UserName
+                        </td>
+                        <td>
+                            @(item.IdanbarNavigation != null ? item.IdanbarNavigation.Namec : "" )
+                        </td>
+                        <td id="td_@item.Id">
+                            <script type="text/javascript">
+                                    getanbar('@item.Id')
+                                    function getanbar(mid) {
+                                        var mform = new FormData();
+                                        mform.append("uid", mid);
+                                        $.ajax({
+                                            type: "Post",
+                                            url: "/Usertbs/getanbar",
+                                            processData: false,
+                                            contentType: false,
+                                            data: mform,
+                                            //dataType: "json",
+                                            success: function (data) {
+                                                $("#td_" + mid).html(data);
+                                            }
+                                        })
+                                    }
+                            </script>
+                        </td>
+                        <td>
+                            @item.PhoneNumber
+                        </td>
+                        <td>
+
+                            @if (item.Isactive == 1)
+                            {
+                                @Html.Raw("فعال")
+                            }
+                            else
+                            {
+                                @Html.Raw("غیر فعال")
+                            }
+                        </td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="mb-2 mr-2 dropdown-toggle btn btn-info"><i class="fa fa-cog"></i></button>
+                                <div class="dropdown-menu">
+                                    <a onclick="ganbar('@item.Id')" href="#" class="dropdown-item">
+                                        دسترسی به فروشگاه ها
+                                    </a>
+                                    <a onclick="listsandogh('@item.Id')" href="#" class="dropdown-item">
+                                        دسترسی به صندوق و بانک
+                                    </a>
+                                    <a href="#" onclick="menu('@item.Id')" class="dropdown-item">
+                                        حق دسترسی
+                                    </a>
+                                    <a href="#" onclick="Edit('@item.Id')" class="dropdown-item">
+                                        ویرایش
+                                    </a>
+                                    <form id="chpass" target="_blank" asp-controller="/Identity/Account" asp-action="/ForgotPassword">
+                                        <input type="hidden" value="@item.Id" name="Id" />
+                                        <a href="#" onclick="chpas()" class="dropdown-item">
+                                            تغییر کلمه عبور
+                                        </a>
+                                        @*<button type="submit" tabindex="0" class="btn btn-label btn-label-brand btn-sm btn-bold">@Resources.Login.Logout</button>*@
+                                    </form>
+                                    <a href="#" onclick="Delete('@item.Id')" class="dropdown-item">
+                                        حذف
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+
+
+
+
+
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+

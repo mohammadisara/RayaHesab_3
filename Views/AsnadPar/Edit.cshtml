@@ -1,0 +1,96 @@
+﻿@model RayaHesab.Models.Pardartb
+<form id="formaction" asp-action="Edit"  class="row DRight">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Mid" id="txtmid" />
+    <input type="hidden" asp-for="Userid" id="txtuser" />
+    <div class="form-group col-md-3">
+        <label asp-for="Noghabz" class="control-label">شماره قبض</label>
+        <input asp-for="Noghabz" id="txtname" onkeypress="handle(event,'txtmoin')" class="form-control" />
+        <span asp-validation-for="Noghabz" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-3">
+        <label asp-for="Datec" class="control-label">تاریخ</label>
+        <input asp-for="Datec" id="txtdateE" onkeypress="handle(event,'txtmoin')" class="form-control DateTextE" type="text" />
+        <span asp-validation-for="Datec" class="text-danger"></span>
+    </div>
+    <div class="form-group col-md-3">
+        <label class="control-label">فروشگاه</label>
+        <select asp-for="Idanbar" asp-items="@ViewBag.listanbar" id="selanbar" class="form-control">
+            <option value="0">انتخاب کنید</option>
+        </select>
+    </div>
+    <input asp-for="Typec" class="form-control" value="2" type="hidden" />
+    <div class="col-sm-12 headcreate">
+        <label class="control-label">کدینگ بدهکار</label>
+    </div>
+    <div class="form-group col-sm-6" style="background-color:lightyellow">
+        <label asp-for="Moinbed" style="display:block" class="control-label">کد حساب (کل و معین و تفصیلی)</label>
+        <div class="autocomplete" style="display:block;">
+            <input onkeypress="handle(event,'txtperson')" onkeyup="hesabchangeE()" 
+                  value="@(ViewBag.Moinbed !=null ? ViewBag.Moinbed + (ViewBag.Tafbed != null ?ViewBag.Tafbed :"") : "" )" id="txtmoin" type="text" class="form-control" >
+        </div>
+        <span class="spanzir" id="namemoin">*</span>
+        <input asp-for="Moinbed" type="hidden" id="hfmoinid" />
+        <input asp-for="Tafbed" type="hidden" id="hftafid" />
+    </div>
+    <div class="form-group col-sm-6" style="background-color:lightyellow">
+        <label style="display:block" asp-for="Pidbed" class="control-label">صاحب حساب</label>
+        <div asp-for="Pid" class="autocomplete form-group" style="display:block">
+            <input id="txtperson" value="@(ViewBag.Pidbed !=null ? ViewBag.Pidbed : "" )" onkeypress="handle(event,'txtmoinS')" type="text" onkeyup="hesabchange()" class="form-control" name="txtperson">
+        </div>
+        <input type="hidden" asp-for="Pidbed" id="hfpersonid" />
+    </div>
+    <div class="col-sm-12 headcreate">
+        <label class="control-label">کدینگ بستانکار</label>
+    </div>
+    <div class="form-group col-sm-6" style="background-color:lightcyan">
+        <label asp-for="Moinbes" style="display:block" class="control-label">کد حساب (کل و معین و تفصیلی)</label>
+        <div class="autocomplete" style="display:block;">
+            <input onkeypress="handle(event,'txtpersonSE')" id="txtmoinS" type="text" onkeyup="hesabchange()" 
+                   value="@(ViewBag.Moinbes !=null ? ViewBag.Moinbes + (ViewBag.Tafbes != null ?ViewBag.Tafbes :"") : "" )" class="form-control" >
+        </div>
+        <span class="spanzir" id="namemoinS">*</span>
+        <input asp-for="Moinbes" type="hidden" id="hfmoinidS" />
+        <input asp-for="Tafbes" type="hidden" id="hftafidS" />
+    </div>
+    <div class="form-group col-sm-6" style="background-color:lightcyan">
+        <label style="display:block" asp-for="Pidbes" class="control-label">صاحب حساب</label>
+        <div asp-for="Pid" onkeypress="handle(event,'mabE')" class="autocomplete form-group" style="display:block">
+            <input id="txtpersonSE"  value="@(ViewBag.Pidbes !=null ? ViewBag.Pidbes : "" )"  type="text" onkeyup="hesabchangeE()" class="form-control" name="txtpersonSE">
+        </div>
+        <input type="hidden" asp-for="Pidbes" id="hfpersonidSE" />
+    </div>
+    <div class="col-sm-12 headcreate">
+        <label class="control-label"></label>
+    </div>
+
+
+    <div class="form-group col-sm-3">
+        <label asp-for="Mablagh" class="control-label">مبلغ </label>
+        <input asp-for="Mablagh" id="mabE" onkeypress="handle(event,'notE')" class="form-control TNPrice" />
+        <span asp-validation-for="Mablagh" class="text-danger"></span>
+    </div>
+    <div class="form-group col-sm-3">
+        <label asp-for="Note" class="control-label">توضیحات</label>
+        <input asp-for="Note" id="notE" onkeypress="handle(event,'txtchekE')" class="form-control" />
+        <span asp-validation-for="Note" class="text-danger"></span>
+    </div>
+    <div class="form-group col-sm-3">
+        <label asp-for="Nocheckq" class="control-label">شماره چک</label>
+        <select asp-for="Nocheckq" asp-items="@ViewBag.listcheck" id="txtchekE" onkeypress="handle(event,'txtDchek')" class="form-control">
+            <option value="">
+                انتخاب کنید
+            </option>
+        </select>
+        <span asp-validation-for="Nocheckq" class="text-danger"></span>
+    </div>
+    <div class="form-group col-sm-3">
+        <label asp-for="Datecheck" class="control-label">تاریخ چک</label>
+        <input asp-for="Datecheck" id="txtDchekE" onkeypress="handle(event,'btn')" class="form-control DateTextE" type="text" />
+        <span asp-validation-for="Datecheck" class="text-danger"></span>
+    </div>
+    <hr />
+    <div class="form-group col-sm-12 modal-footer">
+        <input type="button" onclick="actionrow();" value="ویرایش" id="btnE" class="btn btn-primary" />
+    </div>
+</form>

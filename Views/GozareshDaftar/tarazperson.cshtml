@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewData["Title"] = "تراز اشخاص";
+    Layout = null;
+}
+
+@{if (ViewBag.err != null)
+    {
+        <div class="col-md-12">
+            <a href="#" class="alert-danger">
+                <i class="fa fa-warning fa-2x" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>@ViewBag.err
+            </a>
+        </div>
+    }
+}
+<table id="myTable" class="table table-striped tablesorter">
+    <thead>
+        <tr>
+            @if (ViewBag.gid > 0)
+            {
+
+                <th class="filter-select" data-placeholder="فروشگاه">
+                    فروشگاه
+                </th>
+                <th>
+                    کد حساب
+                </th>
+            }
+
+            <th>
+                عنوان شخص
+            </th>
+            <th class="sorter-currency">
+                بدهکار طی دوره
+            </th>
+            <th class="sorter-currency">
+                بستانکار طی دوره
+            </th>
+            <th class="sorter-currency">
+                بد
+            </th>
+            <th class="sorter-currency">
+                بس
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ decimal m = 0;
+        }
+        @if (ViewBag.list != null)
+        {
+            @foreach (var item in ViewBag.list)
+            {
+                m = m + 1;
+                <tr>
+                    @if (ViewBag.gid > 0)
+                    {
+
+                        <td>
+                            @item.Nameanbar
+                        </td>
+                        <td>
+                            @item.Namekol @item.Namemoin
+                        </td>
+                    }
+                    <td class="text-right">
+                        @item.Nameperson
+                    </td>
+                    <td>
+                        @{ if (@item.Bed >= 0)
+                            {
+                                @string.Format("{0:n0}", @item.Bed)
+                            }
+                            else
+                            {
+                                var line = "0";
+                                @line
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{ if (@item.Bes >= 0)
+                            {
+                                @string.Format("{0:n0}", @item.Bes)
+                            }
+                            else
+                            {
+                                var line = "0";
+                                @line
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{ if (@item.Bednow >= 0)
+                            {
+                                @string.Format("{0:n0}", @item.Bednow)
+                            }
+                            else
+                            {
+                                var line = "0";
+                                @line
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{ if (@item.Besnow >= 0)
+                            {
+                                @string.Format("{0:n0}", @item.Besnow)
+                            }
+                            else
+                            {
+                                var line = "0";
+                                @line
+                            }
+                        }
+                    </td>
+                    <td>
+                        <a class="pbtnHIDetail" title="گردش حساب" onclick="gardesh(@item.Pid)">
+                            <i class="fa fa-sticky-note fa-2x" title="گردش حساب"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            @if (ViewBag.gid > 0)
+            {
+
+                <td></td>
+                <td></td>
+            }
+            <td data-math="col-count"></td>
+            <td data-math="col-sum">above-sum</td>
+            <td data-math="col-sum">above-sum</td>
+            <td data-math="col-sum">above-sum</td>
+            <td data-math="col-sum">above-sum</td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+

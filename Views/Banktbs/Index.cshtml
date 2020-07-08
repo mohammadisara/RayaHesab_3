@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewData["Title"] = "مدیریت بانک";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+<a href="#" id="pbtn" onclick="Create()">
+    <i class="fa fa-plus-square fa-2x" title="تعریف بانک جدید"></i>
+</a>
+<div id="divlist"></div>
+
+@section Scripts{
+    <script>
+        function load() {
+            $("#divlist").html(lmsg);
+            $.ajax({
+                url: "/Banktbs/List",
+                type: "Get"
+            }).done(function (result) {
+                $("#divlist").html(result);
+                $("table").tablesorter({
+                    widthFixed: false,                // initialize zebra and filter widgets
+                    widgets: ["zebra", "filter", "math"],
+                    widgetOptions: {
+                        math_mask: '#,##0.',
+                        filter_reset: '.reset'
+                    }
+                })
+                //$(".tablesorter-filter").attr("style", "width:100%");
+            });
+        }
+        function checkq(mid) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Banktbs/Details?id=" + mid,
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("مدیریت دسته چک");
+                $("#ModalBody").html(result);
+                $("table").tablesorter({
+                    widthFixed: false,                // initialize zebra and filter widgets
+                    widgets: ["zebra", "filter", "math"],
+                    widgetOptions: {
+                        math_mask: '#,##0.',
+                        filter_reset: '.reset'
+                    }
+                });
+            });
+        }
+        function Create() {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Banktbs/Create",
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ایجاد");
+                $("#ModalBody").html(result);
+                loadcoding();
+            });
+        };
+        function Edit(id) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Banktbs/Edit/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ویرایش");
+                $("#ModalBody").html(result);
+                loadcoding();
+            });
+        };
+        $(function () {
+            load();
+        })
+        function Delete(id) {
+            var s = confirm('ایا مطمئن هستید ؟ ');
+            if (s) {
+                $("#divlist").html(lmsg);
+                $.post("/Banktbs/Delete?id=" + id, function (data) {
+                    if (data.msg == "") {
+                        load();
+                    }
+                    else {
+                        alert(data.msg + " ** " + data.err);
+                        load();
+                    }
+                });
+            }
+        };
+        function actionrow() {
+            $.post($("#formaction").attr("action"), $("#formaction").serialize(), function (data) {
+                load();
+                if (data.msg == "") {
+                    Create();
+                }
+                else {
+                    alert(data.msg + " ** " + data.err);
+                }
+            });
+        }
+        function Details(id) {
+            $(".loading").show();
+            loadcoding();
+            $.ajax({
+                url: "/Banktbs/Details/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("نمایش");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+    </script>
+
+}

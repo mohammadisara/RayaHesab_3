@@ -1,0 +1,28 @@
+﻿@model RayaHesab.Models.Pertb
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = Context.Request.Cookies["layoutmain"];
+}
+<br />
+
+<div class="row DMMenu">
+    <div class="col-md-12">
+        <div class="SecContent" style="text-align:center">
+            @*<nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/User"><i class="fa fa-home" aria-hidden="true" style="-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);"></i></a></li>
+                    <li class="breadcrumb-item"><a href="/User/Setting">&nbsp; امکانات</a></li>
+                    <li class="breadcrumb-item"><a href="/Usertbs">&nbsp; مدیریت کاربران</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">&nbsp; ایجاد کاربر</li>
+                </ol>
+            </nav>*@
+            <h3>آیا مطمئن برای حذف هستید?</h3>
+            <hr />
+            <form asp-action="Deletem">
+                <input type="hidden" asp-for="Mid" />
+                <input type="submit" value="حذف" class="btn btn-danger" />
+            </form>
+        </div>
+    </div>
+</div>

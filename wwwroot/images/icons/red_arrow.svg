@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="9px" height="10px" viewBox="0 0 9 10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>right-arrow copy</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Dashboard-with-news-&amp;-Chat" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-927.000000, -275.000000)">
+        <g id="Watch-list" transform="translate(74.000000, 217.000000)" fill="#FF5C55" fill-rule="nonzero" stroke="#FF5C55" stroke-width="0.5">
+            <g id="Items" transform="translate(10.000000, 14.000000)">
+                <g id="5" transform="translate(799.000000, 0.000000)">
+                    <g id="right-arrow-copy" transform="translate(48.790956, 48.797977) rotate(-90.000000) translate(-48.790956, -48.797977) translate(44.290956, 44.797977)">
+                        <path d="M5.39062051,0.110911926 C5.25215472,-0.0369706421 5.02170117,-0.0369706421 4.87839392,0.110911926 C4.73992814,0.253798462 4.73992814,0.491609619 4.87839392,0.634163086 L7.47567643,3.3143681 L0.358590887,3.3143681 C0.158799925,3.31470117 0,3.47857104 0,3.68474066 C0,3.89091028 0.158799925,4.06010925 0.358590887,4.06010925 L7.47567643,4.06010925 L4.87839392,6.73531824 C4.73992814,6.88320081 4.73992814,7.12134503 4.87839392,7.2638985 C5.02170117,7.41178107 5.25247749,7.41178107 5.39062051,7.2638985 L8.60276858,3.94919733 C8.74607583,3.80631079 8.74607583,3.56849963 8.60276858,3.42594617 L5.39062051,0.110911926 Z" id="Shape" transform="translate(4.355125, 3.687405) rotate(-180.000000) translate(-4.355125, -3.687405) "></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

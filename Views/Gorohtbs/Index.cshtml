@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "گروه حساب";
+    Layout = null;
+}
+
+@*<input type="button" class="show-modal" data-id="modalform" value="ثبت" />*@
+
+
+
+<div class="table-responsive-lg">
+    <table class="table table-striped" id="myTable4">
+        <thead>
+            <tr>
+                <th>
+                    کد گروه و عنوان
+                </th>
+                <th>
+                    @*                    <a href="#" onclick="CreateGroup()" class="show-modal" data-id="modalform">*@
+                    <a href="#" onclick="CreateGroup()">
+                        <i class="fa fa-plus-square fa-2x" aria-hidden="true" data-toggle="tooltip" title="تعریف گروه جدید"></i>
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                if (ViewBag.Group != null)
+                {
+                    @foreach (var item in (ViewBag.Group as List<RayaHesab.Models.Gorohtb>))
+                    {
+                        <tr>
+                            <td>
+                                <a href="#" onclick="loadkol(@item.Mid)" >@item.Mid - @item.Namec </a>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="mb-2 mr-2 dropdown-toggle btn btn-info"><i class="fa fa-cog"></i></button>
+
+                                    <div class="dropdown-menu">
+                                        <a href="#" class="dropdown-item" onclick="EditGroup(@item.Mid)" >
+                                            ویرایش
+                                        </a>
+                                        <a href="#" onclick="DeleteGroup(@item.Mid)"  class="dropdown-item">
+                                            حذف
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@*<script src="~/scripts/script.js"></script>*@

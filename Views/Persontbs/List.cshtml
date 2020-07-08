@@ -1,0 +1,116 @@
+﻿
+@{
+    Layout = null;
+}
+<div class=" table-responsive">
+    <table id="myTable" class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    نام
+                </th>
+                <th>
+                    نام خانوادگی
+                </th>
+                <th>
+                    همراه
+                </th>
+                <th>
+                    آدرس
+                </th>
+                <th>
+                    تاریخ تولد
+                </th>
+                <th class="filter-select" data-placeholder="جنسیت">
+                    جنسیت
+                </th>
+                <th>
+                    توضیحات
+                </th>
+                <th class="filter-select" data-placeholder="گروه">
+                    گروه
+                </th>
+                <th>تنظیمات</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ if (ViewBag.list != null)
+                {
+                    int i = 0;
+                    @foreach (var item in ViewBag.list)
+                    {
+                        i = i + 1;
+                        <tr id="r_@item.Mid">
+                            <td>
+                                @i
+                            </td>
+                            <td>
+                                @item.Namec
+                            </td>
+                            <td>
+                                @item.Family
+                            </td>
+                            <td>
+                                @item.Mobile
+                            </td>
+                            <td>
+                                @item.Addressc
+                            </td>
+                            <td>
+                                @item.Datetavalod
+                            </td>
+                            <td>
+                                @{
+                                    var type = "";
+                                    switch (item.Jensiat)
+                                    {
+                                        case 1: type = "زن"; break;
+                                        case 0: type = "مرد"; break;
+                                        case 2: type = "-"; break;
+                                        default: break;
+                                    }
+                                    @type
+                                }
+                            </td>
+                            <td>@item.Note</td>
+                            <td>
+                                @item.G.Title
+                            </td>
+                            <td class="text-center">
+                                <div class="dropdown">
+                                    <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="mb-2 mr-2 dropdown-toggle btn btn-info"><i class="fa fa-cog"></i></button>
+
+                                    <div class="dropdown-menu">
+                                        <a href="#" class="dropdown-item" onclick="Edit(@item.Mid)">
+                                            ویرایش
+                                        </a>
+                                        <a href="#" onclick="Delete(@item.Mid)" class="dropdown-item">
+                                            حذف
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>تعداد ردیف</td>
+                <td data-math="col-count"></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+
+        </tfoot>
+    </table>
+</div>

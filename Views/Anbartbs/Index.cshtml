@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewData["Title"] = "مدیریت فروشگاه";
+    Layout = Context.Request.Cookies["layoutmain"];
+}
+<div class="input-group">
+    <a href="#" id="pbtn" onclick="Create()" >
+        <i class="fa fa-plus-square fa-2x" title="  جدید"></i>
+    </a>
+    <a href="#"  id="showsearch" >
+        <i class="fa fa-search fa-2x" title="نمایش جستجو"></i>
+    </a>
+</div>
+<div id="divlist"></div>
+@section Scripts{
+
+    <script>
+
+        function Create() {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Anbartbs/Create",
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ایجاد");
+                $("#ModalBody").html(result);
+                loadcoding();
+            });
+        };
+        function Edit(id) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Anbartbs/Edit?id=" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ویرایش");
+                $("#ModalBody").html(result);
+                loadcoding();
+            });
+        };
+        $(function () {
+            load();
+        })
+
+        function load() {
+            $("#divlist").html(lmsg);
+            $.ajax({
+                url: "/Anbartbs/List",
+                type: "Get"
+            }).done(function (result) {
+                $("#divlist").html(result);
+                $("table").tablesorter({
+                    widthFixed: false,                // initialize zebra and filter widgets
+                    widgets: ["zebra", "filter", "math"],
+                    widgetOptions: {
+                        math_mask: '#,##0.',
+                        filter_reset: '.reset'
+                    }
+                })
+            });
+        }
+        function Delete(id) {
+            var s = confirm('ایا مطمئن هستید ؟ ');
+            if (s) {
+                $("#divlist").html(lmsg);
+                $.post("/Anbartbs/Delete?id=" + id, function (data) {
+                    if (data.msg == "") {
+                        load();
+                    }
+                    else {
+                        alert(data.msg + " ** " + data.err);
+                    }
+                });
+            }
+        };
+        function actionrow() {
+            $.post($("#formaction").attr("action"), $("#formaction").serialize(), function (data) {
+                if (data.msg == "") {
+                    load();
+                }
+                else {
+                    alert(data.msg + " ** " + data.err);
+                }
+            });
+
+        }
+    </script>
+
+}

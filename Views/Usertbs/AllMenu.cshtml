@@ -1,0 +1,24 @@
+﻿@model IEnumerable<RayaHesab.Models.Pertb>
+
+<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <td>منو</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody id="tbodymenu">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Menu.Title
+                </td>
+                <td>
+                    <input type="button" onclick="delmenu(@item.Menuid)" value='حذف' class='btn btn-primary' />
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

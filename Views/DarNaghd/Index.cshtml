@@ -1,0 +1,196 @@
+﻿
+@{
+    ViewData["Title"] = "دریافت نقدی";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+<a href="#" id="pbtn" onclick="Create()"  >
+    <i class="fa fa-plus-square fa-2x" id="MyBut" aria-hidden="true" data-toggle="tooltip" title="تعریف سند دریافت جدید"></i>
+</a>
+
+<div class="row" id="darlist"></div>
+
+
+
+@section Scripts{
+    <script>
+        function getdarnaghd() {
+            $("#darlist").html(lmsg);
+            $.ajax({
+                url: "/DarNaghd/List",
+                type: "Get"
+            }).done(function (result) {
+                $("#darlist").html(result);
+                $("table").tablesorter({
+                    widthFixed: false,                // initialize zebra and filter widgets
+                    widgets: ["zebra", "filter", "math"],
+                    widgetOptions: {
+                        math_mask: '#,##0.',
+                        filter_reset: '.reset'
+                    }
+                })
+            });
+
+        }
+        function hesabchangeE() {
+            if ($("#txtmoinBE").val() != "") {
+                $("#txtpersonBE").prop('disabled', true);
+                $("#hfpersonidBE").val("");
+            }
+            else
+                $("#txtpersonBE").prop('disabled', false);
+            if ($("#txtmoinSE").val() != "") {
+                $("#txtpersonSE").prop('disabled', true);
+                $("#hfpersonidSE").val("");
+            }
+            else
+                $("#txtpersonSE").prop('disabled', false);
+
+            if ($("#txtpersonBE").val() != "") {
+                $("#txtmoinBE").prop('disabled', true);
+                $("#hfmoinidBE").val("");
+                $("#hftafidBE").val("");
+            }
+            else
+                $("#txtmoinBE").prop('disabled', false);
+            if ($("#txtpersonSE").val() != "") {
+                $("#txtmoinSE").prop('disabled', true);
+                $("#hfmoinidSE").val("");
+                $("#hftafidSE").val("");
+            }
+            else
+                $("#txtmoinSE").prop('disabled', false);
+        }
+        function hesabchange() {
+            if ($("#txtmoinB").val() != "") {
+                $("#txtpersonB").prop('disabled', true);
+                $("#hfpersonidB").val("");
+            }
+            else
+                $("#txtpersonB").prop('disabled', false);
+            if ($("#txtmoinS").val() != "") {
+                $("#txtpersonS").prop('disabled', true);
+                $("#hfpersonidS").val("");
+            }
+            else
+                $("#txtpersonS").prop('disabled', false);
+            if ($("#txtpersonB").val() != "") {
+                $("#txtmoinB").prop('disabled', true);
+                $("#hfmoinidB").val("");
+                $("#hftafidB").val("");
+            }
+            else
+                $("#txtmoinB").prop('disabled', false);
+            if ($("#txtpersonS").val() != "") {
+                $("#txtmoinS").prop('disabled', true);
+                $("#hfmoinidS").val("");
+                $("#hftafidS").val("");
+            }
+            else
+                $("#txtmoinS").prop('disabled', false);
+        }
+        $(function () {
+            getdarnaghd();
+        })
+        function Create() {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered modal-lg");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Darnaghd/Create?type=1",
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ایجاد");
+                $("#ModalBody").html(result);
+                loadcoding();
+                loadcodingBes();
+
+            });
+        };
+        function actionrow() {
+            $.post($("#formaction").attr("action"), $("#formaction").serialize(), function (data) {
+                if (data.msg == "") {
+                    getdarnaghd();
+                }
+                else {
+                    $(".errmsg").html(data.msg);
+                    $(".errdetail").html(data.err);
+                    $("#err").modal('show');
+                }
+            });
+
+        }
+        function Edit(id) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered modal-lg");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/DarNaghd/Edit?id=" + id + "&type=1",
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ویرایش");
+                $("#ModalBody").html(result);
+                loadcoding();
+                loadcodingBes();
+                //$(".DateText , .DateTextE").pDatepicker({
+                //    initialValueType: 'persian',
+                //    calendar: {
+                //        persian: {
+                //            locale: 'en'
+                //        }
+                //    },
+                //    autoClose: true,
+                //    format: 'YYYY/MM/DD'
+                //});
+            });
+        };
+        function Details(id) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered modal-lg");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/AsnadDar/Details/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("نمایش");
+                $("#ModalBody").html(result);
+            });
+        };
+        function Delete(id) {
+            var q = confirm('ایا مطمئن هستید');
+            if (q) {
+                $(".loading").show();
+                $.post("/AsnadPar/Delete/" + id, null, function (data) {
+                    $(".loading").hide();
+                    if (data.msg == "") {
+                        getdarnaghd();
+                    }
+                    else {
+                        $(".errmsg").html(data.msg);
+                        $(".errdetail").html(data.err);
+                        $("#err").modal('show');
+                    }
+                });
+                $(".loading").hide();
+
+            }
+        };
+        var filter = [];
+        function search() {
+            var col = $("#selsearch").val();
+            var amal = $("#selamal").val();
+            var str = amal + $("#txtsearch").val();
+            filter[col] = str;
+            $('.mytable').trigger('search', [filter]);
+        };
+        function closesearch() {
+            filter = [];
+            $('.mytable').trigger('search', [filter]);
+        }
+
+    </script>
+}

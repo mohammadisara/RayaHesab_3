@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    @*<link rel="stylesheet" href="/css/icono.min.css" />
+        <link href="/css/font-awesome.css" rel="stylesheet" />
+        <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="/css/site.css" />*@
+    @*<link href="/Select2/select2.css" rel="stylesheet" />*@
+    @*<link href="/css/autocomplete.css" rel="stylesheet" />*@
+    <link rel="stylesheet" href="/css/jquery-ui.css" />
+
+</head>
+<body>
+    @*<div class="row">*@
+        @RenderBody()
+       @*</div>*@
+        <partial name="_CookieConsentPartial" />
+
+        @*<script src="/lib/jquery/dist/jquery.js"></script>*@
+        @*<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>*@
+        @*<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+        @*<script src="/lib/bootstrap/dist/js/popper.min.js"></script>*@
+        @*<script src="/lib/bootstrap/dist/js/bootstrap.js"></script>*@
+        @*<script src="/Select2/select2.js"></script>*@
+        @*<script src="~/js/my.js"></script>
+            <script src="/js/site.js"></script>*@
+        @*<script src="/js/autocomplete.js"></script>*@
+
+        @RenderSection("Scripts", required: false)
+</body>
+</html>

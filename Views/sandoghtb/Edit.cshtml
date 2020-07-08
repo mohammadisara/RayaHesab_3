@@ -1,0 +1,27 @@
+﻿@model RayaHesab.Models.Banktb
+
+<form asp-action="Edit" onsubmit="return validatecoding" id="formaction">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Mid" id="txtmid" />
+    <div class="row">
+        <div class="form-group col-lg-5">
+            <label asp-for="Title" class="control-label">عنوان</label>
+            <input asp-for="Title" id="txtname" onkeypress="handle(event,'txtmoin')" class="form-control" oninvalid="this.setCustomValidity('عنوان صندوق وارد کنید')" oninput="setCustomValidity('')" required />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group col-lg-7">
+            <label asp-for="Moinid" style="display:block" class="control-label">کد حساب (کل و معین و تفصیلی)</label>
+            <div class="autocomplete" style="display:block;">
+                <input onkeypress="handle(event,'btnE')" id="txtmoin" type="text" class="form-control" value="@ViewBag.codec">
+            </div>
+            <span class="spanzir" id="namemoinE">@ViewBag.namec</span>
+            <input asp-for="Moinid" type="hidden" id="hfmoinid" />
+            <input asp-for="Tafid" type="hidden" id="hftafid" />
+        </div>
+    </div>
+    <input type="hidden" value="3" asp-for="Typec" />
+    <hr />
+    <div class="form-group col-sm-12">
+        <input type="button" onclick="actionrow()" value="ویرایش" id="btnE" class="btn btn-primary" />
+    </div>
+</form>

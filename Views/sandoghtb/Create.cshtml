@@ -1,0 +1,26 @@
+﻿@model RayaHesab.Models.Banktb
+
+<form asp-action="Create" onsubmit="return validatecoding" id="formaction">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+    <div class="form-group col-lg-5">
+        <label asp-for="Title" class="control-label">عنوان</label>
+        <input asp-for="Title" onkeypress="handle(event,'txtmoin')" id="txtTitleC" class="form-control" oninvalid="this.setCustomValidity('عنوان صندوق وارد کنید')" oninput="setCustomValidity('')" required />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group col-lg-7">
+        <label asp-for="Moinid" style="display:block" class="control-label">کد حساب (کل و معین و تفصیلی)</label>
+        <div class="autocomplete" style="display:block;">
+            <input onkeypress="handle(event,'btn')" id="txtmoin" type="text" class="form-control" name="txtmoin"  >
+        </div>
+        <span class="spanzir" id="namemoin"> * </span>
+        <input asp-for="Moinid" type="hidden" id="hfmoinid" />
+        <input asp-for="Tafid" type="hidden" id="hftafid" />
+    </div>
+    </div>
+    <input type="hidden" value="3" asp-for="Typec" />
+    <hr />
+    <div class="form-group col-sm-12">
+        <input type="button"  onclick="actionrow()"  value="ثبت" id="btn" class="btn btn-primary" />
+    </div>
+</form>

@@ -1,0 +1,200 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+<div class="row" style="background-color:white">
+    <div class="col-md-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>
+                        عنوان
+                    </td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.list)
+                {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>
+                            <a onclick="showlookup(@item.Mid)" class="pbtnHIWarning"><i class="fa fa-plus-circle"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-7">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>
+                        عنوان
+                    </td>
+                    <td></td>
+                </tr>
+                <tr id="tradd" style="display:none">
+                    <td>
+                        <input type="text" class="form-control" id="txttitle" placeholder="عنوان را وارد نمایید" />
+                        <input type="hidden" id="hfgid" />
+                        <input type="hidden" id="hfmid" />
+                    </td>
+                    <td>
+                        <a onclick="savelookup()" class="pbtnHISuccess add"><i class="fa fa-save"></i></a>
+                        <a onclick="edit()" style="display:none" class="pbtnHIWarning edit"><i class="fa fa-edit"></i></a>
+                    </td>
+
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    function edit() {
+        //
+         
+        $.ajax({
+            type: "POST",
+            url: "Looupsubtbs/Edit?id=" + $("#hfmid").val() + "&title=" + $("#txttitle").val(),
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(".loading").show();
+            },
+            success: function (data) {
+                if (data.res != '')
+                    alet(data.res);
+                else {
+                    showlookup($("#hfgid").val());
+                    $("#txttitle").val("");
+                    $(".edit").hide();
+                    $(".add").show();
+                }
+            },
+            complete: function () {
+                $(".loading").hide();
+            }
+        })
+    }
+
+
+
+    function editlookup(mid) {
+        $.ajax({
+            type: "GET",
+            url: "Looupsubtbs/Edit?id=" + mid,
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(".loading").show();
+            },
+            success: function (data) {
+                 
+                $(".edit").show();
+                $(".add").hide();
+                $("#txttitle").val(data.res.title);
+                $("#hfmid").val(data.res.mid);
+            },
+            complete: function () {
+                $(".loading").hide();
+            }
+        })
+    }
+    function savelookup() {
+        var mform = new FormData();
+        mform.append("Title", $("#txttitle").val());
+        mform.append("Grp", $("#hfgid").val());
+         
+        $.ajax({
+            type: "POST",
+            url: "Looupsubtbs/Create?Title=" + $("#txttitle").val() + "&Grp=" + $("#hfgid").val(),
+            dataType: "json",
+            //data: mform,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(".loading").show();
+            },
+            success: function (data) {
+                if (data.res != '')
+                    alet(data.res);
+                else {
+                    showlookup($("#hfgid").val());
+                    $("#txttitle").val("");
+                }
+            },
+            complete: function () {
+                $(".loading").hide();
+            }
+        })
+    }
+    function showlookup(gid) {
+        var mform = new FormData();
+        mform.append("gid", gid);
+        $.ajax({
+            type: "GET",
+            url: "Looupsubtbs/Details/?gid=" + gid,
+            dataType: "json",
+            //data: mform,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(".loading").show();
+            },
+            success: function (data) {
+                var s = "";
+                $("#tbody").html("");
+                $("#hfgid").val(gid);
+                $("#tradd").css("display", "");
+                for (var i = 0; i < data.res.length; i++) {
+                    s = "            <tr> "
+                        + "<td>" + data.res[i].title + "</td>"
+                        + "<td>"
+                        + "<a onclick='editlookup(" + data.res[i].mid + ")' class='pbtnHIDetail'>"
+                        + "<i class='fa fa-edit'></i></a>"
+                        + "<a onclick='dellookup(" + data.res[i].mid + ")' class='pbtnHIDetail'><i class='fa fa-trash'></i></a>"
+                        + "</td>"
+                        + "</tr>";
+                    $("#tbody").append(s);
+                }
+
+            },
+            complete: function () {
+                $(".loading").hide();
+            }
+        })
+    }
+
+    function dellookup(mid) {
+        var s = confirm('ایا مطمئن هستید');
+        if (s) {
+            $.ajax({
+                type: "POST",
+                url: "Looupsubtbs/Delete/?id=" + mid,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $(".loading").show();
+                },
+                success: function (data) {
+                    if (data.res != "")
+                        alert(data.res);
+                    else
+                        showlookup($("#hfgid").val());
+                },
+                complete: function () {
+                    $(".loading").hide();
+                }
+            })
+        }
+    }
+
+</script>

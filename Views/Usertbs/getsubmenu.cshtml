@@ -1,0 +1,26 @@
+﻿@model IEnumerable<RayaHesab.Models.Menutb>
+@{
+    Layout = null;
+}
+<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <td>منو</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody id="tbodymenu">
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    <input type="button" onclick="savem(@item.Mid  , '@ViewBag.uid')" value='انتخاب' class='btn btn-primary' />
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

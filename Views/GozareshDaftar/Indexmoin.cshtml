@@ -1,0 +1,99 @@
+﻿
+
+@{
+    ViewData["Title"] = ViewBag.Tittle;
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+<div class="row" style="background-color:white">
+    @{if (ViewBag.err != null)
+        {
+            <div class="col-md-12">
+                <a href="#" class="alert-danger">
+                    <i class="fa fa-warning fa-2x" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>@ViewBag.err
+                </a>
+            </div>
+        }
+    }
+    <form asp-action="daftarmoin" id="formdkol">
+        <div class="row">
+            <div class="form-group col-sm-4 form-inline">
+                <div style="display:block;padding-bottom:0.5em">
+                    <span style="padding-left:1em"> از تاریخ</span>
+                    <input id="fdate" autocomplete="off" name="fdate" class="form-control DateText" type="text" value="@ViewBag.fdate" />
+                </div>
+                <div style="display:block">
+                    <span style="padding-left:1em"> تا تاریخ</span>
+                    <input id="tdate" autocomplete="off" name="tdate" class="form-control DateText" type="text" value="@ViewBag.tdate" />
+                </div>
+            </div>
+            <div class="form-group col-sm-5 form-inline">
+                <div style="display:block;padding-bottom:0.5em">
+                    <select asp-items="@ViewBag.kol" name="idkol" id="idkol" class="form-control myselect2">
+                        <option value="0">حساب انتخاب کنید</option>
+                    </select>
+                </div>
+                <div style="display:block;padding-bottom:0.5em">
+                    <select asp-items="@ViewBag.listanbar" name="anbar" id="anbarmoin" class="form-control ">
+                        <option value="0">فروشگاه را انتخاب کنید</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-sm-3 form-inline">
+                    <input type="hidden" name="typec" value="@ViewBag.id" />
+                    <input type='hidden' id="hftypec" name='print' value="0" />
+                    <a class="btn btn-primary" onclick="sendprint(2 , 'formdkol')">تهیه گزارش</a>
+                    <a class="btn btn-primary" onclick="sendprint(1 , 'formdkol')">
+                        <i class="fa fa-print"></i>
+                    </a>
+
+            </div>
+        </div>
+    </form>
+    <div id="table">
+
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.myselect2').select2();
+    });
+    function sendprint(typec, frm) {
+        $("#hftypec").val(typec)
+        if (typec == 1) {
+            var tmp = "<form target='_blank' action='/GozareshDaftar/Printdaftarmoin' id='frmtmp'></form>";
+            $('body').append(tmp);
+            $("#frmtmp").append("<input type='hidden' name='fdate' value='" + $("#fdate").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='tdate' value='" + $("#tdate").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='idkol' value='" + $("#idkol").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='anbar' value='" + $("#anbarmoin").val() + "'>");
+            $("#frmtmp").submit();
+            $("#frmtmp").remove();
+        }
+        else {
+            $("#" + frm).attr("target", "_self");
+            $(".loading").show();
+            $.ajax({
+                url: $("#formdkol").attr("action"),
+                data: $("#formdkol").serialize(),
+                //url: "/GozareshDaftar/daftarkol?fdate="++"&tdate="++"&idkol="++"&anbar="++"&print=",
+                type: "Get"
+            }).done(function (result) {
+                 
+                $("#table").html(result);
+                $("table").tablesorter({
+                    theme: 'blue',
+                    // initialize zebra and filter widgets
+                    widgets: ["filter", "math"],
+                    widgetOptions: {
+                        math_mask: '#,##0.',
+                        filter_reset: '.reset'
+                    }
+                })
+                $(".loading").hide();
+            });
+        }
+    }
+
+</script>

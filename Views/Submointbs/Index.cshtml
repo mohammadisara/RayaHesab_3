@@ -1,0 +1,52 @@
+﻿
+
+@{
+    ViewData["Title"] = "کدینگ تفصیلی";
+    Layout = null;
+}
+
+<div class="table-responsive-lg">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>
+                    کد و عنوان تفصیلی
+                </th>
+                <th>
+                    <a href="#" onclick="Createtaf()" class="show-modal" data-id="modalform">
+                        <i class="fa fa-plus-square fa-2x" aria-hidden="true" data-toggle="tooltip" title=" جدید"></i>
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ if (ViewBag.taf != null)
+                {
+                    foreach (var item in ViewBag.taf)
+                    {
+                        <tr>
+                            <td>
+                                @item.Taf.Codetaf - @item.Taf.Nametaf
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="mb-2 mr-2 dropdown-toggle btn btn-info"><i class="fa fa-cog"></i></button>
+
+                                    <div class="dropdown-menu">
+                                        <a href="#" class="dropdown-item" onclick="Edittaf(@item.Mid)">
+                                            ویرایش
+                                        </a>
+                                        <a href="#" onclick="Deletetaf(@item.Mid)" class="dropdown-item">
+                                            حذف
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script src="~/scripts/script.js"></script>

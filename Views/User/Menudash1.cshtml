@@ -1,0 +1,45 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+    <li class="header">منو</li>
+
+    @foreach (var item in ViewBag.mmenu)
+    {
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-dashboard"></i>
+            <span>@item.Title</span>
+            <span class="pull-left-container">
+                <i class="fa fa-angle-right pull-left"></i>
+            </span>
+        </a>
+        @if (item.Menutb.Count > 0)
+            {
+
+        <ul class="treeview-menu">
+            @foreach (var itemc in item.Menutb)
+                {
+                    if (itemc.Msort == null)
+                    {
+                        continue;
+                    }
+                    if (itemc.Rout1 != null)
+                    {
+                        var parms = new Dictionary<string, string>
+                            {
+                                { itemc.Rout1 , itemc.Valrout1 }
+                            };
+            <li><a asp-all-route-data="@parms" asp-action="@itemc.Actionname" asp-controller="@itemc.Controller">@itemc.Title</a></li>
+                    }
+                    else
+                    {
+            <li><a asp-action="@itemc.Actionname" asp-controller="@itemc.Controller">@itemc.Title</a></li>
+                    }
+                }
+        </ul>
+        }
+    </li>
+    }

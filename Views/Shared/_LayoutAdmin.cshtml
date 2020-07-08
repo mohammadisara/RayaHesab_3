@@ -1,0 +1,307 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewData["Title"] </title>
+@*       <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap4.css">*@
+       <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/css/fonts/fontawesome-free-5.9.0-web/css/all.css" />
+    <link rel="stylesheet" href="~/styles/fonts.css">
+        <link rel="stylesheet" href="~/styles/reset.css">
+        <link rel="stylesheet" href="~/styles/bootstrap-grid.min.css">
+        <link rel="stylesheet" href="~/styles/style.css">
+        <link rel="stylesheet" href="~/styles/jquery.mCustomScrollbar.css">
+        <link rel="stylesheet" href="~/vendor/select2/css/select2.min.css">
+        <link rel="stylesheet" href="~/vendor/jquery-nice-select/css/nice-select.css">
+        <link rel="stylesheet" href="~/vendor/datepicker/css/bootstrap-datepicker.min.css">
+        <link rel="stylesheet" href="~/vendor/tablesorter/css/theme.default.min.css">
+        <link rel="stylesheet" href="~/vendor/tagsinput/css/bootstrap-tagsinput.css">
+        <link rel="stylesheet" href="~/styles/custom.css">
+        <link rel="stylesheet" href="~/css/style.css">
+    <script src="~/scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/js/my.js"></script>
+</head>
+<body>
+    <div class="modal fade" id="MyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered " id="modaldoc" role="document">
+            <div class="modal-content" style="overflow-x:scroll">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="Modaltitle"></h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="ModalBody">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-modal" id="modalform">
+        <div class="container">
+            <div class="modal col-6">
+                <div class="modal-header">
+                    <div class="row">
+                        <div class="col-11">
+                            <h5 class="header-title"> </h5>
+                        </div>
+                        <div class="col-1">
+                            <img src="~/images/icons/cancel.svg" class="hide-modal modal-close"
+                                 data-id="modalform" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body" style="overflow-y:scroll!important;max-height:500px">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<div class="loading">
+            <button class="lc">×</button>
+        </div>*@
+
+    <!--Start header-->
+    <header id="menu">
+        <h1><a asp-action="Index" asp-controller="User"><img src="~/images/logo/Logo.png" alt="shahr saat"></a></h1>
+        <nav id="navmenu">
+            @*<ul>
+                    <li><a href="/base" title="">اطلاعات پایه</a></li>
+                    <li>
+                        <a href="#" title="">امکانات <img src="images/icons/arrow_user_profile.svg" alt=""></a>
+                        <ul>
+                            <li><a href="#" title="">مدیریت ارزها</a></li>
+                            <li>
+                                <a href="#" title="">شخصی سازی‌ها <img src="images/icons/arrow_user_profile.svg" alt=""></a>
+                                <ul>
+                                    <li><a href="#" title="">فرم ها</a></li>
+                                    <li><a href="#" title="">اطلاعات فاکتور‌ها</a></li>
+                                    <li><a href="#" title="">پنل دشبورد</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#" title="">نمودار‌ها</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="/second" title="">استعلام و پیگیری</a></li>
+                </ul>*@
+        </nav>
+        <div id="head-menu-profile">
+            <ul>
+                <li id="head-menu-profile-user">
+                    <ul id="head-menu-user-profile">
+                        <li>
+                            <a href="#" title="">
+                                ویرایش اطلاعات
+                            </a>
+                        </li>
+                        <li>
+
+                            <form id="exitform" asp-controller="/Identity/Account" asp-action="/Logout">
+                                <a href="#" onclick="exit()" title="">
+                                    خروج
+                                    <img src="~/images/icons/logout.svg" id="sign-out" alt="">
+                                </a>
+
+                                @*<button type="submit" tabindex="0" class="btn btn-label btn-label-brand btn-sm btn-bold">@Resources.Login.Logout</button>*@
+                            </form>
+
+
+                        </li>
+                    </ul>
+                    <a href="#" title="" id="user-profile-avatar" class="user-profile">
+                        <span class="profile-avatar-name">
+                            <img src="~/images/icons/arrow_user_profile.svg" alt="">
+                            @ViewBag.fullname
+                        </span>
+                        <span class="user-profile-avatar">
+                            <img src="~/images/icons/avatar.svg" alt="my FLName" class="avatar">
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </header>
+    <!--End header-->
+    <!-- Start Instant Rate -->
+    <div class="container-instant-rate">
+        <span class="instant-rate-title">نرخ لحظه‌ای</span>
+        <ul>
+            <li><span class="title">دلار</span><span class="price">۱۳۰,۰۰۰</span></li>
+            <li><span class="title">یورو</span><span class="price">۱۴۰,۵۰۰</span></li>
+            <li><span class="title">فرانک</span><span class="price">۱۴۱,۵۷۰</span></li>
+            <li><span class="title">پوند انگلیس</span><span class="price">۱۷۵,۸۴۰</span></li>
+            <li><span class="title">درهم</span><span class="price">۳۷,۰۱۰</span></li>
+            <li><span class="title">دلار کانادا</span><span class="price">۱۰۳,۴۶۰</span></li>
+            <li><span class="title">طلا ۱۸ عیار</span><span class="price">۴,۹۷۵,۰۰۰</span></li>
+            <li><span class="title">سکه بهار آزادی</span><span class="price">۴۸,۴۸۰,۰۰۰</span></li>
+        </ul>
+    </div>
+    <!-- End Instant Rate -->
+    <!--Start aside-->
+    <div class="wrapper">
+
+        <aside style="left:-270px">
+            <div class="aside-pin">
+                <span id="close-pin">
+                    <img src="~/images/icons/close.svg" />
+                    <span>بستن نوار</span>
+                </span>
+            </div>
+            <div class="aside-open" style="left:-10px">
+                <img src="~/images/icons/talk.svg" style="left:-10px" />
+            </div>
+            <!--Start People in network-->
+            <section id="people_in_network">
+                <header>
+                    <div id="search-people-in-network">
+                        <input type="text" placeholder="نام فرد را تایپ کنید" class="search-icon-input">
+                        <span id="search-people-in-network-cancel">
+                            <img src="~/images/icons/cancel.svg" alt="">
+                        </span>
+                    </div>
+                    <h3>افراد آنلاین در پنل</h3>
+                    <a href="#" title="" id="people_in_network_search_show">
+                        <img src="~/images/icons/search_users.svg" alt="search user">
+                    </a>
+                </header>
+                <div id="people_in_network_content">
+                    <ul>
+                        <li>
+                            <a href="#" title="">
+                                <span class="user-profile-avatar">
+                                    <img src="~/images/avatars/01.jpg" alt="my FLName">
+                                </span>
+                                <span class="user_name">
+                                    ایمان جواهریان
+                                    <span class="status_online"></span>
+                                </span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </section>
+            <!--End People in network-->
+            <div class="separator"></div>
+            <!--Start Latest News-->
+
+            <section id="latest_news">
+                <header>
+                    <h3>رویداد ها</h3>
+                    <a href="#" title="">آرشیو</a>
+                </header>
+                <div id="latest_news_content">
+                    <div class="latest_news_items">
+                        <a href="#" title="" class="latest_news_ex_link">
+                            خبرگذاری قطره
+                            <img src="~/images/icons/foreign_link.svg" alt="">
+                        </a>
+                        <a href="#" title="" class="latest_news_title">
+                            کاهش نسبی قیمت سکه و ارز | جدول قیمت ها
+                        </a>
+                        <div>
+                            <span class="user-profile-avatar">
+                                <img src="~/images/avatars/01.jpg" alt="my FLName">
+                            </span>
+                            <span>سارا میرزایی</span>
+                            <span>۱۰ دقیقه پیش</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--End Latest News-->
+        </aside>
+        <!--End aside-->
+        <!--Start Modal-->
+        <div class="container-modal" id="modal-tab-setting">
+            <div class="container">
+                <div class="modal col-6">
+                    <div class="modal-header">
+                        <div class="row">
+                            <div class="col-11">
+                                <h5 class="header-title">تغییر نام تب </h5>
+                            </div>
+                            <div class="col-1">
+                                <img src="/images/icons/cancel.svg" class="hide-modal modal-close"
+                                     data-id="modal-tab-setting" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div class="body-title">یک نام جدید برای تب مورد نظر انتخاب کنید</div>
+                        <div class="">
+                            <input type="text" value="" />
+                        </div>
+                        <button class="button3 mt-3 hide-modal" data-id="modal-tab-setting">تغییر نام</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Modal-->
+        <!--Start main-->
+        <main class="open">
+            <section class="container-page-like-tab">
+                <div class="page-like-tab-links">
+                    <div class="tab-container auto-margin">
+                        <ul>
+                            <li class="pageLikeTab active" data-tab-id="1">
+                                <span class="title">@ViewBag.Title</span>
+                                <a href="#" class="setting-page show-modal" data-id="modal-tab-setting">
+                                    <img src="~/images/icons/settings.svg" alt="">
+                                </a>
+                                <a href="#" class="close-page"><img src="~/images/icons/cancel.svg" alt=""></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Start Tab -->
+                <div class="page-like-tab container" data-tab-id="1" style="direction:rtl">
+                    @RenderBody()
+                </div>
+                <!-- End Tab -->
+            </section>
+        </main>
+    </div>
+    <!--End main-->
+    <!---------------------------------------- Content & Sidebar ---------------------------------------->
+    <!---------------------------------------- Java Script ---------------------------------------->
+    <div>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/js/jquery-ui.js"></script>
+        <script src="~/scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+        <script src="~/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+        <script src="~/vendor/jquery-nice-select/js/prism.js"></script>
+        <script src="~/vendor/select2/js/select2.full.min.js"></script>
+        <script src="~/vendor/datepicker/js/bootstrap-datepicker.min.js"></script>
+        <script src="~/vendor/datepicker/js/bootstrap-datepicker.fa.min.js"></script>
+
+        <script src="~/vendor/tablesorter/js/jquery.tablesorter.min.js"></script>
+        <script src="~/vendor/tablesorter/js/jquery.tablesorter.widgets.min.js"></script>
+        <script src="~/vendor/tablesorter/js/widget-math.js"></script>
+        <script src="~/vendor/tagsinput/js/bootstrap-tagsinput.min.js"></script>
+
+
+        <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/scripts/script.js"></script>
+        <script src="~/js/site.js"></script>
+
+    </div>
+
+    @RenderSection("Scripts", required: false)
+    <script>
+        $(function () {
+            $.post("/User/Menu", function (data) {
+                $("#navmenu").html(data);
+            })
+        })
+        function exit() {
+            $("#exitform").submit();
+        }
+
+    </script>
+</body>
+</html>

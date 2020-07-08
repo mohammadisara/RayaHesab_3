@@ -1,0 +1,89 @@
+﻿@model RayaHesab.Models.Persontb
+
+<form asp-action="Edit" id="formaction">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Mid" />
+    <div class="row">
+        <div class="form-group col-sm-3">
+            <label class="control-label">لقب</label>
+            <input asp-for="Laghab" onkeypress="handle(event,'namec')"
+                   class="form-control" />
+
+        </div>
+        <div class="form-group col-sm-3">
+            <label asp-for="Namec" class="control-label">نام</label>
+            <input asp-for="Namec" id="namec" onkeypress="handle(event,'fam')" class="form-control" />
+            <span asp-validation-for="Namec" class="text-danger"></span>
+        </div>
+        <div class="form-group col-sm-3">
+            <label asp-for="Family" class="control-label">نام خانوادگی</label>
+            <input asp-for="Family" id="fam" onkeypress="handle(event,'mob')" class="form-control" oninvalid="this.setCustomValidity('نام خانوادگی را وارد کنید')" oninput="setCustomValidity('')" required />
+            <span asp-validation-for="Family" class="text-danger"></span>
+        </div>
+        <div class="form-group col-sm-3">
+            <label asp-for="Mobile" class="control-label">تلفن همراه</label>
+            <input asp-for="Mobile" id="mob" onkeypress="handle(event,'dateb')" class="form-control" />
+            <span asp-validation-for="Mobile" class="text-danger"></span>
+        </div>
+        <div class="form-group col-sm-3">
+            <label asp-for="Tel" class="control-label">تلفن ثابت</label>
+            <input asp-for="Tel" onkeypress="handle(event,'dateb')" class="form-control" />
+        </div>
+        <div class="form-group col-sm-3">
+            <label asp-for="Mob2" class="control-label">تلفن همراه 2</label>
+            <input asp-for="Mob2" onkeypress="handle(event,'dateb')" class="form-control" />
+        </div>
+        <div class="form-group col-sm-3">
+            <label asp-for="Datetavalod" class="control-label">تاریخ تولد</label>
+            <input asp-for="Datetavalod" id="dateb" onkeypress="handle(event,'sta')" class="form-control DateText" type="text" />
+            <span asp-validation-for="Datetavalod" class="text-danger"></span>
+
+        </div>
+        <div class="form-group col-sm-3">
+            <label asp-for="Datetavalod" class="control-label">کد ملی</label>
+            <input asp-for="Codemeli" class="form-control" type="text" onkeypress="handle(event,'sta')" />
+        </div>
+
+        <div class="form-group col-sm-3">
+            <label asp-for="Statec" class="control-label">وضعیت</label>
+            <select asp-for="Statec" id="sta" onkeypress="handle(event,'jen')" class="form-control">
+                <option value="0">فعال</option>
+                <option value="1">غیر فعال</option>
+            </select>
+        </div>
+        <div class="form-group col-sm-3">
+            <label asp-for="Jensiat" class="control-label">جنسیت</label>
+            <select asp-for="Jensiat" id="jen" onkeypress="handle(event,'typeperson')" class="form-control">
+                <option value="0">اقا</option>
+                <option value="1">خانم</option>
+            </select>
+        </div>
+        <div class="form-group col-sm-3">
+            <label asp-for="Typeperson" class="control-label">نوع شخص</label>
+            <select asp-for="Typeperson" id="typeperson" onkeypress="handle(event,'selg')" class="form-control">
+                <option value="0">حقیقی</option>
+                <option value="1">ویزیتور</option>
+                <option value="2">حقوقی</option>
+            </select>
+        </div>
+        <div class="form-group  col-sm-3">
+            <label asp-for="Gid" class="control-label">گروه اشخاص</label>
+            <select asp-for="Gid" id="selg" class="form-control" asp-items="ViewBag.gid" onkeypress="handle(event,'add')">
+                <option value="-1" selected="selected">انتخاب کنید</option>
+
+            </select>
+        </div>
+        <div class="form-group col-sm-6">
+            <label asp-for="Addressc" class="control-label">آدرس</label>
+            <input asp-for="Addressc" id="add" onkeypress="handle(event,'notetxt')" class="form-control" />
+        </div>
+        <div class="form-group  col-sm-6">
+            <label asp-for="Note" class="control-label">توضیحات</label>
+            <input asp-for="Note" class="form-control" id="notetxt" onkeypress="handle(event,'btn')" />
+        </div>
+    </div>
+    <hr />
+    <div class="form-group col-sm-12">
+        <input type="button" onclick="actionrow()" value="ویرایش" id="btn" class="btn btn-primary" />
+    </div>
+</form>

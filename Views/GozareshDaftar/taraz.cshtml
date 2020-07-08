@@ -1,0 +1,247 @@
+﻿@model IEnumerable<RayaHesab.Models.Taraz>
+@{
+    ViewData["Title"] = "گزارش تراز";
+    Layout = Context.Request.Cookies["layoutmain"];
+}
+
+
+<div class="row DMMenu">
+    @*<div class="col-md-12">
+        <br />
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User"><i class="fa fa-home" aria-hidden="true" style="-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);"></i></a></li>
+                <li class="breadcrumb-item"><a href="/User/ReportMali">&nbsp; گزارشات مالی</a></li>
+                <li class="breadcrumb-item active" aria-current="page">&nbsp; تراز</li>
+            </ol>
+        </nav>
+    </div>*@
+    <div class="col-md-12">
+        <div class="SecContent">
+            <h2 class="myh2">@ViewBag.Tittle</h2>
+            <form asp-action="Taraz" class="row" style="background-color:antiquewhite;padding:1em 0;margin-top:-1.5em;">
+                <input type="hidden" value="@ViewBag.TCode" name="typec" />
+                <div class="form-group col-sm-3">
+                    از تاریخ
+                    <input id="fdate" name="fdate" autocomplete="off" class="form-control DateText" type="text" value="@ViewBag.fdate" />
+
+                </div>
+                <div class="form-group col-sm-3">
+                    تا تاریخ
+                    <input id="tdate" name="tdate" class="form-control DateText" autocomplete="off" type="text" value="@ViewBag.tdate" />
+                </div>
+                <div class="form-group col-md-2">
+                    جستجو بر اساس مانده
+                    <select class="form-control" name="typesearch">
+                        @if (ViewBag.typesearch == 0)
+                        {
+                            <option value="0" selected>همه</option>
+                            <option value="1">بدهکار</option>
+                            <option value="2">بستانکار</option>
+                        }
+                        else if (ViewBag.typesearch == 1)
+                        {
+                            <option value="0">همه</option>
+                            <option value="1" selected>بدهکار</option>
+                            <option value="2">بستانکار</option>
+                        }
+                        else if (ViewBag.typesearch == 2)
+                        {
+                            <option value="0">همه</option>
+                            <option value="1">بدهکار</option>
+                            <option value="2" selected>بستانکار</option>
+                        }
+
+                    </select>
+                </div>
+                <div class="form-group col-md-2">
+                    جستجو بر اساس گروه اشخاص
+                    <select class="form-control" name="goroh" asp-items="@ViewBag.list">
+                        <option value="0" selected>همه</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2">
+                    فروشگاه
+                    <select asp-items="@ViewBag.listanbar" name="anbar" class="form-control">
+                        <option value="0">انتخاب کنید</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-sm-2">
+                    <input type='hidden' id="hftypec" name='print' value="0" />
+                    @*                    <input style="margin-top:1.5em" type="submit" class="btn btn-success" value="جستجو" />*@
+
+                    <a class="btn btn-success" style="color:white;margin-top:1.5em" onclick="sendprint(0)">تهیه گزارش</a>
+                    <a class="btn btn-primary" style="color:white;margin-top:1.5em" onclick="sendprint(1)">چاپ</a>
+                </div>
+                @*<div class="form-group col-sm-6">
+            <a class="btn btn-success" onclick="sendform(1)">تراز کل</a>
+            <a class="btn btn-success" onclick="sendform(2)">تراز معین</a>
+            <a class="btn btn-success" onclick="sendform(3)">تراز تفصیلی</a>
+            <a class="btn btn-success" onclick="sendform(4)">تراز حساب یک فرد</a>
+            <a class="btn btn-success" onclick="sendform(5)">تراز یک فرد</a>
+        </div>*@
+            </form>
+            <div class="table-responsive-lg">
+                <table id="myTable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th data-sort="int" id="radif">
+                                ردیف
+                            </th>
+                            <th class="text-center" data-sort="string" id="name">
+                                عنوان حساب
+                            </th>
+                            <th data-sort="float" id="bed">
+                                بدهکار طی دوره
+                            </th>
+                            <th data-sort="float" id="bes">
+                                بستانکار طی دوره
+                            </th>
+                            <th data-sort="float" id="bednow">
+                                بد
+                            </th>
+                            <th data-sort="float" id="besnow">
+                                بس
+                            </th>
+                            <th>
+
+                            </th>
+                            @*<th>تنظیمات</th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ decimal m = 0, bed = 0, bes = 0, bednow = 0, besnow = 0;
+                        }
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                m = m + 1;
+                                <tr>
+                                    <td>
+                                        @m
+                                    </td>
+                                    <td>
+                                        @item.Nameperson
+                                    </td>
+                                    <td>
+                                        @{ if (@item.Bed >= 0)
+                                            {
+                                                @string.Format("{0:n0}", @item.Bed)
+                                                bed += item.Bed;
+                                            }
+                                            else
+                                            {
+                                                var line = "0";
+                                                @line
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{ if (@item.Bes >= 0)
+                                            {
+                                                @string.Format("{0:n0}", @item.Bes)
+                                                bes += item.Bes;
+                                            }
+                                            else
+                                            {
+                                                var line = "0";
+                                                @line
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{ if (@item.Bednow >= 0)
+                                            {
+                                                @string.Format("{0:n0}", @item.Bednow)
+                                                bednow += item.Bednow;
+                                            }
+                                            else
+                                            {
+                                                var line = "0";
+                                                @line
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{ if (@item.Besnow >= 0)
+                                            {
+                                                @string.Format("{0:n0}", @item.Besnow)
+                                                besnow += item.Besnow;
+                                            }
+                                            else
+                                            {
+                                                var line = "0";
+                                                @line
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+
+                                        <a asp-action="Index" asp-route-id="5"
+                                           asp-route-codeperson="@item.Pid" 
+                                           asp-route-typec="5" class="btn btn-success" title="گردش حساب">
+                                            <i class="fa fa-sticky-note-o" aria-hidden="true"
+                                               data-toggle="tooltip" title="گردش حساب"></i>
+                                        </a>
+                                        @*<a href="#" onclick="Delete(@item.Mid)" class="pbtnHID">
+            <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>
+        </a>*@
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr style="background-color:brown;color:white">
+                            <td>تعداد ردیف @Html.Raw(m)</td>
+                            <td>جمع کل</td>
+                            <td>@Html.Raw(string.Format("{0:n0}", bed))</td>
+                            <td>@Html.Raw(string.Format("{0:n0}", bes))</td>
+                            <td>@Html.Raw(string.Format("{0:n0}", bednow))</td>
+                            <td>@Html.Raw(string.Format("{0:n0}", besnow))</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+
+    <script>
+        $(function () {
+            $("table").tablesorter({
+                 
+                showProcessing: true,
+                theme: 'blue',
+                // initialize zebra and filter widgets
+                widgets: ["zebra", "filter"],
+                widgetOptions: {
+                    filter_reset: '.reset'
+                }
+            })
+        })
+        function sendprint(typec) {
+            $("#hftypec").val(typec)
+            if (typec == 1)
+                $("form").attr("target", "_blank");
+            else
+                $("form").attr("target", "_self");
+            $("form").submit();
+
+        }
+        function sendformT(typec) {
+            var codekol = $("#codekol").val();
+            var codemoin = $("#codemoin").val();
+            var codetaf = $("#codetaf").val();
+            var codeperson = $("#codeperson").val();
+            var fdate = $("#fdate").val();
+            var tdate = $("#tdate").val();
+            window.location.href = '/GozareshDaftar/PrintPageT?typec=' + typec + "&codekol=" + codekol + "&codemoin=" + codemoin + "&codetaf=" + codetaf + "&codeperson=" + codeperson + "&fdate=" + fdate + "&tdate=" + tdate;
+        }
+
+    </script>
+}

@@ -1,0 +1,241 @@
+﻿@*@model RayaHesab.Models.Mastersanadtb*@
+@*@model IEnumerable<RayaHesab.Models.vmastersanad>*@
+@*@model IEnumerable<RayaHesab.Controllers.MastersanadtbsController.empsanad>*@
+
+@{
+    ViewData["Title"] = "لیست اسناد";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+@{ if (ViewBag.err != null)
+    {
+        <div class="alert alert-danger">@ViewBag.err</div>
+    }
+}
+<a href="#" id="pbtn" onclick="Create()" >
+    <i class="fa fa-plus-square fa-2x" aria-hidden="true" data-toggle="tooltip" title="تعریف سند جدید"></i>
+</a>
+
+<table id="myTable" class="table table-striped mytable">
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th>
+                شماره سند
+            </th>
+            <th>
+                تاریخ ثبت
+            </th>
+            <th>
+                عنوان
+            </th>
+            <th class="filter-select" data-placeholder="نوع ">
+                نوع
+            </th>
+            <th>
+                جمع بدهکار
+            </th>
+            <th>
+                جمع بستانکار
+            </th>
+            <th>
+                اختلاف
+            </th>
+            <th>
+                تعداد ردیف
+            </th>
+            <th class="filter-false">تنظیمات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ if (ViewBag.list != null)
+            {
+                int rowc = 0;
+                foreach (var item in ViewBag.list)
+                {
+                    rowc += 1;
+        <tr>
+            <td>
+                @rowc
+            </td>
+            <td>
+                @item.nosanad
+            </td>
+            <td>
+                @item.datec
+            </td>
+            <td>
+                @item.title
+            </td>
+            <td>
+                @{
+                    var type = "";
+                    switch (item.typec)
+                    {
+                        case 0: type = "ویرایش"; break;
+                        case 1: type = "موقت"; break;
+                        case 2: type = "دائم"; break;
+                        default: break;
+                    }
+                    @type
+                }
+            </td>
+            <td class="price">
+                @string.Format("{0:#,##0}", item.bed)
+            </td>
+            <td>
+                <b> @string.Format("{0:#,##0}", item.bes)</b>
+            </td>
+            <td>
+                @{ if (item.ekh != 0)
+                    {
+                        @Html.Raw("<span style='color:red'><b>" + string.Format("{0:#,##0}", Math.Abs(item.ekh)) + "</b></span>");
+                        if (item.ekh > 0)
+                        {@Html.Raw("<span style='color:red'><b>بد </b></span>")
+                    }
+                    else
+                    { @Html.Raw("<span style='color:red'><b>بس </b></span>")
+                }
+            }
+            else
+            {
+                <b>@string.Format("{0:#,##0}", item.ekh) </b>
+            }
+                }
+            </td>
+            <td>
+                @item.crow
+            </td>
+            <td class="text-center">
+                <div class="dropdown">
+                    <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="mb-2 mr-2 dropdown-toggle btn btn-info"><i class="fa fa-cog"></i></button>
+
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#" onclick="getsanadfrm(@item.nosanad)">ریز اسناد</a>
+                        <a class="dropdown-item" onclick="Edit(@item.nosanad)" href="#">ویرایش</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" onclick="Delete(@item.nosanad)" href="#">حذف</a>
+                    </div>
+                </div>
+            </td>
+
+
+        </tr>
+                }
+
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>تعداد ردیف</td>
+            <td data-math="col-count"></td>
+            <td colspan="3">جمع کل</td>
+            <td data-math="col-sum"></td>
+            <td data-math="col-sum"></td>
+            <td data-math="col-sum"></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+
+<script>
+
+    function Create() {
+        $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+        $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+        $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered modal-lg");
+        $("#MyModal").modal("show");
+        $.ajax({
+            url: "/Mastersanadtbs/Create",
+            type: "Get"
+        }).done(function (result) {
+            $("#Modaltitle").html("ایجاد");
+            $("#ModalBody").html(result);
+        });
+    };
+
+
+    function Edit(id) {
+        $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+        $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+        $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered modal-lg");
+        $("#MyModal").modal("show");
+        $.ajax({
+            url: "/Mastersanadtbs/Edit?id=" + id,
+            type: "Get"
+        }).done(function (result) {
+            $("#Modaltitle").html("ویرایش");
+            $("#ModalBody").html(result);
+        });
+    };
+    function getmyfrm() {
+        $("#MyModal").modal("hide");
+        $(".loading").show();
+        $.ajax({
+            url: "/Mastersanadtbs/Index",
+            type: "Get"
+        }).done(function (result) {
+            fmenu[indextab] = result;
+            $('#' + smenu[indextab]).html(fmenu[indextab]);
+            $("table").tablesorter({
+                theme: 'blue',
+                widthFixed: true,                // initialize zebra and filter widgets
+                widgets: ["zebra", "filter", "math"],
+                widgetOptions: {
+                    math_mask: '#,##0.',
+                    filter_reset: '.reset'
+                }
+            })
+            $(".tablesorter-filter").attr("style", "width:100%");
+            $(".loading").hide();
+        });
+    }
+
+    function Delete(id) {
+        var s = confirm('ایا مطمئن هستید ؟ ');
+        if (s) {
+            $(".loading").show();
+            $.post("/Mastersanadtbs/Delete?id=" + id, function (data) {
+                $(".loading").hide();
+                if (data.msg == "") {
+                    getmyfrm();
+                }
+                else {
+                    $(".errmsg").html(data.msg);
+                    $(".errdetail").html(data.err);
+                    $("#err").modal('show');
+                }
+            });
+        }
+    };
+    $(function () {
+        $("table").tablesorter({
+            widthFixed: false,                // initialize zebra and filter widgets
+            widgets: ["zebra", "filter", "math"],
+            widgetOptions: {
+                math_mask: '#,##0.',
+                filter_reset: '.reset'
+            }
+        })
+    })
+
+    function actionrow() {
+
+        $.post($("#formaction").attr("action"), $("#formaction").serialize(), function (data) {
+
+            if (data.msg == "") {
+                getmyfrm();
+            }
+            else {
+                $(".errmsg").html(data.msg);
+                $(".errdetail").html(data.err);
+                $("#err").modal('show');
+            }
+        });
+
+    }
+</script>

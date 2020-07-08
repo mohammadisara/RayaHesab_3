@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewData["Title"] = "پنل کاربری";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<div class="row DMMenu">
+    @*<div class="col-md-12">
+        <br />
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User"><i class="fa fa-home" aria-hidden="true" style="-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);"></i></a></li>
+                <li class="breadcrumb-item active" aria-current="page">&nbsp;  تولید</li>
+            </ol>
+        </nav>
+    </div>*@
+
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Create" asp-controller="Rlate2kalatb">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-user" style="color:white"></span></div>
+                <p>
+                    ارتباط کالاهای تولیدی
+                </p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="Mchangeanbartbs">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-document" style="color:white"></span></div>
+                <p>
+                    جابجایی بین انبار ها
+                </p>
+            </div>
+        </a>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-route-st="1" asp-controller="Mastertolidtbs">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-document" style="color:white"></span></div>
+                <p>
+                    تحویل ریخته گر
+                </p>
+            </div>
+        </a>
+    </div>
+
+
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="Mastertolidtbs">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-document" style="color:white"></span></div>
+                <p>
+                    تولید
+                </p>
+            </div>
+        </a>
+    </div>
+
+</div>
+

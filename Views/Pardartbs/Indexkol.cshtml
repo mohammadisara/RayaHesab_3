@@ -1,0 +1,268 @@
+﻿
+@{
+    ViewData["Title"] = "اسناد دریافتنی";
+    Layout = null;
+}
+<div class="modal fade" id="MyModalbdate" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTittle">بازه تاریخ</h5>
+                <button type="button" class="close`" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="List">
+                    <input type="hidden" value="@ViewBag.typec" name="typefact" id="hftypefact" />
+                    <input type="hidden" value="6" name="typec" />
+                    <input value="@ViewBag.fdate" class="form-control form-group" name="Fdate" placeholder="از تاریخ" />
+                    <input value="@ViewBag.tdate" class="form-control form-group" name="Tdate" placeholder="تا تاریخ" />
+                    <input type="button" onclick="getlist(6)" class="btn btn-success" value="جستجو" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="background-color:white">
+    @{if (ViewBag.err != null)
+        {
+            <div class="col-md-12">
+                <a href="#" class="alert-danger">
+                    <i class="fa fa-warning fa-2x" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>@ViewBag.err
+                </a>
+            </div>
+        }
+    }
+    <div class="form-group col-md-12">
+        <h4 style="padding-bottom:1em" class="text-center">@ViewBag.titleform</h4>
+    </div>
+    <hr />
+
+    <div class="row">
+        <div class="form-group col-md-12 form-inline">
+            <input type="button" value="امروز" onclick="getlist(1)" class="btn btn-success" />
+            <input type="button" value="دیروز" onclick="getlist(2)" class="btn btn-secondary" />
+            <input type="button" value="ماه جاری" onclick="getlist(3)" class="btn btn-primary" />
+            <input type="button" value="ماه گذشته" onclick="getlist(4)" class="btn btn-info" />
+            <input type="button" value="سال جاری" onclick="getlist(5)" class="btn btn-warning" />
+            <input type="button" value=" بازه تاریخ" onclick="showdate()" class="btn btn-danger" />
+        </div>
+    </div>
+    <div class="row form-group">
+
+
+        <div id="table">
+
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    function showsetting() {
+        $("#MyModalsetting").modal("show");
+    }
+    function getsanaddar() {
+        $(".loading").hide();
+        $(".loading").show();
+        $.ajax({
+            url: "/Pardartbs/List",
+            type: "Get"
+        }).done(function (result) {
+            $("#MyModal").modal("hide");
+            $("#sanaddar").html(result);
+            var colCount = 0;
+            var cols = [];
+            $('tr:nth-child(1) th').each(function () {
+                if ($(this).attr('data-role') != undefined)
+                    cols.push("<option value='" + colCount + "'>" + $(this).attr('data-role') + "</option>");
+                colCount++;
+            });
+            $("#selsearch").html(cols.join(""));
+            console.clear();
+            console.log(cols.join(""));
+            $("table").tablesorter({
+                theme: 'blue',
+                // initialize zebra and filter widgets
+                widgets: ["filter", "math"],
+                widgetOptions: {
+                    math_mask: '#,##0.',
+                    filter_reset: '.reset'
+                }
+            })
+            $(".loading").hide();
+            $(".DateText , .DateTextE").pDatepicker({
+                initialValueType: 'persian',
+                calendar: {
+                    persian: {
+                        locale: 'en'
+                    }
+                },
+                autoClose: true,
+                format: 'YYYY/MM/DD'
+            });
+
+        });
+
+    }
+    function hesabchangeE() {
+        if ($("#txtmoinBE").val() != "") {
+            $("#txtpersonBE").prop('disabled', true);
+            $("#hfpersonidBE").val("");
+        }
+        else
+            $("#txtpersonBE").prop('disabled', false);
+        if ($("#txtmoinSE").val() != "") {
+            $("#txtpersonSE").prop('disabled', true);
+            $("#hfpersonidSE").val("");
+        }
+        else
+            $("#txtpersonSE").prop('disabled', false);
+
+        if ($("#txtpersonBE").val() != "") {
+            $("#txtmoinBE").prop('disabled', true);
+            $("#hfmoinidBE").val("");
+            $("#hftafidBE").val("");
+        }
+        else
+            $("#txtmoinBE").prop('disabled', false);
+        if ($("#txtpersonSE").val() != "") {
+            $("#txtmoinSE").prop('disabled', true);
+            $("#hfmoinidSE").val("");
+            $("#hftafidSE").val("");
+        }
+        else
+            $("#txtmoinSE").prop('disabled', false);
+    }
+    function hesabchange() {
+        if ($("#txtmoinB").val() != "") {
+            $("#txtpersonB").prop('disabled', true);
+            $("#hfpersonidB").val("");
+        }
+        else
+            $("#txtpersonB").prop('disabled', false);
+        if ($("#txtmoinS").val() != "") {
+            $("#txtpersonS").prop('disabled', true);
+            $("#hfpersonidS").val("");
+        }
+        else
+            $("#txtpersonS").prop('disabled', false);
+        if ($("#txtpersonB").val() != "") {
+            $("#txtmoinB").prop('disabled', true);
+            $("#hfmoinidB").val("");
+            $("#hftafidB").val("");
+        }
+        else
+            $("#txtmoinB").prop('disabled', false);
+        if ($("#txtpersonS").val() != "") {
+            $("#txtmoinS").prop('disabled', true);
+            $("#hfmoinidS").val("");
+            $("#hftafidS").val("");
+        }
+        else
+            $("#txtmoinS").prop('disabled', false);
+    }
+    $(function () {
+        getsanaddar();
+    })
+    function Create() {
+        $(".loading").hide();
+        $(".loading").show();
+        $.ajax({
+            url: "/Pardartbs/Create",
+            type: "Get"
+        }).done(function (result) {
+            $("#MyModal").modal("show");
+            $("#ModalTittle").html("ایجاد");
+            $("#ModalBody").html(result);
+            $(".loading").hide();
+            loadcoding();
+            loadcodingBes();
+            $(".DateText").pDatepicker({
+                initialValueType: 'persian',
+                calendar: {
+                    persian: {
+                        locale: 'en'
+                    }
+                },
+                autoClose: true,
+                format: 'YYYY/MM/DD'
+            });
+        });
+    };
+
+
+    function Edit(id) {
+        $(".loading").hide();
+        $(".loading").show();
+        $.ajax({
+            url: "/Pardartbs/Edit/" + id,
+            type: "Get"
+        }).done(function (result) {
+            $("#MyModal").modal("show");
+            $("#ModalTittle").html("ویرایش");
+            $("#ModalBody").html(result);
+            $(".loading").hide();
+            loadcoding();
+            loadcodingBes();
+            $(".DateText , .DateTextE").pDatepicker({
+                initialValueType: 'persian',
+                calendar: {
+                    persian: {
+                        locale: 'en'
+                    }
+                },
+                autoClose: true,
+                format: 'YYYY/MM/DD'
+            });
+
+        });
+    };
+    function Details(id) {
+        $(".loading").show();
+        $.ajax({
+            url: "/AsnadDar/Details/" + id,
+            type: "Get"
+        }).done(function (result) {
+            $("#MyModal").modal("show");
+            $("#ModalTittle").html("نمایش");
+            $("#ModalBody").html(result);
+            $(".loading").hide();
+        });
+    };
+    function Delete(id) {
+        var q = confirm('ایا مطمئن هستید');
+        if (q) {
+
+            $(".loading").show();
+            $.post("/AsnadDar/Delete/" + id, null, function (data) {
+                $(".loading").hide();
+                if (data.msg == "") {
+                    getsanaddar();
+                }
+                else {
+                    $(".errmsg").html(data.msg);
+                    $(".errdetail").html(data.err);
+                    $("#err").modal('show');
+                }
+            });
+            $(".loading").hide();
+
+        }
+    };
+    var filter = [];
+    function search() {
+        var col = $("#selsearch").val();
+        var amal = $("#selamal").val();
+        var str = amal + $("#txtsearch").val();
+        filter[col] = str;
+        $('#myTable').trigger('search', [filter]);
+    };
+    function closesearch() {
+        filter = [];
+        $('#myTable').trigger('search', [filter]);
+    }
+</script>

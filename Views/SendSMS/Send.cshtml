@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "SendSms";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<br />
+<br />
+<h2>گزارش پیام های ارسالی</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>نام و نام خانوادگی</th>
+            <th>تلفن همراه</th>
+            <th>متن پیام</th>
+            <th>وضعیت پیام</th>
+        </tr>
+    </thead>
+</table>
+<br />
+<div>
+    <a asp-controller="User" class="btn btn-info" asp-action="Index">بازگشت به منوی اصلی</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

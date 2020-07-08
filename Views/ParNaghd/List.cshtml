@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewData["Title"] = "دریافت نقد ";
+    Layout = null;
+}
+@if(!string.IsNullOrEmpty(ViewBag.err))
+{
+<div class="alert alert-danger">@ViewBag.err</div>
+}
+<table id="myTable" class="table table-responsive mytable">
+    <thead>
+        <tr>
+            <th data-role="ردیف" class="group-false">
+            </th>
+            <th data-role="تاریخ" class="group-false">
+                تاریخ
+            </th>
+            <th data-role="صندوق / بانک" class="group-false filter-select" data-placeholder="صندوق / بانک">
+                صندوق / بانک
+            </th>
+            <th data-role="حساب بستانکار" class="group-word">
+                بدهکار
+            </th>
+            <th class="sorter-currency group-false" data-role="مبلغ">
+                مبلغ
+            </th>
+            <th data-role="توضیحات" class="group-false">
+                توضیحات
+            </th>
+            <th data-role="فروشگاه" class="group-false filter-select" data-placeholder="فروشگاه">
+                فروشگاه
+            </th>
+            <th class="filter-false">تنظیمات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int count = 0;
+            if (ViewBag.listk != null)
+            {
+                foreach (var item in ViewBag.listk)
+                {
+                    count += 1;
+            <tr>
+                <td>
+                    @count
+                </td>
+                <td>
+                    @item.Datec
+                </td>
+                <td>
+                    @(item.SanbesNavigation != null ? item.SanbesNavigation.Title : "") @(item.MoinbesNavigation != null ? item.MoinbesNavigation.Codemoin : "") 
+
+                </td>
+                <td>
+                    @(item.PidbedNavigation != null ? item.PidbedNavigation.Namekamel : "")
+                    @(item.MoinbedNavigation != null ? item.MoinbedNavigation.K.Codekol : "") @(item.MoinbedNavigation != null ? item.MoinbedNavigation.Codemoin : "") @(item.TafbedNavigation != null ? item.TafbedNavigation.Codetaf : "")
+                    @(item.MoinbedNavigation != null ? item.MoinbedNavigation.K.Namekol : "") @(item.MoinbedNavigation != null ? item.MoinbedNavigation.Namemoin : "") @(item.TafbedNavigation != null ? item.TafbedNavigation.Nametaf : "")
+
+                </td>
+                <td>
+                    @string.Format("{0:n0}", item.Mablagh) ریال
+                </td>
+                <td>
+                    @item.Note
+                </td>
+                <td>
+                    @(item.IdanbarNavigation != null ? item.IdanbarNavigation.Namec : "")
+                </td>
+                <td>
+                    <div class="dropdown ntolid text-left" style="width:50px;direction:rtl">
+                        <a class="btn btn-group-sm"><i style="font-size:x-large" class="fa fa-bars"></i></a>
+                        <div class="dropdown-content" style="left:5px;top:10px">
+                            <a href="#" onclick="Details(@item.Mid)" class="pbtnHIS">
+                                نمایش سند
+                            </a>
+                            <a href="#" onclick="Edit(@item.Mid)" class="pbtnHIE">
+                                ویرایش
+                            </a>
+                            <a href="#" onclick="Delete(@item.Mid)" class="pbtnHID">
+                                حذف
+                            </a>
+
+                        </div>
+
+                    </div>
+                </td>
+            </tr>
+                }
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>تعداد ردیف</td>
+            <td data-math="col-count"></td>
+            <td colspan="2"> جمع کل</td>
+            <td data-math="col-sum">above-sum</td>
+            @*            <td data-math="above-sum">@string.Format("{0:n0}", sumu)</td>*@
+            <td colspan="3"></td>
+        </tr>
+    </tfoot>
+</table>

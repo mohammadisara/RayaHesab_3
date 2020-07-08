@@ -1,0 +1,270 @@
+﻿@model IEnumerable<RayaHesab.Models.Pardartb>
+
+@{
+    ViewData["Title"] = @ViewBag.tittle;
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="row DMMenu">
+    @*<div class="col-md-12">
+        <br />
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User"><i class="fa fa-home" aria-hidden="true" style="-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);"></i></a></li>
+                <li class="breadcrumb-item"><a href="User/Khazaneh">&nbsp; خزانه</a></li>
+                <li class="breadcrumb-item active" aria-current="page">&nbsp; دریافت نقد</li>
+            </ol>
+        </nav>
+    </div>*@
+    <div class="col-md-12">
+        <div class="SecContent" id="MyCreate" style="display:none;">
+            @await Component.InvokeAsync("DarNaghdC")
+        </div>
+        <div class="SecContent" id="MyEdit" style="display:none;">
+            @await Component.InvokeAsync("DarNaghdE")
+        </div>
+        <div class="SecContent">
+            <p style="padding:0 0.5em;text-align:right;">
+                <a href="#" id="pbtn" onclick="Create()" class="pbtnHI">
+                    <i class="fa fa-plus-square" id="MyBut" aria-hidden="true" data-toggle="tooltip" title="تعریف سند دریافت نقد جدید"></i>
+                </a>
+            </p>
+            <div class="@((ViewBag.errormsg != "")?"alert alert-danger":"")">@ViewBag.errormsg</div>
+
+            <div class="table-responsive-lg">
+                <div class="alert alert-info">
+                    <input class="form-control" id="myInputSearch" type="text" placeholder="جستجو..."/>
+                </div>
+
+                <table id="myTable" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                تاریخ
+                            </th>
+                            <th>
+                                صندوق بدهکار
+                            </th>
+                            <th style="@((ViewBag.Type == 1)?"":"display:none;")">
+                                حساب بس
+                            </th>
+                            <th style="@((ViewBag.Type == 2)?"":"display:none;")">
+                                شخص بس
+                            </th>
+                            <th>
+                                شماره قبض
+                            </th>
+                            <th>
+                                مبلغ
+                            </th>
+                            <th>
+                                توضیحات
+                            </th>
+                            <th>
+                               فروشگاه
+                            </th>
+
+                            <th>تنظیمات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Datec)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SanbedNavigation.Title)
+                            </td>
+                            <td style="@((ViewBag.Type == 1)?"":"display:none;")">
+                                @Html.DisplayFor(modelItem => item.MoinbesNavigation.K.Codekol) -
+                                @Html.DisplayFor(modelItem => item.MoinbesNavigation. Codemoin) -
+                                @Html.DisplayFor(modelItem => item.TafbesNavigation.Codetaf) 
+                                (@Html.DisplayFor(modelItem => item.MoinbesNavigation.K.Namekol) -
+                                @Html.DisplayFor(modelItem => item.MoinbesNavigation.Namemoin) -
+                                @Html.DisplayFor(modelItem => item.TafbesNavigation.Nametaf) )
+                            </td>
+                            <td style="@((ViewBag.Type == 2)?"":"display:none;")">
+                                @Html.DisplayFor(modelItem => item.PidbesNavigation.Namekamel)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Noghabz)
+                            </td>
+                            <td>
+                                @string.Format("{0:n0}", item.Mablagh) ریال
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Note)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IdanbarNavigation.Namec)
+                            </td>
+                            <td>
+                                <a href="#" onclick="Details(@item.Mid)" class="pbtnHIS">
+                                    <i class="fa fa-sticky-note" aria-hidden="true" data-toggle="tooltip" title="نمایش سند"></i>
+                                </a>
+                                <a href="#" onclick="Edit(@item.Mid)" class="pbtnHIE">
+                                    <i class="fa fa-pencil-alt" aria-hidden="true" data-toggle="tooltip" title="ویرایش"></i>
+                                </a>
+                                <a href="#" onclick="Delete(@item.Mid)" class="pbtnHID">
+                                    <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="MyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTittle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ModalBody">
+                ...
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+  
+   
+    <script>
+        function hesabchangeE() {
+            if ($("#txtmoinE").val() != "") {
+                $("#txtpersonE").prop('disabled', true);
+                $("#hfpersonidE").val("");
+            }
+            else
+                $("#txtpersonE").prop('disabled', false);
+            if ($("#txtpersonE").val() != "") {
+                $("#txtmoinE").prop('disabled', true);
+                $("#hfmoinidE").val("");
+                $("#hftafidE").val("");
+            }
+            else
+                $("#txtmoinE").prop('disabled', false);
+        }
+
+        function hesabchange() {
+            if ($("#txtmoin").val() != "") {
+                $("#txtperson").prop('disabled', true);
+                $("#hfpersonid").val("");
+            }
+            else
+                $("#txtperson").prop('disabled', false);
+            if ($("#txtperson").val() != "") {
+                $("#txtmoin").prop('disabled', true);
+                $("#hfmoinid").val("");
+                $("#hftafid").val("");
+            }
+            else
+                $("#txtmoin").prop('disabled', false);
+        }
+
+        loadcoding();
+
+        function Create() {
+            $(".loading").show();
+            $("#MyEdit").slideUp();
+            $("#MyCreate").slideToggle(200);
+            $("#txtTitleC").focus();
+            if ($("#MyBut").hasClass("fa fa-minus-circle")) {
+                $("#MyBut").removeClass("fa fa-minus-circle");
+                $("#MyBut").addClass("fa fa-plus-square");
+            }
+            else {
+                $("#MyBut").removeClass("fa fa-plus-square");
+                $("#MyBut").addClass("fa fa-minus-circle");
+            }
+            $(".loading").hide();
+        };
+        function Edit(id) {
+            $("#MyCreate").slideUp();
+            $("#MyBut").removeClass("fa fa-minus-circle");
+            $("#MyBut").addClass("fa fa-plus-square");
+            $("#MyEdit").slideDown(200);
+            $("#txtname").focus();
+            var mform = new FormData();
+            mform.append("mid", id);
+
+            $.ajax({
+                type: "POST",
+                url: "/DarNaghd/getrow",
+                contentType: false,
+                processData: false,
+                data: mform,
+                beforeSend: function () {
+                    $(".loading").show();
+                },
+                success: function (result) {
+                    var res = jQuery.parseJSON(result);
+                    $("#txtmid").val(res.Mid);
+                    $("#txtuser").val(res.UserId);
+                    //$("#sanE option:selected").val(res.Sanbes);
+
+                    $("#txtname").val(res.Noghabz);
+                    $("#hfmoinidE").val(res.Moinbesid);
+                    $("#hftafidE").val(res.Tafbesid);
+                    $("#hfpersonidE").val(res.Pbesid);
+                    $("#namemoinE").html(res.Moinbes + ' - ' + res.Tafbes);
+                    $("#nametafE").html(res.Tafbes);
+                    $("#txtmoinE").val("");
+                    if (res.MoinbesCode != null) {
+                        $("#txtmoinE").val(res.MoinbesCode);
+                        if (res.Tafbescode != null)
+                            $("#txtmoinE").val(res.MoinbesCode + ' - ' + res.Tafbescode);
+                    }
+                    //$("#txttafE").val(res.Tafbescode);
+                    $("#selanbar").val(res.Idanbar);
+                    $("#txtpersonE").val(res.Pbes);
+                    $("#mabE").val(res.MablaghE);
+                    $("#notE").val(res.NoteE);
+                    $("#sanE").val(res.Sanbed);
+                    $("#txtdateE").val(res.Datec);
+                    hesabchangeE();
+
+                },
+                complete: function () {
+                    $(".loading").hide();
+                }
+            });
+        };
+        function Details(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/DarNaghd/Details/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("نمایش");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+        function Delete(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/DarNaghd/Delete/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("حذف");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+    </script>
+}

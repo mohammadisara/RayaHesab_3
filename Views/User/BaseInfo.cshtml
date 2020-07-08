@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewData["Title"] = "پنل کاربری";
+    Layout = Context.Request.Cookies["layoutmain"];
+    //Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@*@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor*@
+
+<div class="row DMMenu">
+    @*<div class="col-md-12">
+        <br />
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User"><i class="fa fa-home" aria-hidden="true" style="-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);"></i></a></li>
+                <li class="breadcrumb-item active" aria-current="page">&nbsp; اطلاعات پایه</li>
+            </ol>
+        </nav>
+    </div>*@
+    @*@if (@HttpContextAccessor.HttpContext.Session.GetString("a7") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-controller="Coding">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                    <p>
+                        کدینگ
+                    </p>
+                </div>
+            </a>
+        </div>
+    @*}
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("a8") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-controller="gorohPersontbs">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-user" style="color:white"></span></div>
+                    <p>
+                        گروه اشخاص
+                    </p>
+                </div>
+            </a>
+        </div>
+    @*}
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("a9") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-controller="Persontbs">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-user" style="color:white"></span></div>
+                    <p>
+                        مدیریت اشخاص
+                    </p>
+                </div>
+            </a>
+        </div>
+    @*}
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("a10") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-controller="sandoghtb">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-document" style="color:white"></span></div>
+                    <p>
+                        مدیریت صندوق
+                    </p>
+                </div>
+            </a>
+        </div>
+    @*}
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("a11") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-controller="Banktbs">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-user" style="color:white"></span></div>
+                    <p>
+                        مدیریت بانک
+                    </p>
+                </div>
+            </a>
+        </div>
+    @*}
+
+    @if (@HttpContextAccessor.HttpContext.Session.GetString("a47") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-controller="Otherhesabtbs">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-user" style="color:white"></span></div>
+                    <p>
+                        مدیریت سایر حساب ها 
+                    </p>
+                </div>
+            </a>
+        </div>
+@*    }*@
+
+
+</div>
+

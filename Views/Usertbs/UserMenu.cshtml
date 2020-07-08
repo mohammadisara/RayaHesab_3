@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "UserMenu";
+    Layout = null;
+}
+<input type="hidden" value="@ViewBag.uid" id="hfuid" />
+<input type="hidden"  id="hfmastermenuid" />
+<div class="row" >
+    <div class="col-md-12" style="z-index:10">
+        <div class="SecContent row">
+            <div class="col-md-3">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>منو</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{if (ViewBag.mastermenu != null)
+                            {
+                                foreach (var item in ViewBag.mastermenu)
+                                {
+                                    <tr>
+                                        <td> @Html.Raw(item.Title)</td>
+                                        <td>
+                                            <a onclick="getsubmenu(@item.Mid , '@ViewBag.uid')" href="#" class="btn btn-primary">انتخاب</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-3" id="submenu">
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-4" id="usermenu">
+                
+            </div>
+        </div>
+    </div>
+</div>
+

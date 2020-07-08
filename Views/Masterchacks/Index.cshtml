@@ -1,0 +1,145 @@
+﻿@model IEnumerable<RayaHesab.Models.Masterchack>
+
+@{
+    ViewData["Title"] = "دست چک ها";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+<div class="row DMMenu">
+    @*<div class="col-md-12">
+        <br />
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User"><i class="fa fa-home" aria-hidden="true" style="-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);"></i></a></li>
+                <li class="breadcrumb-item"><a href="/User/BaseInfo">&nbsp; اطلاعات پایه</a></li>
+                <li class="breadcrumb-item"><a href="/Banktbs">&nbsp; مدیریت بانک</a></li>
+                <li class="breadcrumb-item active" aria-current="page">&nbsp; دسته چک ها</li>
+            </ol>
+        </nav>
+    </div>*@
+    <div class="col-md-12">
+        <div class="SecContent">
+            <p style="padding:0 0.5em;text-align:right;">
+                <a href="#" id="pbtn" onclick="Create()" class="pbtnHI">
+                    <i class="fa fa-plus-square" id="MyBut" aria-hidden="true" data-toggle="tooltip" title="تعریف دسته چک جدید"></i>
+                </a>
+            </p>
+            <div class="@((ViewBag.errormsg != "")?"alert alert-danger":"")">@ViewBag.errormsg</div>
+
+            @*<div class="table-responsive-lg">
+        <div class="alert alert-info">
+            <input class="form-control" id="myInputSearch" type="text" placeholder="جستجو...">
+        </div>*@
+
+            <table id="myTable" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>کد</th>
+                        <th>
+                            عنوان بانک
+                        </th>
+                        <th>
+                            عنوان چک
+                        </th>
+                        <th>
+                            از شماره
+                        </th>
+                        <th>
+                            تا شماره
+                        </th>
+                        <th>تنظیمات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.Mid
+                            </td>
+                            <td>
+                                @item.Bank.Title
+                            </td>
+                            <td>
+                                @item.Title
+                            </td>
+                            <td>
+                                @item.Frombarg
+                            </td>
+                            <td>
+                                @item.Tobarg
+                            </td>
+                            <td>
+                                <a href="#" onclick="Edit(@item.Mid)" class="pbtnHIE">
+                                    <i class="fa fa-pencil-alt" aria-hidden="true" data-toggle="tooltip" title="ویرایش"></i>
+                                </a>
+                                <a href="#" onclick="Delete(@item.Mid)" class="pbtnHID">
+                                    <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="MyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTittle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ModalBody">
+                ...
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function Create() {
+            $(".loading").show();
+            $.ajax({
+                url: "/Masterchacks/Create",
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("ایجاد");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+        function Edit(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/Masterchacks/Edit/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("ویرایش");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+        function Delete(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/Masterchacks/Delete/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("حذف");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+    </script>
+}

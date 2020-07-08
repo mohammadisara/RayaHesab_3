@@ -1,0 +1,19 @@
+﻿@model RayaHesab.Models.Gorohtb
+
+
+<h3>آیا مطمئن هستید؟</h3>
+<div class="container-fluid">
+    <dl class="dl-horizontal">
+        <dt>
+            عنوان گروه
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Namec)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Mid" />
+        <input type="submit" value="حذف" class="btn btn-danger" />
+    </form>
+</div>

@@ -1,0 +1,186 @@
+﻿
+@{
+    Layout = null;
+}
+
+<table id="myTable" class="table table-striped mytable form-group">
+    <thead>
+        <tr>
+            <th>
+                ردیف
+            </th>
+            <th class="filter-select" data-placeholder="فروشگاه ">
+                فروشگاه
+            </th>
+            <th class="filter-select" data-placeholder="کد حساب">
+                کد حساب
+            </th>
+            <th>
+                عنوان حساب
+            </th>
+            <th>
+                نام شخص
+            </th>
+            <th>
+                بدهکار
+            </th>
+            <th>
+                بستانکار
+            </th>
+            <th>
+                توضیحات
+            </th>
+            <th>
+                فیش / قبض
+            </th>
+            <th>
+                نوع سند
+            </th>
+            <th>
+                عملیات
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            decimal sumbed = 0, sumbes = 0, ekh = 0;
+            int radif = 0;
+        }
+        @foreach (var item in ViewBag.list)
+        {
+            radif = radif + 1;
+            <tr @(item.Isedit == 1 ? "style='background-color:burlywood'" : "")>
+
+                <td> @Html.Raw(radif)</td>
+                <td> @(item.IdanbarNavigation == null ? "" : item.IdanbarNavigation.Namec)</td>
+
+                <td>
+                    @item.Moin.K.Codekol -
+                    @item.Moin.Codemoin   @(item.Taf == null ? "" : " - " + item.Taf.Codetaf)
+                </td>
+                <td>
+                    @item.Moin.K.Namekol -
+                    @item.Moin.Namemoin   @(item.Taf == null ? "" : " - " + item.Taf.Nametaf)
+                </td>
+                @*<td>
+                        @(item.Taf == null ? "" : item.Taf.Nametaf)
+                    </td>*@
+                <td>
+                    @(item.P == null ? "" : item.P.Namec)
+                    @(item.P == null ? "" : item.P.Family)
+                </td>
+                <td>
+                    @{
+                        if (@item.Bed >= 0)
+                        {
+                            @string.Format("{0:n0}", @item.Bed)
+                            sumbed += (decimal)@item.Bed;
+                        }
+                        else
+                        {
+                            var line = "0";
+                            @line
+                        }
+                    }
+                </td>
+                <td>
+                    @{
+                        if (@item.Bes >= 0)
+                        {
+                            @string.Format("{0:n0}", @item.Bes)
+                            sumbes += (decimal)@item.Bes;
+                        }
+                        else
+                        {
+                            var line = "0";
+                            @line
+                        }
+                    }
+                </td>
+                <td>
+                    @{
+                        if (@item.Note != null)
+                        {
+                            @item.Note
+                        }
+                        else
+                        {
+                            var line = "---";
+                            @line
+                        }
+                    }
+
+                </td>
+                <td>
+                    @item.Nofish
+                </td>
+                <td>
+                    @{
+                        string typesanad = "";
+                        if (item.Pardarid != null)
+                        {
+                            typesanad = "خزانه";
+                        }
+                        if (item.Factid != null)
+                        {
+                            typesanad = "خرید و فروش";
+                        }
+                        if (item.Factpid != null)
+                        {
+                            typesanad = "سند مشتریان";
+                        }
+                        if (item.Sbimarid != null)
+                        {
+                            typesanad = "سند پذیرش";
+                        }
+                        Html.Raw(typesanad);
+                    }
+                </td>
+                <td>
+                    <input type="hidden" id="hfmid" />
+
+                    <div class="dropdown">
+                        <button class="btn btn-group-sm"><i style="font-size:x-large" class="fa fa-bars"></i></button>
+                        <div class="dropdown-content">
+                            <a href="#" onclick="Edit(@item.Mid)" class="pbtnHIE">
+                                <i class="fa fa-pencil-alt" aria-hidden="true" style="padding:0.5em" data-toggle="tooltip" title="ویرایش"></i>
+                            </a>
+                            <a href="#" onclick="Delete(@item.Mid)" class="pbtnHID">
+                                <i class="fa fa-trash-alt" aria-hidden="true" data-toggle="tooltip" style="padding:0.5em" title="حذف"></i>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<table class="table table-striped" style="margin:0">
+    <tbody>
+        <tr>
+            <td>جمع کل</td>
+            <td id="tdbed">بدهکار :  @string.Format("{0:n0}", @sumbed) ریال </td>
+            <td id="tdbes"> بستانکار : @string.Format("{0:n0}", @sumbes) ریال</td>
+            <td id="tdm">
+                اختلاف :
+                @{
+                    ekh = sumbed - sumbes;
+                }
+                @string.Format("{0:n0}", ekh) ریال
+
+            </td>
+            <td id="tdmah">
+                @{
+                    if (ekh > 0)
+                    {
+                        @string.Format("{0}", "ماهیت حساب : بدهکار");
+                    }
+                    else if (ekh < 0)
+                    {
+                        @string.Format("{0}", "ماهیت حساب : بستانکار");
+                    }
+                }
+            </td>
+        </tr>
+    </tbody>
+</table>

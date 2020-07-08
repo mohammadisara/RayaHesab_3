@@ -1,0 +1,49 @@
+﻿@model RayaHesab.Models.Banktb
+
+<form asp-action="Edit" onsubmit="return validatecoding" id="formaction">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Mid" id="txtmid" />
+    <div class="row">
+        <div class="form-group col-sm-6">
+            <label asp-for="Title" class="control-label">عنوان</label>
+            <input asp-for="Title" id="txtname" onkeypress="handle(event,'nkartE')" class="form-control" oninvalid="this.setCustomValidity('عنوان صندوق وارد کنید')" oninput="setCustomValidity('')" required />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Nokart" class="control-label">شماره کارت</label>
+            <input asp-for="Nokart" id="nkartE" onkeypress="handle(event,'nhesE')" class="form-control" />
+            <span asp-validation-for="Nokart" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Nohesab" class="control-label">شماره حساب</label>
+            <input asp-for="Nohesab" id="nhesE" onkeypress="handle(event,'nsheE')" class="form-control" oninvalid="this.setCustomValidity('شماره حساب را وارد کنید')" oninput="setCustomValidity('')" required />
+            <span asp-validation-for="Nohesab" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Nosheba" class="control-label">شماره شبا</label>
+            <input asp-for="Nosheba" id="nsheE" onkeypress="handle(event,'typeE')" class="form-control" />
+            <span asp-validation-for="Nosheba" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Typec" class="control-label">نوع حساب</label>
+            <select asp-for="Typec" id="typeE" onkeypress="handle(event,'txtmoin')" class="form-control">
+                <option value="0">پس انداز</option>
+                <option value="1">جاری</option>
+                <option value="2">کوتاه مدت</option>
+            </select>
+        </div>
+        <div class="form-group col-sm-6">
+            <label asp-for="Moinid" style="display:block" class="control-label"> کد حساب (کل و معین و تفصیلی)</label>
+            <div class="autocomplete" style="display:block;">
+                <input value="@ViewBag.codec" onkeypress="handle(event,'btnE')" id="txtmoin" type="text" class="form-control" >
+            </div>
+            <span class="spanzir" id="namemoin">@ViewBag.namec</span>
+            <input asp-for="Moinid" type="hidden" id="hfmoinid" />
+            <input asp-for="Tafid" type="hidden" id="hftafid" />
+        </div>
+    </div>
+    <hr />
+    <div class="form-group col-sm-12">
+        <input type="button" onclick="actionrow()" value="ویرایش" id="btnE" class="btn btn-primary" />
+    </div>
+</form>

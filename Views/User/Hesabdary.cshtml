@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewData["Title"] = "پنل کاربری";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+@*@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor*@
+
+<div class="row DMMenu">
+    @*<div class="col-md-12">
+        <br />
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User"><i class="fa fa-home" aria-hidden="true" style="-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);"></i></a></li>
+                <li class="breadcrumb-item active" aria-current="page">&nbsp; حسابداری</li>
+            </ol>
+        </nav>
+    </div>*@
+
+    @*@if (@HttpContextAccessor.HttpContext.Session.GetString("a12") != null)
+    {*@
+        <div class="col-md-6 col-lg-3">
+            <a class="DMMA" asp-action="Index" asp-controller="Mastersanadtbs">
+                <div class="SecContent">
+                    <div class="DSpan"><span class="icono-document" style="color:white"></span></div>
+                    <p>
+                        مدیریت اسناد
+                    </p>
+                </div>
+            </a>
+        </div>
+@*    }*@
+    </div>

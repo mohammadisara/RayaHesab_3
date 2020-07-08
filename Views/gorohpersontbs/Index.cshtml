@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewData["Title"] = "گروه اشخاص";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+@{ if (ViewBag.err != null)
+    {
+        <div class="alert alert-danger">@ViewBag.err</div>
+    }
+}
+<a href="#" id="pbtn" onclick="Create()" >
+    <i id="MyBut" class="fa fa-plus-square fa-2x" aria-hidden="true" data-toggle="tooltip" title="تعریف گروه جدید"></i>
+</a>
+
+<div id="divlist"></div>
+
+
+<!-- Modal -->
+
+@section Scripts{ 
+<script>
+    function load() {
+        $("#divlist").html(lmsg);
+        $.ajax({
+            url: "/Gorohpersontbs/List",
+            type: "Get"
+        }).done(function (result) {
+            $("#divlist").html(result);
+            $("table").tablesorter({
+                widthFixed: false,                // initialize zebra and filter widgets
+                widgets: ["zebra", "filter", "math"],
+                widgetOptions: {
+                    math_mask: '#,##0.',
+                    filter_reset: '.reset'
+                }
+            })
+            //$(".tablesorter-filter").attr("style", "width:100%");
+        });
+    }
+    function Create() {
+        $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+        $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+        $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+        $("#MyModal").modal("show");
+        $.ajax({
+            url: "/Gorohpersontbs/Create",
+            type: "Get"
+        }).done(function (result) {
+            $("#Modaltitle").html("ایجاد");
+            $("#ModalBody").html(result);
+            loadcoding();
+        });
+    };
+    function Edit(id) {
+        $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+        $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+        $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+        $("#MyModal").modal("show");
+        $.ajax({
+            url: "/Gorohpersontbs/Edit?id=" + id,
+            type: "Get"
+        }).done(function (result) {
+            $("#Modaltitle").html("ویرایش");
+            $("#ModalBody").html(result);
+            loadcoding();
+        });
+    };
+    $(function () {
+        load();
+    })
+    function Delete(id) {
+        var s = confirm('ایا مطمئن هستید ؟ ');
+        if (s) {
+            $("#divlist").html(lmsg);
+            $.post("/Gorohpersontbs/Delete?id=" + id, function (data) {
+                $(".loading").hide();
+                if (data.msg == "") {
+                    load();
+                }
+                else {
+                    alert(data.msg + " ** " + data.err);
+                    load();
+                }
+            });
+        }
+    };
+    function actionrow() {
+        $.post($("#formaction").attr("action"), $("#formaction").serialize(), function (data) {
+            load();
+            if (data.msg == "") {
+                Create();
+            }
+            else {
+                alert(data.msg + " ** " + data.err);
+            }
+        });
+
+    }
+
+</script>
+}

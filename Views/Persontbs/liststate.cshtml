@@ -1,0 +1,199 @@
+﻿@{
+    ViewData["Title"] = "لیست";
+    Layout = null;
+}
+@if (string.IsNullOrEmpty(ViewBag.err) != true)
+{
+    <div class="alert-danger alert"> @ViewBag.err</div>
+
+}
+<div class="row">
+    <div class="col-md-12">
+        @{
+            decimal? sdkh = 0, skh = 0, spfactf = 0, ssefareshf = 0, stahvilforosh = 0, sforosh = 0;
+        }
+        <table class="table mytable table-striped">
+            <thead>
+                <tr>
+                    <th>فاکتور درخواست خرید</th>
+                    <th>فاکتور خرید</th>
+                    <th>فاکتور پیش فاکتور فروش</th>
+                    <th>فاکتور سفارش فروش</th>
+                    <th>فاکتور تحویلی فروش</th>
+                    <th>فاکتور فروش</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        @{
+
+                            if (ViewBag.listdkh != null)
+                            {
+                                foreach (var item in ViewBag.listdkh)
+                                {
+                                    sdkh += item.pricekhales;
+                                    <a href="#" onclick="showfact(@item.Mid)" class="btn btn-primary form-group">
+                                        <span style="display:block;color:white">فروشنده : @item.Namec</span>
+                                        <span style="display:block;color:white">تاریخ : @item.Datec</span>
+                                        <span style="display:block;color:white">شماره فاکتور : @item.Nofact</span>
+                                        <span style="display:block;color:white">
+                                            مبلغ کل : @string.Format("{0:n0}", item.pricekol) ریال
+                                        </span>
+                                        <span style="display:block;color:white">
+                                            کل تخفیف : @string.Format("{0:n0}", item.takhfif) ریال
+                                        </span>
+                                        <span style="display:block;color:white">
+                                            مبلغ پس از کسر تخفیف : @string.Format("{0:n0}", item.pricekhales) ریال
+                                        </span>
+                                    </a>
+                                }
+                            }
+                        }
+
+                    </td>
+                    <td>
+                        @{
+                            if (ViewBag.listkh != null)
+                            {
+                                foreach (var item in ViewBag.listkh)
+                                {
+                                    skh += item.pricekhales;
+
+                                    <a href="#" onclick="showfact(@item.Mid)" class="btn btn-secondary form-group">
+                                        <span style="display:block;color:white">فروشنده : @item.Namec</span>
+                                        <span style="display:block;color:white">تاریخ : @item.Datec</span>
+                                        <span style="display:block;color:white">تاریخ : @item.Datec</span>
+                                        <span style="display:block;color:white">شماره فاکتور : @item.Nofact</span>
+                                        <span style="display:block;color:white">
+                                            مبلغ کل : @string.Format("{0:n0}", item.pricekol) ریال
+                                        </span>
+                                        <span style="display:block;color:white">
+                                            کل تخفیف : @string.Format("{0:n0}", item.takhfif) ریال
+                                        </span>
+                                        <span style="display:block;color:white">
+                                            مبلغ پس از کسر تخفیف : @string.Format("{0:n0}", item.pricekhales) ریال
+                                        </span>
+                                    </a>
+                                }
+                            }
+                        }
+
+                    </td>
+                    <td>
+                        @{
+                            if (ViewBag.listpfactf != null)
+                            {
+                                foreach (var item in ViewBag.listpfactf)
+                                {
+                                    spfactf += item.pricekhales;
+                                    <a href="#" onclick="showfact(@item.Mid)" class="btn btn-success form-group">
+                                        <span style="display:block;color:white">تاریخ : @item.Datec</span>
+                                        <span style="display:block;color:white">شماره فاکتور : @item.Nofact</span>
+                                        <span style="display:block;color:white">
+                                            مبلغ کل : @string.Format("{0:n0}", item.pricekol) ریال
+                                        </span>
+                                        <span style="display:block;color:white">
+                                            کل تخفیف : @string.Format("{0:n0}", item.takhfif) ریال
+                                        </span>
+                                        <span style="display:block;color:white">
+                                            مبلغ پس از کسر تخفیف : @string.Format("{0:n0}", item.pricekhales) ریال
+                                        </span>
+                                    </a>
+                                }
+                            }
+                        }
+
+                    </td>
+                    <td>
+                        @{
+                            if (ViewBag.listsefareshf != null)
+                            {
+                                foreach (var item in ViewBag.listsefareshf)
+                                {
+                                    ssefareshf += item.pricekhales;
+                                    <a href="#" onclick="showfact(@item.Mid)" class="btn btn-warning form-group">
+                                        <span style="display:block;color:white">تاریخ : @item.Datec</span>
+                                        <span style="display:block;color:white">شماره فاکتور : @item.Nofact</span>
+                                        <span style="display:block;color:white">
+                                            مبلغ کل : @string.Format("{0:n0}", item.pricekol) ریال
+                                        </span>
+                                        <span style="display:block;color:white">
+                                            کل تخفیف : @string.Format("{0:n0}", item.takhfif) ریال
+                                        </span>
+                                        <span style="display:block;color:white">
+                                            مبلغ پس از کسر تخفیف : @string.Format("{0:n0}", item.pricekhales) ریال
+                                        </span>
+                                    </a>
+                                }
+                            }
+                        }
+
+                    </td>
+                    <td>
+                        @{
+                            if (ViewBag.listtahvilforosh != null)
+                            {
+                                foreach (var item in ViewBag.listtahvilforosh)
+                                {
+                                    stahvilforosh += item.pricekhales;
+
+                                    <a href="#" onclick="showfact(@item.Mid)" class="btn btn-info form-group">
+                                        <span style="display:block;color:white">تاریخ : @item.Datec</span>
+                                        <span style="display:block;color:white">شماره فاکتور : @item.Nofact</span>
+                                        <span style="display:block;color:white">
+                                            مبلغ کل : @string.Format("{0:n0}", item.pricekol) ریال
+                                        </span>
+                                        <span style="display:block;color:white">
+                                            کل تخفیف : @string.Format("{0:n0}", item.takhfif) ریال
+                                        </span>
+                                        <span style="display:block;color:white">
+                                            مبلغ پس از کسر تخفیف : @string.Format("{0:n0}", item.pricekhales) ریال
+                                        </span>
+                                    </a>
+                                }
+                            }
+                        }
+
+                    </td>
+                    <td>
+                        @{
+                            if (ViewBag.listforosh != null)
+                            {
+                                foreach (var item in ViewBag.listforosh)
+                                {
+                                    sforosh += item.pricekhales;
+
+                                    <a href="#" onclick="showfact(@item.Mid)" class="btn btn-primary form-group">
+                                        <span style="display:block;color:white">تاریخ : @item.Datec</span>
+                                        <span style="display:block;color:white">شماره فاکتور : @item.Nofact</span>
+                                        <span style="display:block;color:white">
+                                            مبلغ کل : @string.Format("{0:n0}", item.pricekol) ریال
+                                        </span>
+                                        <span style="display:block;color:white">
+                                            کل تخفیف : @string.Format("{0:n0}", item.takhfif) ریال
+                                        </span>
+                                        <span style="display:block;color:white">
+                                            مبلغ پس از کسر تخفیف : @string.Format("{0:n0}", item.pricekhales) ریال
+                                        </span>
+                                    </a>
+                                }
+                            }
+                        }
+
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td>@string.Format("{0:n0}", sdkh) ریال</td>
+                    <td>@string.Format("{0:n0}", skh) ریال</td>
+                    <td>@string.Format("{0:n0}", spfactf) ریال</td>
+                    <td>@string.Format("{0:n0}", ssefareshf) ریال</td>
+                    <td>@string.Format("{0:n0}", stahvilforosh) ریال</td>
+                    <td>@string.Format("{0:n0}", sforosh) ریال</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

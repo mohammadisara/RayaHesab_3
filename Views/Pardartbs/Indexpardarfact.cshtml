@@ -1,0 +1,239 @@
+﻿@{
+    ViewData["Title"] = "اسناد دریافتنی";
+    Layout = null;
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.err))
+{
+    <div class="alert alert-danger">@ViewBag.err</div>
+}
+<table id="myTable" class="table table-responsive mytable">
+    <thead>
+        <tr>
+            <th data-role="ردیف" class="group-false">
+            </th>
+            <th data-role="تاریخ" class="group-false">
+                تاریخ
+            </th>
+            <th data-role="حساب بدهکار" class="group-false">
+                بدهکار
+            </th>
+            <th data-role="حساب بستانکار" class="group-word">
+                بستانکار
+            </th>
+            <th class="sorter-currency group-false" data-role="مبلغ">
+                مبلغ
+            </th>
+            <th data-role="توضیحات" class="group-false">
+                توضیحات
+            </th>
+            <th data-role="فروشگاه" class="group-false filter-select" data-placeholder="فروشگاه">
+                فروشگاه
+            </th>
+            <th class="filter-false">تنظیمات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            decimal sumu = 0; int count = 0;
+            if (ViewBag.listk != null)
+            {
+                foreach (var item in ViewBag.listk)
+                {
+                    count += 1;
+                    if (item.Mablagh != null)
+                    {
+                        sumu = sumu + Convert.ToDecimal(item.Mablagh);
+                    }
+                    <tr>
+                        <td>
+                            @count
+                        </td>
+                        <td>
+                            @item.Datec
+                        </td>
+                        <td>
+                            @item.Namekamelbed
+                            @item.codekolbed @item.Codemoinbed @item.Codetafbed
+                            @item.Namekolbed  @item.Namemoinbed @item.Nametafbed
+
+                        </td>
+                        <td>
+                            @item.Namekamelbes
+                            @item.Codekolbes @item.Codemoinbes @item.Codetafbes
+                            @item.Namekolbes @item.Namemoinbes @item.Nametafbes
+
+                        </td>
+                        <td>
+                            @string.Format("{0:n0}", (item.Mablagh != null ? item.Mablagh : 0)) ریال
+                        </td>
+                        <td>
+                            @item.Note
+                        </td>
+                        <td>
+                            @item.Nameanbar
+                        </td>
+                        <td>
+                            <div class="dropdown ntolid text-left" style="width:50px;direction:rtl">
+                                <button class="btn btn-group-sm"><i style="font-size:x-large" class="fa fa-bars"></i></button>
+                                <div class="dropdown-content" style="left:5px;top:10px">
+                                    <a href="#" onclick="Details(@item.Mid)" class="pbtnHIS">
+                                        نمایش سند
+                                    </a>
+                                    <a href="#" onclick="Edit(@item.Mid)" class="pbtnHIE">
+                                        ویرایش
+                                    </a>
+                                    <a href="#" onclick="Delete(@item.Mid)" class="pbtnHID">
+                                        حذف
+                                    </a>
+
+                                </div>
+
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>تعداد ردیف</td>
+            <td data-math="col-count"></td>
+            <td colspan="2"> جمع کل</td>
+            <td data-math="col-sum">above-sum</td>
+            <td colspan="3"></td>
+        </tr>
+    </tfoot>
+</table>
+
+
+<script>
+    function hesabchangeE() {
+        if ($("#txtmoinBE").val() != "") {
+            $("#txtpersonBE").prop('disabled', true);
+            $("#hfpersonidBE").val("");
+        }
+        else
+            $("#txtpersonBE").prop('disabled', false);
+        if ($("#txtmoinSE").val() != "") {
+            $("#txtpersonSE").prop('disabled', true);
+            $("#hfpersonidSE").val("");
+        }
+        else
+            $("#txtpersonSE").prop('disabled', false);
+
+        if ($("#txtpersonBE").val() != "") {
+            $("#txtmoinBE").prop('disabled', true);
+            $("#hfmoinidBE").val("");
+            $("#hftafidBE").val("");
+        }
+        else
+            $("#txtmoinBE").prop('disabled', false);
+        if ($("#txtpersonSE").val() != "") {
+            $("#txtmoinSE").prop('disabled', true);
+            $("#hfmoinidSE").val("");
+            $("#hftafidSE").val("");
+        }
+        else
+            $("#txtmoinSE").prop('disabled', false);
+    }
+    function hesabchange() {
+        if ($("#txtmoinB").val() != "") {
+            $("#txtpersonB").prop('disabled', true);
+            $("#hfpersonidB").val("");
+        }
+        else
+            $("#txtpersonB").prop('disabled', false);
+        if ($("#txtmoinS").val() != "") {
+            $("#txtpersonS").prop('disabled', true);
+            $("#hfpersonidS").val("");
+        }
+        else
+            $("#txtpersonS").prop('disabled', false);
+        if ($("#txtpersonB").val() != "") {
+            $("#txtmoinB").prop('disabled', true);
+            $("#hfmoinidB").val("");
+            $("#hftafidB").val("");
+        }
+        else
+            $("#txtmoinB").prop('disabled', false);
+        if ($("#txtpersonS").val() != "") {
+            $("#txtmoinS").prop('disabled', true);
+            $("#hfmoinidS").val("");
+            $("#hftafidS").val("");
+        }
+        else
+            $("#txtmoinS").prop('disabled', false);
+    }
+    function Edit(id) {
+        $(".loading").hide();
+        $(".loading").show();
+        $.ajax({
+            url: "/Pardartbs/Edit/" + id,
+            type: "Get"
+        }).done(function (result) {
+            $("#MyModal").modal("show");
+            $("#ModalTittle").html("ویرایش");
+            $("#ModalBody").html(result);
+            $(".loading").hide();
+            loadcoding();
+            loadcodingBes();
+            $(".DateText , .DateTextE").pDatepicker({
+                initialValueType: 'persian',
+                calendar: {
+                    persian: {
+                        locale: 'en'
+                    }
+                },
+                autoClose: true,
+                format: 'YYYY/MM/DD'
+            });
+
+        });
+    };
+    function Details(id) {
+        $(".loading").show();
+        $.ajax({
+            url: "/AsnadDar/Details/" + id,
+            type: "Get"
+        }).done(function (result) {
+            $("#MyModal").modal("show");
+            $("#ModalTittle").html("نمایش");
+            $("#ModalBody").html(result);
+            $(".loading").hide();
+        });
+    };
+    function Delete(id) {
+        var q = confirm('ایا مطمئن هستید');
+        if (q) {
+             
+            $(".loading").show();
+            $.post("/AsnadDar/Delete/" + id, null, function (data) {
+                $(".loading").hide();
+                if (data.msg == "") {
+                    getsanaddar();
+                }
+                else {
+                    $(".errmsg").html(data.msg);
+                    $(".errdetail").html(data.err);
+                    $("#err").modal('show');
+                }
+            });
+            $(".loading").hide();
+
+        }
+    };
+    $(function () {
+        $(".mytable").tablesorter({
+            theme: 'blue',
+            widthFixed: true,                // initialize zebra and filter widgets
+            widgets: ["zebra", "filter", "math"],
+            widgetOptions: {
+                math_mask: '#,##0.',
+                filter_reset: '.reset'
+            }
+        });
+    })
+
+</script>

@@ -1,0 +1,33 @@
+﻿@model RayaHesab.Models.RlateMstb
+
+<div class="row">
+    <div class="col-md-12 DRight">
+        <form asp-action="Edit"  id="actionform">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Mid" />
+            <input type="hidden" asp-for="Tafid" />
+            <input type="hidden" asp-for="Moinid" />
+            <div class="form-group">
+                <label asp-for="Moinid" class="control-label">کل و معین</label>
+                <select asp-for="Moinid" class="form-control" asp-items="ViewBag.codeparent">
+                    <option value="0">انتخاب کنید</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Taf.Codetaf" class="control-label">کد تفصیلی</label>
+                <input asp-for="Taf.Codetaf" onkeypress="handle(event,'nametaf')" class="form-control" oninvalid="this.setCustomValidity('کد تفصیلی را وارد کنید')" oninput="setCustomValidity('')" required />
+                <span asp-validation-for="Taf.Codetaf" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Taf.Nametaf" class="control-label">نام تفصیلی</label>
+                <input asp-for="Taf.Nametaf" id="nametaf" onkeypress="handle(event,'btn')" class="form-control" oninvalid="this.setCustomValidity('نام تفصیلی را وارد کنید')" oninput="setCustomValidity('')" required />
+                <span asp-validation-for="Taf.Nametaf" class="text-danger"></span>
+            </div>
+<hr />
+            <div class="form-group">
+                <input type="button" onclick="submite(4);" id="btn" value="ویرایش" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

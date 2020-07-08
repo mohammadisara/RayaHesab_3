@@ -1,0 +1,101 @@
+﻿
+
+@{
+    ViewData["Title"] = ViewBag.Tittle;
+    Layout = null;
+}
+
+<div class="row" style="background-color:white">
+    @{if (ViewBag.err != null)
+        {
+            <div class="col-md-12">
+                <a href="#" class="alert-danger">
+                    <i class="fa fa-warning fa-2x" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>@ViewBag.err
+                </a>
+            </div>
+        }
+    }
+    <div class="col-md-12">
+        <h4 style="padding-bottom:1em" class="text-center">@ViewBag.Tittle</h4>
+        <hr />
+    </div>
+@*    <form target='_blank' action='/GozareshDaftar/Printdaftar' id='frmtmp'>*@
+        <form asp-action="ListForosh" id="formdkol">
+            <div class="row">
+                <div class="form-group col-sm-4 form-inline">
+                    <link href="~/DatePicker/persian-datepicker.min.css" rel="stylesheet" />
+                    <div style="display:block;padding-bottom:0.5em">
+                        <span style="padding-left:1em"> از تاریخ</span>
+                        <input id="fdate" autocomplete="off" name="fdate" class="form-control DateText" type="text" value="@ViewBag.fdate" />
+                    </div>
+                    <div style="display:block">
+                        <span style="padding-left:1em"> تا تاریخ</span>
+                        <input id="tdate" autocomplete="off" name="tdate" class="form-control DateText" type="text" value="@ViewBag.tdate" />
+                    </div>
+                </div>
+                <div class="form-group col-sm-5 form-inline">
+                    <div style="display:block;padding-bottom:0.5em">
+                        <select asp-items="@ViewBag.listanbar" name="anbar" id="anbarkol" class="form-control">
+                            <option value="0">فروشگاه را انتخاب کنید</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-sm-3 form-inline">
+                    <div style="display:block">
+                        <input type='hidden' id="hftypec" name='print' value="0" />
+                        <a class="btn btn-success" onclick="sendprint(2 , 'formdkol')">تهیه گزارش</a>
+                        <a class="btn btn-primary" target="_blank" onclick="sendprint(1 , 'formdkol')">
+                            <i class="fa fa-print"></i>
+                        </a>
+                        <iframe id="txtArea1" style="display:none"></iframe>
+                        <a class="btn btn-warning" href="#" id="exp">
+                            <i class="fa fa-file-excel"></i>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+  @*  </form>*@
+    <div id="table">
+
+    </div>
+</div>
+<script>
+    function sendprint(typec) {
+        if (typec == 1) {
+            var tmp = "<form target='_blank' action='/GozareshDaftar/Printdaftar' id='frmtmp'></form>";
+            $('body').append(tmp);
+            $("#frmtmp").append("<input type='hidden' name='fdate' value='" + $("#fdate").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='tdate' value='" + $("#tdate").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='anbar' value='" + $("#anbarkol").val() + "'>");
+            $("#frmtmp").submit();
+            $("#frmtmp").remove();
+        }
+        else {
+            $("#formdkol").attr("target", "_self");
+            $(".loading").show();
+            $.ajax({
+                url: $("#formdkol").attr("action"),
+                data: $("#formdkol").serialize(),
+                //url: "/GozareshDaftar/daftarkol?fdate="++"&tdate="++"&idkol="++"&anbar="++"&print=",
+                type: "Get"
+            }).done(function (result) {
+                 
+                $("#table").html(result);
+                var colCount = 0;
+                $("table").tablesorter({
+                    theme: 'blue',
+                    // initialize zebra and filter widgets
+                    widgets: ["filter", "math"],
+                    widgetOptions: {
+                        math_mask: '#,##0.',
+                        filter_reset: '.reset'
+                    }
+                })
+                $(".loading").hide();
+            });
+        }
+    }
+
+</script>

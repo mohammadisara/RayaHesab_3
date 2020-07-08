@@ -1,0 +1,432 @@
+
+.page-login .wrapper {
+    direction: rtl;
+    width: 100%;
+    min-height: 100vh;
+    background-image: url("../images/bg/sh_s.png");
+    background-repeat: repeat;
+    background-position: left top;
+}
+.page-login input::-webkit-input-placeholder,
+.page-login input::-moz-placeholder,
+.page-login input:-ms-input-placeholder,
+.page-login input:-moz-placeholder {
+        color: #90a4ae;
+        font-size: 12px;                
+}
+.box.login-box {
+        /*margin-left: 30px;*/
+        padding: 15px 15px 0 15px;
+        background-color: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+        -webkit-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+        -moz-box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.03);
+        height:100%;
+        margin-bottom:0!important;
+}
+.login-box .box-header {
+        padding-top: 8px;
+}
+.login-box .box-header .logo-holder {
+    width: 62px;
+    height: 62px;
+    margin: 0 auto 5px;
+}
+.login-box .box-header .logo-holder img {
+        max-width: 100%;
+        height: auto;
+        display: inline-block;
+        object-fit: cover;
+}
+.login-box .box-header-title {
+        font-size: 14px;
+}
+.login-box .form-group {
+        margin-bottom: 10px;
+}
+.login-box .form-group .form-control {
+        height: 35px;
+        line-height: 35px;
+        border: 1px solid #cfd8dc;
+}
+.login-box .form-group.has-btn .btn {
+        height: 35px;
+        line-height: 35px;
+}
+.otp-trigger {
+        display: none;
+        margin-bottom: 15px;
+        font-size: 11px;          
+}
+.otp-trigger a {
+        position: relative;
+        color: inherit;
+        display: inline-block;
+        font-size: inherit;
+        font-weight: inherit;
+        transition: all .3s ease-in-out;
+}
+.otp-trigger a:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 3px;
+        height: 1px;
+        background-color: #007aff;
+}
+.otp-trigger a:hover {
+        color: #0c31ff !important;
+}
+.otp-trigger.active {
+        display: block;
+}
+.login-box .otp-holder,
+.otp-holder {        
+        display: none;
+        position: relative;
+        padding: 10px;
+        background-color: #eceff1;
+        color: #263238;
+        font-size: 12px;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+}
+.login-box .otp-holder.active,
+.otp-holder.active {
+        display: block;
+} 
+.login-box .otp-holder {
+        margin: 0 -10px 15px;
+}
+.login-box .otp-holder .otp-close,
+.otp-holder .otp-close {
+        position: absolute;
+        left: 13px;
+        top: 13px;
+        cursor: pointer;
+        display: inline-block;
+        z-index: 99;
+}
+.login-box .otp-holder .form-group,
+.otp-holder .form-group {
+        direction: rtl;
+}
+.login-box .otp-holder .form-group label,
+.otp-holder .form-group label {
+        font-size: 12px;
+        font-weight: normal;
+        color: #263238;
+        text-align: right;
+        display: inline-block;
+        margin-top: 3px;
+        margin-bottom: 10px;
+}
+.login-box .otp-holder .text-success,
+.otp-holder .text-success {
+        color: #43a047 !important;
+}
+.login-box .otp-holder .text-primary,
+.otp-holder .text-primary {
+        color: #007aff !important;
+}
+.login-box .otp-holder .otp-content .otp-desc,
+.otp-content .otp-desc {        
+        font-size: 12px;
+        text-align: right;
+        float: right;
+        color: #43a047;
+}
+.login-box .otp-holder .otp-content .otp-send,
+.otp-content .otp-send {
+        position: relative;
+        float: left;        
+        font-size: 10px;
+        color: #263238;        
+        text-align: left;
+        transition: all .3s ease-in-out;
+}
+.login-box .otp-holder .otp-content .otp-send:hover,
+.otp-content .otp-send:hover {
+        color: #43a047;                
+}
+.login-box .otp-holder .otp-content .otp-send:after,
+.otp-content .otp-send:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 3px;
+        height: 1px;
+        background-color: #263238;
+}
+.login-box .captcha-holder {
+        font-size: 12px;
+        margin: 0 -5px 6px;
+}
+.login-box .captcha-holder .form-group,
+.captcha-holder .form-group,
+.login-box .captcha-holder .security-holder,
+.captcha-holder .security-holder, 
+.login-box .captcha-holder .icon-holder,
+.captcha-holder .icon-holder {
+        padding-left: 5px;
+        padding-right: 5px;
+}
+.login-box .captcha-holder .form-group,
+.captcha-holder .form-group,
+.login-box .captcha-holder .security-holder,
+.captcha-holder .security-holder {
+        float: right;
+}
+.login-box .captcha-holder .form-group,
+.captcha-holder .form-group {
+        width: 150px;
+}
+.login-box .security-holder,
+.captcha-holder .security-holder {
+        width: 70px;
+}
+.login-box .captcha-holder .icon-holder,
+.captcha-holder .icon-holder {
+        width: calc(100% - 230px);
+}
+.login-box .security-holder,
+.security-holder {                
+        height: 35px;
+        line-height: 35px;
+        background-color: #eceff1;
+        font-size: 12px;
+        font-weight: bold;
+        text-align: center;
+        color: #263238;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+}
+.login-box .captcha-holder .security-holder > *,
+.captcha-holder .security-holder > * {
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        margin: 0 auto;
+        letter-spacing: 5px;
+        color: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        background-color: transparent;
+}
+.login-box .captcha-holder .security-holder img,
+.captcha-holder .security-holder img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+}
+.login-box .captcha-holder .icon-holder,
+.captcha-holder .icon-holder {
+        float: left;
+        text-align: left;
+        padding-top: 10px;
+}
+.login-box .captcha-holder .icon-holder .icon-link,
+.captcha-holder .icon-holder .icon-link {
+        display: inline-block;
+        opacity: 1;
+        font-size: inherit;
+        color: inherit;
+        font-weight: inherit;
+        transition: all .3s ease-in-out;
+}
+.login-box .captcha-holder .icon-holder .icon-link:hover,
+.captcha-holder .icon-holder .icon-link:hover {
+        opacity: 1;
+}
+.login-box .captcha-holder .icon-holder .icon-link img,
+.captcha-holder .icon-holder .icon-link img {
+        max-width: 100%;
+        height: auto;
+}
+.login-box .captcha-holder .icon-holder .icon-link .icon,
+.captcha-holder .icon-holder .icon-link .icon {
+        display: inline-block;
+        font-size: inherit;
+        color: inherit;
+}
+.login-box .forgot-password {
+        margin-bottom: 15px;
+        font-size: 11px;
+        text-align: right;        
+}
+.login-box .forgot-password-link {
+        display: inline-block;
+        font-size: inherit;
+        font-weight: inherit;
+        transition: all .3s ease-in-out;
+}
+.login-box .forgot-password-link:hover{
+        color: #0c31ff !important;
+}
+.login-box .btns-holder .btn-login,
+.login-box .btns-holder .btn-register {
+        font-size: 12px;
+        font-weight: normal;
+        text-align: center;
+}
+.login-box .btns-holder .login-btn{
+        font-weight: bold;
+}
+.login-box .btns-holder .btn + .btn {
+        margin-top: 10px;
+}
+.news-slider-holder {
+        position: relative;
+        height:100%;
+}
+.news-slider,
+.news-slider.flexslider {
+        position: relative;
+        direction: ltr;
+        margin-bottom: 0;
+        border: 0;
+        border-radius: 0;
+}
+.news-slider-holder .custom-navigation {
+        width: 100%;
+        position: absolute;
+        right: 15px;
+        bottom: 20px;
+}
+.news-slider-holder .custom-navigation .flex-prev,
+.news-slider-holder .custom-navigation .flex-next {
+        float: right;        
+        font-size: 12px;
+        color: #78909c;
+}
+.news-slider-holder .custom-navigation .flex-prev {
+        margin-left: 25px;
+}
+.news-slider-holder .custom-navigation .flex-prev span,
+.news-slider-holder .custom-navigation .flex-next span {
+        display: inline-block;
+        font-size: inherit;
+        color: inherit;
+        font-weight: inherit;
+        vertical-align: middle;
+}
+.news-slider-holder .custom-navigation .flex-prev span {
+        margin-right: 5px;
+}
+.news-slider-holder .custom-navigation .flex-next span {
+       margin-left: 5px;
+}
+.news-slider-holder .custom-navigation .flex-prev img,
+.news-slider-holder .custom-navigation .flex-next img {
+        display: inline-block;
+        font-size: inherit;
+        color: inherit;
+        font-weight: inherit;
+        vertical-align: middle;
+}
+.news-slider .slides li {
+        position: relative;
+        direction: rtl;
+        text-align: right;
+}
+.news-slider .slides li .image,
+.news-slider .slides li .caption {
+        float: right;
+        direction: rtl;
+        text-align: right;
+}
+.news-slider .slides li .image {
+        width: 310px;        
+        height: 430px;
+        padding: 10px;
+}
+.news-slider .image a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        background-image: linear-gradient(to bottom, rgba(38, 50, 56, 0.26), #263238);
+}
+.news-slider .image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        background-image: linear-gradient(to bottom, rgba(38, 50, 56, 0.26), #263238);
+}
+.news-slider .slides li .caption {
+        width: calc(100% - 310px);
+        padding: 0 15px;
+}
+.news-slider .caption-header {
+        margin: 20px 0 12px;
+}
+.news-slider .caption-header-title {
+        font-size: 16px;
+        margin-bottom: 2px;
+        font-weight: bold;
+        color: #263238;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+}
+.news-slider .caption-header-title a {
+        display: block;
+        font-size: 16px;        
+        font-weight: bold;
+        color: #263238;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+}
+.news-slider .caption-header-meta {
+        height: 20px;
+        overflow: hidden;
+}
+.news-slider .caption-header-meta,
+.news-slider .caption-header-meta-date {
+        font-size: 12px;        
+        color: #78909c;
+}       
+.news-slider .caption-header-meta span
+.news-slider .caption-header-meta p {
+        font-size: inherit;
+        color: inherit;
+}
+.news-slider .caption-content {
+        font-size: 12px;
+        color: #263238;       
+        height: 305px; 
+        overflow: hidden;
+}
+.news-slider .caption-content p {
+        font-size: inherit;
+        color: inherit;
+        line-height: 22px;
+}
+@media(min-width: 1200px) {
+        .page-login .wrapper .container {
+                width: 950px;
+        }
+}
+@media only screen and (max-width: 500px) {
+    .wrapper {
+        padding-top:50px;
+    }
+    .news-slider-holder{
+        display:none;
+    }
+}

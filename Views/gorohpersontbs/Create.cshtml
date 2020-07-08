@@ -1,0 +1,40 @@
+﻿@model RayaHesab.Models.Gorohpersontb
+
+        <form asp-action="Create" onsubmit="return validatecoding" id="formaction">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="row">
+            <div class="form-group col-sm-5">
+                <label asp-for="Title" class="control-label">عنوان</label>
+                <input asp-for="Title" onkeypress="handle(event,'txtmoin')" id="txtTitleC" class="form-control" oninvalid="this.setCustomValidity('عنوان صندوق وارد کنید')" oninput="setCustomValidity('')" required />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group col-sm-7">
+                <label asp-for="Moinid" style="display:block" class="control-label">کد حساب - کل ، معین ، تفصیلی</label>
+                <div class="autocomplete" style="display:block;">
+                    <input onkeypress="handle(event,'btn')" id="txtmoin" type="text" class="form-control" name="txtmoin">
+                </div>
+                <span class="spanzir" id="namemoin">*</span>
+                <input asp-for="Moinid" type="hidden" id="hfmoinid" />
+            </div>
+            @*<div class="form-group col-sm-3">
+                <label asp-for="Tafid" style="display:block" class="control-label">کد تفصیلی</label>
+                <div class="autocomplete" style="display:block;">
+                    <input onkeypress="handle(event,'btn')" id="txttaf" type="text" class="form-control" name="txttaf">
+                </div>
+                <span class="spanzir" id="nametaf">*</span>
+                <input asp-for="Tafid" type="hidden" id="hftafid" />
+            </div>*@
+            @*<div class="form-group col-sm-3">
+                <label style="display:block" asp-for="Pid" class="control-label">صاحب حساب</label>
+                <div asp-for="Pid" onkeypress="handle(event,'btn')" class="autocomplete form-group" style="display:block">
+                    <input id="txtperson" type="text" class="form-control" name="txtperson">
+                </div>
+                <input type="hidden" asp-for="Pid" id="hfpersonid" />
+            </div>*@
+            </div>
+            <hr />
+            <div class="form-group col-sm-12">
+                <input type="button"  onclick="actionrow()"  value="ثبت" id="btn" class="btn btn-primary" />
+            </div>
+        </form>

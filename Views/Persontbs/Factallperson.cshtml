@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "وضعیت یک شخص";
+    Layout = null;
+}
+
+<form  asp-action="Listfactallperson" asp-controller="Persontbs" id="formfactall">
+    <div class="row form-group">
+        <div class="col-md-4">
+            از تاریخ : <input type="text" name="mindate" value="@ViewBag.mindate" class="form-control" />
+            تا تاریخ : <input type="text" name="maxdate"  value="@ViewBag.maxdate" class="form-control" />
+        </div>
+        <div class="col-md-4 form-inline">
+            <input type="button" value="تهیه گزارش" class="btn btn-success" onclick="submitrep()" />
+        </div>
+    </div>
+</form>
+<div id="table"></div>
+<script>
+    $(function () {
+        $('select').select2();
+    })
+    function submitrep() {
+        $('.loading').show();
+        $.ajax({
+            url: $("#formfactall").attr("action"),
+            data: $("#formfactall").serialize(),
+            type: "Get"
+        }).done(function (result) {
+            $("#table").html(result);
+            $(".mytable").tablesorter({
+                theme: 'blue',
+                widgets: ["filter", "math"],
+                widgetOptions: {
+                    math_mask: '#,##0.',
+                    filter_reset: '.reset'
+                }
+            })
+            $('.loading').hide();
+        });
+
+    }
+</script>

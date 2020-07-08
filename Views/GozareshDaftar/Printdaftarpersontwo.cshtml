@@ -1,0 +1,274 @@
+﻿
+@{
+    ViewData["Title"] = ViewBag.Title;
+    Layout = "~/Views/Shared/_printtaraz.cshtml";
+}
+<div class="row " style="padding: 0 2em">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-5" style="padding-top:3em">
+                <br />
+                <p>از تاریخ : @ViewBag.fdate</p>
+                <p>تا تاریخ : @ViewBag.tdate</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <p class="text-center">
+                    <img src="~/images/Logop.png" class="imagep" />
+                </p>
+                <p class="text-center">
+                    <h4>@ViewData["Title"]</h4>
+                </p>
+            </div>
+            <div class="col-md-4" style="padding-top:5em">
+                <p>عنوان حساب : @ViewBag.namec</p>
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+        <div class="row">
+
+        </div>
+
+        <table id="myTable" class="table  borderbold">
+            <thead>
+                <tr>
+                    <th>
+                        شماره سند
+                    </th>
+                    <th>
+                        تاریخ سند
+                    </th>
+                    <th>
+                        توضیحات
+                    </th>
+                    <th class="sorter-currency">
+                        بدهکار
+                    </th>
+                    <th class="sorter-currency">
+                        بستانکار
+                    </th>
+                    <th class="sorter-currency">
+                        مانده
+                    </th>
+                    <th class="filter-select" data-placeholder="ماهیت حساب">
+                        ماهیت حساب 1
+                    </th>
+
+
+                    <th class="sorter-currency">
+                        بدهکار
+                    </th>
+                    <th class="sorter-currency">
+                        بستانکار
+                    </th>
+                    <th class="sorter-currency">
+                        مانده
+                    </th>
+                    <th class="filter-select" data-placeholder="ماهیت حساب">
+                        ماهیت حساب 2
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @{ decimal m = 0, bed = 0, bes = 0;
+                    decimal mn = 0, bedn = 0, besn = 0;
+                    string s = "بد";
+                    int r = 0;
+                }
+                @if (ViewBag.list != null)
+                {
+                @foreach (var item in ViewBag.list)
+                    {
+                        r = r + 1;
+                <tr>
+                    <td>
+                        <a asp-action="Index" title="نمایش سند" target="_blank" asp-controller="Sanadtbs" asp-route-id="@item.Nosanad">@item.Nosanad</a>
+                    </td>
+                    <td>
+                        <a title="نمایش سند" asp-action="Index" target="_blank" asp-controller="Sanadtbs" asp-route-id="@item.Nosanad">@item.Datec</a>
+                    </td>
+                    <td>
+                        <span style="display:block">
+                            @{if (item.Factid != null)
+                                {
+                                    <a title="نمایش فاکتور" asp-action="Index" target="_blank" asp-controller="Factkalatbs" asp-route-id="@item.Factid">@item.Note</a>
+                                }
+                                else
+                                {
+                                    @item.Note
+                                }
+                            }
+                        </span>
+                        @if (ViewBag.isfact == 1)
+                        {
+                            Int64 qrt = Convert.ToInt64(item.Mid);
+                            <span style="display:block;font-size:12px" id="sp_@qrt">
+                                @{ if (item.Factid != 0 && item.Note.IndexOf("تخفیف") < 0)
+                                    {
+                                        <script src="~/lib/jquery/dist/jquery.js"></script>
+                                        <script>
+                                                        setfact(@qrt , @item.Factid)
+                                                        function setfact(mid , idfact) {
+
+                                                                var span = "#sp_"+mid;
+                                                                var mform = new FormData();
+                                                                mform.append("idfact", idfact);
+                                                                $.ajax({
+                                                                    url: "/GozareshDaftar/getfact",
+                                                                    data: mform,
+                                                                    processData: false,
+                                                                    contentType: false,
+                                                                    type: "POST",
+                                                                    dataType: "json",
+                                                                    success: function (data) {
+
+                                                                        var srr = "";
+                                                                        for (var i = 0; i < data.length; i++) {
+                                                                            if (data[i]["act"] != 1)
+                                                                                srr += "<span style='color:red'><b>غیر قطعی</b></span>";
+                                                                            srr += "<span style='display:block;'>" + data[i]["Namekala"]
+                                                                                + " مقدار / مقدار درخواست : " + data[i]["Tedadv"] + " " + data[i]["Vahedkala"]
+                                                                                + " قیمت : " + formatMoney(data[i]["Price"], 0, "", ",")
+                                                                                + " قیمت کل : " + formatMoney(data[i]["Pricekol"], 0, "", ",")
+                                                                                + " تخفیف : " + formatMoney(data[i]["takhfif"], 0, "", ",") + "</span>";
+                                                                        }
+                                                                        $(span).html(srr);
+                                                                    }
+                                                                })
+                                                            }
+                                        </script>
+                                    }
+                                }
+
+                            </span>
+                        }
+                    </td>
+                    <td>
+                        @{ if (@item.Bed >= 0)
+                            {
+                                @string.Format("{0:n0}", @item.Bed)
+                                bed += (decimal)@item.Bed;
+                            }
+                            else
+                            {
+                                var line = "0";
+                                @line
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{ if (@item.Bes >= 0)
+                            {
+                                @string.Format("{0:n0}", @item.Bes)
+                                bes += (decimal)@item.Bes;
+                            }
+                            else
+                            {
+                                var line = "0";
+                                @line
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{ m = bed - bes;
+                            if (m < 0)
+                            {
+
+                                s = "بس";
+                                @Html.Raw("<span style='color:green'>" + string.Format("{0:n0}", System.Math.Abs(m)) + "</span>");
+                            }
+                            else if (m > 0)
+                            {
+                                s = "بد";
+                                @Html.Raw("<span style='color:black'>" + string.Format("{0:n0}", m) + "</span>");
+                            }
+                            else
+                            {
+                                s = "بی حساب";
+                                @Html.Raw("<span style='color:black'>0</span>");
+                            }
+                        }
+                    </td>
+                    <td>
+                        @s
+                    </td>
+
+
+
+                    <td>
+                        @{ if (@item.Bedn >= 0)
+                            {
+                                @string.Format("{0:n0}", @item.Bedn)
+                                bedn += (decimal)@item.Bedn;
+                            }
+                            else
+                            {
+                                var line = "0";
+                                @line
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{ if (@item.Besn >= 0)
+                            {
+                                @string.Format("{0:n0}", @item.Besn)
+                                besn += (decimal)@item.Besn;
+                            }
+                            else
+                            {
+                                var line = "0";
+                                @line
+                            }
+                        }
+                    </td>
+                    <td>
+                        @{ mn = bedn - besn;
+                            if (m < 0)
+                            {
+
+                                s = "بس";
+                                @Html.Raw("<span style='color:green'>" + string.Format("{0:n0}", System.Math.Abs(mn)) + "</span>");
+                            }
+                            else if (mn > 0)
+                            {
+                                s = "بد";
+                                @Html.Raw("<span style='color:black'>" + string.Format("{0:n0}", mn) + "</span>");
+                            }
+                            else
+                            {
+                                s = "بی حساب";
+                                @Html.Raw("<span style='color:black'>0</span>");
+                            }
+                        }
+                    </td>
+                    <td>
+                        @s
+                    </td>
+
+                </tr>
+                    }
+                }
+            </tbody>
+            <tfoot id="tfoot">
+                <tr>
+                    <td>تعداد ردیف</td>
+                    <td>@r</td>
+                    <td> جمع کل</td>
+                    <td>@string.Format("{0:n0}", bed)</td>
+                    <td>@string.Format("{0:n0}", bes)</td>
+                    <td></td>
+                    <td></td>
+                    <td>@string.Format("{0:n2}", bedn)</td>
+                    <td>@string.Format("{0:n2}", besn)</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+
+        </table>
+    </div>
+</div>
+
+

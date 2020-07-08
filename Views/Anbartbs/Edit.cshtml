@@ -1,0 +1,31 @@
+﻿@model RayaHesab.Models.Anbartb
+
+<form asp-action="Edit" onsubmit="return validatecoding"  id="formaction">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="Mid" class="control-label">کد انبار</label>
+            <input asp-for="Mid" id="txtmidE" onkeypress="handle(event,'txtnameE')" class="form-control" readonly oninvalid="this.setCustomValidity('کد انبار وارد کنید')" oninput="setCustomValidity('')" required />
+            <span asp-validation-for="Mid" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Namec" class="control-label">عنوان</label>
+            <input asp-for="Namec" id="txtnameE" onkeypress="handle(event,'txtmoinE')" class="form-control" autofocus oninvalid="this.setCustomValidity('عنوان انبار وارد کنید')" oninput="setCustomValidity('')" required />
+            <span asp-validation-for="Namec" class="text-danger"></span>
+        </div>
+        <div class="form-group col-sm-4">
+            <label asp-for="Moinid" style="display:block" class="control-label">کد حساب (کل و معین و تفصیلی)</label>
+            <div class="autocomplete" style="display:block;">
+                <input onkeypress="handle(event,'txttafE')" id="txtmoinE" value="@ViewBag.codec" type="text" class="form-control" name="txtmoinE">
+            </div>
+            <span class="spanzir" id="namemoinE">@ViewBag.namec</span>
+            <input asp-for="Moinid" type="hidden" id="hfmoinidE" />
+            <input asp-for="Tafid" type="hidden" id="hftafidE" />
+
+        </div>
+    </div>
+    <hr />
+    <div class="form-group col-sm-12">
+        <input type="button" onclick="actionrow()" value="ویرایش" id="btnE" class="btn btn-primary hide-modal " data-id="modalform" />
+    </div>
+</form>

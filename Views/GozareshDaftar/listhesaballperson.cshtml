@@ -1,0 +1,106 @@
+﻿
+@{
+    ViewData["Title"] = " گزارش ستونی اشخاص";
+    Layout = null;
+}
+
+@{if (ViewBag.err != null)
+    {
+        <div class="col-md-12">
+            <a href="#" class="alert-danger">
+                <i class="fa fa-warning fa-2x" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>@ViewBag.err
+            </a>
+        </div>
+    }
+}
+        <div id="tprint">
+            <table id="myTable" class="table tablesorter mytable">
+                <thead>
+                    <tr>
+                        <th>عنوان حساب</th>
+                        @{ int q = 0;
+                            foreach (var item in ViewBag.cols)
+                            {
+                                q = q + 1;
+                                <th data-name="@item.Namemoin"> @item.Namemoin </th>
+                            }
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int i;
+                        foreach (var item in ViewBag.res)
+                        {
+                            i = -1;
+                            <tr>
+                                @foreach (var itemc in item)
+                                {
+                                    i = i + 1;
+                                    if (i > 0)
+                                    {
+                                        <td>@string.Format("{0:n2}", (string.IsNullOrEmpty(itemc.ToString()) ? "0" : Convert.ToDecimal(itemc)))</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@itemc</td>
+                                    }
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+                <tfoot id="tfoot">
+                    <tr>
+                        <td data-math="col-count" data-math-mask="##0."></td>
+                        @{
+                            foreach (var item in ViewBag.cols)
+                            {
+                                <td data-math="col-sum" ></td>
+                            }
+                        }
+                    </tr>
+
+                </tfoot>
+            </table>
+            <table class="table">
+                <tr>
+                    @{ if (ViewBag.gsum != null)
+                        {
+                            foreach (var item in ViewBag.gsum)
+                            {
+
+                                @foreach (var itemc in item)
+                                {
+                                    try
+                                    {
+                                        <td>@string.Format("{0:n2}", (string.IsNullOrEmpty(itemc.ToString()) ? "0" : Convert.ToDecimal(itemc)))</td>
+                                    }
+                                    catch
+                                    {
+                                        <td>@string.Format("{0}", itemc)</td>
+                                    }
+                                }
+
+                                @*<td> جمع @item.name  : @item.m </td>*@
+
+
+                            }
+                        }
+                    }
+                </tr>
+            </table>
+        </div>
+
+<script>
+
+    $("#exp").click(function () {
+         
+        $("#myTable").table2excel({
+            exclude: ".noExl",
+            name: "Worksheet Name",
+            filename: "SomeFile.xls",//do not include extension
+            fileext: ".xls" // file extension
+        });
+    });
+
+</script>

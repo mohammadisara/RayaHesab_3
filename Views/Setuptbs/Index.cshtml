@@ -1,0 +1,115 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+<div class="row">
+    @foreach (var item in ViewBag.list)
+    {
+        <div class="col-md-6 form-group">
+            <div style="background-color:white;margin:0 1em">
+                <div style="display:block">
+                    <span>لوگو : </span>
+                    <span>
+                        <img id='img_@item.Mid' src="~/images/@item.Addlogo" style="width:100px;cursor:pointer;height:100px"
+                             onclick="showpic(@item.Mid)"
+                             class="rounded-circle" />
+                    </span>
+                </div>
+                <div style="display:block">
+                    <a asp-action="Edit" asp-route-id="@item.Mid" class="pbtnHIE" title="ویرایش">
+                        <span>سربرگ : </span>
+                        <span>
+                            @item.Sarbarg
+                        </span>
+                    </a>
+                    @*                    <i class="fa fa-pencil-alt" aria-hidden="true" data-toggle="tooltip" title="ویرایش"></i>*@
+
+                </div>
+                <div style="display:block;color:red">
+                    <span>فروشگاه : </span>
+                    <span>
+                        @item.Namec
+                    </span>
+                </div>
+                <div style="display:block">
+                    <span>سال مالی : </span>
+                    <span>
+                        @item.Fsal الی  @item.Tsal
+                    </span>
+                </div>
+                <div style="display:block">
+                    <span style="color:blue">توضیحات انتهای فاکتور فروش : </span>
+                    <span>
+                        <textarea readonly="readonly" class="content1">@item.Fforosh</textarea>
+                    </span>
+                </div>
+                <div style="display:block">
+                    <span style="color:blue">توضیحات انتهای فاکتور خرید : </span>
+                    <span>
+                        <textarea readonly="readonly" class="content2">@item.Fkharid</textarea>
+                    </span>
+                </div>
+                <div style="display:block">
+                    <span style="color:blue">توضیحات انتهای فاکتور سفارش فروش : </span>
+                    <span>
+                        <textarea readonly="readonly" class="content3">@item.Sfforosh</textarea>
+                    </span>
+                </div>
+                <div style="display:block">
+                    <span style="color:blue">توضیحات انتهای فاکتور سفارش خرید : </span>
+                    <span>
+                        <textarea readonly="readonly" class="content4">@item.Sfkharid</textarea>
+                    </span>
+                </div>
+                <div style="display:block">
+                    <span style="color:blue">توضیحات انتهای فاکتور پیش فاکتور فروش : </span>
+                    <span>
+                        <textarea readonly="readonly" class="content5">@item.Pfforosh</textarea>
+                    </span>
+                </div>
+                <div style="display:block">
+                    <span style="color:blue">توضیحات انتهای فاکتور برگشت از فروش : </span>
+                    <span>
+                        <textarea readonly="readonly" class="content6">@item.Bfforosh</textarea>
+                    </span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<form asp-action="savepic" id="myform" enctype="multipart/form-data">
+    <input type="file" accept="image/*" name="files" id="files"
+           onchange="savepictmp()" style="display:none" />
+    @*onchange="$('#myform').submit();" style="display:none" />*@
+</form>
+@section Scripts{ 
+<script>
+    function savepictmp() {
+        $.post($("#myform").attr("action"), $("#myform").serialize(), function (data) {
+            alert(data);
+        });
+    }
+    function showpic(mid) {
+        var input = $("<input>")
+            .attr("type", "hidden")
+            .attr("name", "mid").val(mid);
+        $('#myform').append(input);
+        $("#files").trigger("click");
+    }
+    $(function () {
+        $('.content1').richText();
+        $('.content2').richText();
+        $('.content3').richText();
+        $('.content4').richText();
+        $('.content5').richText();
+        $('.content6').richText();
+        $(".richText-toolbar").hide();
+        $(".richText-editor").attr("contenteditable", "false");
+    })
+    function edit(mid) {
+        $.post("", )
+
+    }
+</script>
+}

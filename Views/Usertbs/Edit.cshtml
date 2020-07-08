@@ -1,0 +1,45 @@
+﻿@model RayaHesab.Models.AspNetUsers
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = null;
+}
+
+<h3>اطلاعات کاربر : @Model.UserName  @Model.Firstname @Model.Lastname </h3>
+
+<br />
+<hr />
+
+<form asp-action="Edit"  id="formaction">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Id" />
+    <div class="row">
+        <div class="form-group col-sm-6">
+            <label class="control-label">نام</label>
+            <input asp-for="Firstname" class="form-control" />
+        </div>
+        <div class="form-group col-sm-6">
+            <label class="control-label">نام خانوادگی</label>
+            <input asp-for="Lastname" class="form-control" />
+        </div>
+        <div class="form-group col-sm-4">
+            <label class="control-label">تلفن همراه</label>
+            <input asp-for="PhoneNumber" class="form-control" />
+        </div>
+        <div class="form-group col-sm-4">
+            <label asp-for="Idanbar" class="control-label">فروشگاه اصلی</label>
+            <select asp-for="Idanbar" class="form-control" asp-items="ViewBag.Idanbar"></select>
+        </div>
+        <div class="form-group col-sm-4">
+            <label asp-for="Isactive" class="control-label">وضعیت</label>
+            <select asp-for="Isactive" class="form-control">
+                <option value="0" >غیر فعال</option>
+                <option value="1">فعال</option>
+            </select>
+        </div>
+    </div>
+    <hr />
+    <div class="form-group">
+        <input type="button" onclick="actionrow()" value="ویرایش" id="btnE" class="btn btn-primary  hide-modal " data-id="modalform" />
+    </div>
+</form>

@@ -1,0 +1,258 @@
+﻿@*@model IEnumerable<RayaHesab.Models.Pardartb>*@
+
+@{
+    ViewData["Title"] = "اسناد پرداختنی";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+<a href="#" id="pbtn" onclick="Create()">
+    <i class="fa fa-plus-square fa-2x" title="تعریف سند پرداختنی جدید"></i>
+</a>
+
+<div class="row" id="sanadpar"></div>
+@section Scripts{
+
+    <script>
+    function Create() {
+        $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+        $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+        $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered modal-lg");
+        $("#MyModal").modal("show");
+        $.ajax({
+            url: "/Asnadpar/Create",
+            type: "Get"
+        }).done(function (result) {
+            $("#Modaltitle").html("ایجاد");
+            $("#ModalBody").html(result);
+            loadcoding();
+            loadcodingBes();
+
+        });
+    };
+
+
+
+
+    function getsanadpar() {
+        $("#sanadpar").html(lmsg);
+        $.ajax({
+            url: "/Asnadpar/sanadpar",
+            type: "Get"
+        }).done(function (result) {
+            $("#sanadpar").html(result);
+            $("table").tablesorter({
+                widthFixed: false,                // initialize zebra and filter widgets
+                widgets: ["zebra", "filter", "math"],
+                widgetOptions: {
+                    math_mask: '#,##0.',
+                    filter_reset: '.reset'
+                }
+            })
+
+        });
+
+    }
+    function vosol() {
+        $.post($("#formvosol").attr("action"), $("#formvosol").serialize(),
+            function (data) {
+                if (data.msg == "") {
+                    getsanadpar();
+                }
+                else {
+                    $(".errmsg").html(data.msg);
+                    $(".errdetail").html(data.err);
+                    $("#err").modal('show');
+                }
+            })
+    }
+
+    function backvosol(id) {
+        var q = confirm('برای تغییر وضعیت چک  مطمئن هستید ؟ تمامی ثبت های اتومات حذف و مجدد ثبت می شوند');
+        if (q) {
+            $.post("/AsnadPar/changestatus?mid=" + id, null, function (data) {
+                if (data.msg == "") {
+                    getsanadpar();
+                }
+                else {
+                    $(".errmsg").html(data.msg);
+                    $(".errdetail").html(data.err);
+                    $("#err").modal('show');
+                }
+            });
+        }
+    }
+    function showm(id, sid) {
+        loadcoding();
+        loadcodingBes();
+        $("#mid").val(id);
+        $("#state").val(sid);
+        $("#kharj").attr("style", "display:none");
+        if (sid == 1)
+            $("#ModalTittles").html("وصول چک");
+        if (sid == 2) {
+            $("#ModalTittles").html("خرج چک");
+            $("#kharj").attr("style", "");
+        }
+        if (sid == 3)
+            $("#ModalTittles").html("برگشت چک");
+        $("#modals").modal("show");
+    };
+
+    function hesabchangeE() {
+        if ($("#txtmoinBE").val() != "") {
+            $("#txtpersonBE").prop('disabled', true);
+            $("#hfpersonidBE").val("");
+        }
+        else
+            $("#txtpersonBE").prop('disabled', false);
+        if ($("#txtmoinSE").val() != "") {
+            $("#txtpersonSE").prop('disabled', true);
+            $("#hfpersonidSE").val("");
+        }
+        else
+            $("#txtpersonSE").prop('disabled', false);
+
+        if ($("#txtpersonBE").val() != "") {
+            $("#txtmoinBE").prop('disabled', true);
+            $("#hfmoinidBE").val("");
+            $("#hftafidBE").val("");
+        }
+        else
+            $("#txtmoinBE").prop('disabled', false);
+        if ($("#txtpersonSE").val() != "") {
+            $("#txtmoinSE").prop('disabled', true);
+            $("#hfmoinidSE").val("");
+            $("#hftafidSE").val("");
+        }
+        else
+            $("#txtmoinSE").prop('disabled', false);
+    }
+    function hesabchange() {
+        if ($("#txtmoinB").val() != "") {
+            $("#txtpersonB").prop('disabled', true);
+            $("#hfpersonidB").val("");
+        }
+        else
+            $("#txtpersonB").prop('disabled', false);
+        if ($("#txtmoinS").val() != "") {
+            $("#txtpersonS").prop('disabled', true);
+            $("#hfpersonidS").val("");
+        }
+        else
+            $("#txtpersonS").prop('disabled', false);
+        if ($("#txtpersonB").val() != "") {
+            $("#txtmoinB").prop('disabled', true);
+            $("#hfmoinidB").val("");
+            $("#hftafidB").val("");
+        }
+        else
+            $("#txtmoinB").prop('disabled', false);
+        if ($("#txtpersonS").val() != "") {
+            $("#txtmoinS").prop('disabled', true);
+            $("#hfmoinidS").val("");
+            $("#hftafidS").val("");
+        }
+        else
+            $("#txtmoinS").prop('disabled', false);
+    }
+    $(function () {
+        getsanadpar();
+
+        //loadcoding();
+        //loadcodingBes();
+    })
+
+    function actionrow() {
+        $.post($("#formaction").attr("action"), $("#formaction").serialize(), function (data) {
+            if (data.msg == "") {
+                getsanadpar();
+            }
+            else {
+                $(".errmsg").html(data.msg);
+                $(".errdetail").html(data.err);
+                $("#err").modal('show');
+            }
+        });
+
+    }
+    function Edit(id) {
+        $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+        $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+        $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered modal-lg");
+        $("#MyModal").modal("show");
+        $.ajax({
+            url: "/Asnadpar/Edit/" + id,
+            type: "Get"
+        }).done(function (result) {
+            $("#Modaltitle").html("ویرایش");
+            $("#ModalBody").html(result);
+            loadcoding();
+            loadcodingBes();
+            //$(".DateText , .DateTextE").pDatepicker({
+            //    initialValueType: 'persian',
+            //    calendar: {
+            //        persian: {
+            //            locale: 'en'
+            //        }
+            //    },
+            //    autoClose: true,
+            //    format: 'YYYY/MM/DD'
+            //});
+
+        });
+    };
+    function Details(id) {
+        $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+        $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+        $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered modal-lg");
+        $("#MyModal").modal("show");
+        $.ajax({
+            url: "/AsnadDar/Details/" + id,
+            type: "Get"
+        }).done(function (result) {
+            $("#Modaltitle").html("نمایش");
+            $("#ModalBody").html(result);
+        });
+    };
+    function Delete(id) {
+        var q = confirm('ایا مطمئن هستید');
+        if (q) {
+            $(".loading").show();
+            $.post("/AsnadPar/Delete/" + id, null, function (data) {
+                $(".loading").hide();
+                if (data.msg == "") {
+                    getsanadpar();
+                }
+                else {
+                    $(".errmsg").html(data.msg);
+                    $(".errdetail").html(data.err);
+                    $("#err").modal('show');
+                }
+            });
+            $(".loading").hide();
+
+        }
+    };
+    function moinchange() {
+        $("#hfmoinidsearch").val("0");
+        $("#hftafidsearch").val("0");
+    }
+    function pidchange() {
+        $("#hfpersonidsearch").val("0");
+
+    }
+
+    var filter = [];
+    function closesearch() {
+        filter = [];
+        $('.mytable').trigger('search', [filter]);
+    }
+    function search() {
+        var col = $("#selsearch").val();
+        var amal = $("#selamal").val();
+        var str = amal + $("#txtsearch").val();
+        filter[col] = str;
+        $('.mytable').trigger('search', [filter]);
+    };
+    </script>
+}

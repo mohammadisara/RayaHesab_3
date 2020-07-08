@@ -1,0 +1,75 @@
+﻿@model RayaHesab.Models.Setuptb
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+<h2>Create</h2>
+
+<h4>Setuptb</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Sarbarg" class="control-label"></label>
+                <input asp-for="Sarbarg" class="form-control" />
+                <span asp-validation-for="Sarbarg" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fsal" class="control-label"></label>
+                <input asp-for="Fsal" class="form-control" />
+                <span asp-validation-for="Fsal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Tsal" class="control-label"></label>
+                <input asp-for="Tsal" class="form-control" />
+                <span asp-validation-for="Tsal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fforosh" class="control-label"></label>
+                <input asp-for="Fforosh" class="form-control" />
+                <span asp-validation-for="Fforosh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Fkharid" class="control-label"></label>
+                <input asp-for="Fkharid" class="form-control" />
+                <span asp-validation-for="Fkharid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sfforosh" class="control-label"></label>
+                <input asp-for="Sfforosh" class="form-control" />
+                <span asp-validation-for="Sfforosh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sfkharid" class="control-label"></label>
+                <input asp-for="Sfkharid" class="form-control" />
+                <span asp-validation-for="Sfkharid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pfforosh" class="control-label"></label>
+                <input asp-for="Pfforosh" class="form-control" />
+                <span asp-validation-for="Pfforosh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Bfforosh" class="control-label"></label>
+                <input asp-for="Bfforosh" class="form-control" />
+                <span asp-validation-for="Bfforosh" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

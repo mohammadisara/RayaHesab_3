@@ -1,0 +1,393 @@
+﻿@{
+    ViewData["Title"] = "مدیریت کدینگ";
+    Layout = null;
+}
+
+@{if (ViewBag.err != null)
+    {
+        <div class="alert alert-danger">@ViewBag.err</div>
+    }
+}
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="form-group has-search">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input class="form-control" id="myInputSearch4" type="text" placeholder="جستجو...">
+            <a href="#" id="pbtn" onclick="CreateGroup()" class="pbtnHI BtnNew">
+                <i class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" title="تعریف گروه جدید"></i>
+            </a>
+        </div>
+
+        <div class="table-responsive-lg">
+            <table class="table table-striped" id="myTable4">
+                <thead>
+                    <tr>
+                        <th>
+                            کد گروه و عنوان
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        if (ViewBag.Group != null)
+                        {
+                            @foreach (var item in (ViewBag.Group as List<RayaHesab.Models.Gorohtb>))
+                            {
+                                <tr>
+                                    <td>
+                                        @*                                                    <a href="/Coding/UpdateList?id=@item.Mid&s=g" class="btn btn-outline-info btload" style="width:90%;text-align:right">@item.Mid - @item.Namec</a>*@
+                                        <a asp-action="Index" asp-route-gid="@item.Mid" class="btn btn-outline-info btload" style="width:90%;text-align:right">@item.Mid - @item.Namec</a>
+                                        <a href="#" onclick="EditGroup(@item.Mid)" class="pbtnHIE BtnEdit">
+                                            <i class="fa fa-pencil-alt" aria-hidden="true" data-toggle="tooltip" title="ویرایش"></i>
+                                        </a>
+                                        <a href="#" onclick="DeleteGroup(@item.Mid)" class="pbtnHID BtnDel">
+                                            <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group has-search">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input class="form-control" id="myInputSearch3" type="text" placeholder="جستجو...">
+            <a href="#" id="pbtn" onclick="CreateKol(@ViewBag.gid)" class="pbtnHI BtnNew">
+                <i class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" title="تعریف کل جدید"></i>
+            </a>
+        </div>
+
+        <div class="table-responsive-lg">
+            <table class="table table-striped" id="myTable3">
+                <thead>
+                    <tr>
+                        <th>
+                            کد کل و عنوان
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        if (ViewBag.Kol != null)
+                        {
+                            @foreach (var item in (ViewBag.Kol as List<RayaHesab.Models.Koltb>))
+                            {
+                                <tr>
+                                    <td>
+                                        <a asp-action="Index" asp-route-kid="@item.Mid" class="btn btn-outline-info btload" style="width:90%;text-align:right">@item.Codekol - @item.Namekol</a>
+                                        @*<a href="/Coding/UpdateList?id=@item.Mid&s=k"
+                                            class="btn btn-outline-info btload"
+                                            style="width:90%;text-align:right">@item.Codekol-@item.Namekol</a>*@
+                                        <a href="#" onclick="EditKol(@item.Mid)" class="pbtnHIE BtnEdit">
+                                            <i class="fa fa-pencil-alt" aria-hidden="true" data-toggle="tooltip" title="ویرایش"></i>
+                                        </a>
+                                        <a href="#" onclick="DeleteKol(@item.Mid)" class="pbtnHID BtnDel">
+                                            <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group has-search">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input class="form-control" id="myInputSearch2" type="text" placeholder="جستجو...">
+            <a href="#" id="pbtn" onclick="CreateMoein(@ViewBag.kid)" class="pbtnHI BtnNew">
+                <i class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" title="تعریف معین جدید"></i>
+            </a>
+        </div>
+
+
+        <div class="table-responsive-lg">
+            <table class="table table-striped" id="myTable2">
+                <thead>
+                    <tr>
+                        <th>
+                            کد معین و عنوان
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        if (ViewBag.Moin != null)
+                        {
+                            @foreach (var item in (ViewBag.Moin as List<RayaHesab.Models.Mointb>))
+                            {
+                                <tr>
+                                    <td>
+                                        @*<a href="/Coding/UpdateList?id=@item.Mid&s=m" class="btn btn-default" style="width:90%;text-align:right">@item.K.Codekol-@item.Codemoin - @item.Namemoin</a>*@
+                                        <a asp-action="Index" asp-route-moinid="@item.Mid" class="btn btn-outline-info btload" style="width:90%;text-align:right">@item.Codemoin - @item.Namemoin</a>
+                                        <a href="#" onclick="EditMoein(@item.Mid)" class="pbtnHIE BtnEdit">
+                                            <i class="fa fa-pencil-alt" aria-hidden="true" data-toggle="tooltip" title="ویرایش"></i>
+                                        </a>
+                                        <a href="#" onclick="DeleteMoein(@item.Mid)" class="pbtnHID BtnDel">
+                                            <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="form-group has-search">
+            <span class="fa fa-search form-control-feedback"></span>
+            <input class="form-control" id="myInputSearch1" type="text" placeholder="جستجو...">
+            <a href="#" id="pbtn" onclick="CreateTaf(@ViewBag.mid)" class="pbtnHI BtnNew">
+                <i class="fa fa-plus-square" aria-hidden="true" data-toggle="tooltip" title="تعریف تفصیلی جدید"></i>
+            </a>
+        </div>
+
+
+        <div class="table-responsive-lg">
+            <table class="table table-striped" id="myTable1">
+                <thead>
+                    <tr>
+                        <th>
+                            کد تفصیلی و عنوان
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        if (ViewBag.Submoin != null)
+                        {
+                            @foreach (var item in (ViewBag.Submoin as List<RayaHesab.Models.RlateMstb>))
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="#" class="btn btn-default"
+                                           style="width:90%;text-align:right">@item.Moin.K.Codekol-@item.Moin.Codemoin-@item.Taf.Codetaf-@item.Taf.Nametaf</a>
+                                        <a href="#" onclick="EditTaf(@item.Mid)" class="pbtnHIE BtnEdit">
+                                            <i class="fa fa-pencil-alt" aria-hidden="true" data-toggle="tooltip" title="ویرایش"></i>
+                                        </a>
+                                        <a href="#" onclick="DeleteTaf(@item.Mid)" class="pbtnHID BtnDel">
+                                            <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="MyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTittle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ModalBody">
+                ...
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function maxkol(gid, kcontrol) {
+            var mform = new FormData();
+            mform.append("gid", gid);
+            $.ajax({
+                url: "/Main/getmaxkol",
+                data: mform,
+                type: "POST",
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function (data) {
+                    $(kcontrol).val(data);
+                }
+            })
+        }
+        function maxcode(kid) {
+            var mform = new FormData();
+            mform.append("kid", kid);
+            $.ajax({
+                url: "/Main/getmaxmoin",
+                data: mform,
+                type: "POST",
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    $("#cmoin").val(data);
+                }
+            })
+        }
+
+
+        function CreateKol(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/Koltbs/Create/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("ایجاد");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+        function EditKol(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/Koltbs/Edit/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("ویرایش");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+        function DeleteKol(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/Koltbs/Delete/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("حذف");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+        function CreateGroup() {
+            $(".loading").show();
+            $.ajax({
+                url: "/Gorohtbs/Create",
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("ایجاد");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+        function EditGroup(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/Gorohtbs/Edit/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("ویرایش");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+        function DeleteGroup(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/Gorohtbs/Delete/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("حذف");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+        function CreateMoein(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/Mointbs/Create/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("ایجاد");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+        function EditMoein(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/Mointbs/Edit/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("ویرایش");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+        function DeleteMoein(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/Mointbs/Delete/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("حذف");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+        function CreateTaf(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/Submointbs/Create/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("ایجاد");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+        function EditTaf(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/Submointbs/Edit/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("ویرایش");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+        function DeleteTaf(id) {
+            $(".loading").show();
+            $.ajax({
+                url: "/Submointbs/Delete/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#MyModal").modal("show");
+                $("#ModalTittle").html("حذف");
+                $("#ModalBody").html(result);
+                $(".loading").hide();
+            });
+        };
+    </script>
+}

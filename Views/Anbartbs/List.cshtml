@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewData["Title"] = "مدیریت انبار";
+    Layout = null;
+}
+
+@if (ViewBag.err != null)
+{
+    <div class="alert-danger"> @ViewBag.err</div>
+
+}
+
+<table id="myTable" class="table table-striped table-responsive " >
+    <thead>
+        <tr>
+            <th>
+                ردیف
+            </th>
+            <th>
+                عنوان
+            </th>
+            <th>
+                کد حساب
+            </th>
+            <th>
+                عنوان حساب
+            </th>
+            <th>تنظیمات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ int rowc = 0;
+            if (ViewBag.list != null)
+            {
+                foreach (var item in ViewBag.list)
+                {
+                    rowc = rowc + 1;
+                    <tr>
+                        <td>
+                            @rowc
+                        </td>
+                        <td>
+                            @item.Mid -
+                            @item.Namec
+                        </td>
+                        <td>
+                            @item.Moin.K.Codekol -
+                            @item.Moin.Codemoin
+                            @(item.Taf != null ? " - " + item.Taf.Codetaf : "")
+                        </td>
+                        <td>
+                            @item.Moin.K.Namekol -
+                            @item.Moin.Namemoin
+                            @(item.Taf != null ? " - " + item.Taf.Nametaf : "")
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="mb-2 mr-2 dropdown-toggle btn btn-info"><i class="fa fa-cog"></i></button>
+
+                                <div class="dropdown-menu">
+                                    <a href="#" class="dropdown-item" onclick="Edit(@item.Mid)">
+                                        ویرایش
+                                    </a>
+                                    <a href="#" onclick="Delete(@item.Mid)" class="dropdown-item">
+                                        حذف
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>تعداد ردیف</td>
+            <td data-math="col-count"></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+
+
+<!-- Modal -->

@@ -1,0 +1,46 @@
+﻿@model RayaHesab.Models.Koltb
+
+<div class="row">
+    <div class="col-md-12 DRight">
+        <form asp-action="Edit"  id="actionform">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Mid" />
+            <div class="form-group">
+                <label asp-for="Gid" class="control-label">عنوان گروه</label>
+                <select asp-for="Gid" onkeypress="handle(event,'codekol')"  class="form-control" asp-items="ViewBag.Gid"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Codekol" class="control-label">کد کل</label>
+                <input asp-for="Codekol" id="codekol" onkeypress="handle(event,'namekol')" class="form-control" oninvalid="this.setCustomValidity('کد کل را وارد کنید')" oninput="setCustomValidity('')" required />
+                <span asp-validation-for="Codekol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Namekol" class="control-label">نام کل</label>
+                <input asp-for="Namekol" id="NameKol" onkeypress="handle(event,'typec')" class="form-control" oninvalid="this.setCustomValidity('نام کل را وارد کنید')" oninput="setCustomValidity('')" required />
+                <span asp-validation-for="Namekol" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Typec" class="control-label">ماهیت</label>
+                <select asp-for="Typec" id="typec" onkeypress="handle(event,'kind')" class="form-control">
+                    <option value="0">بدهکار</option>
+                    <option value="1">بستانکار</option>
+                    <option value="2">خنثی</option>
+                </select>
+                <span asp-validation-for="Typec" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Kind" class="control-label">نوع</label>
+                <select asp-for="Kind" id="kind" onkeypress="handle(event,'btn')" class="form-control">
+                    <option value="0">موقت</option>
+                    <option value="1">دائم</option>
+                </select>
+                <span asp-validation-for="Kind" class="text-danger"></span>
+            </div>
+            <hr />
+            <div class="form-group">
+                <input type="button" onclick="submite(2)" id="btn" value="ویرایش" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

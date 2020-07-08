@@ -1,0 +1,71 @@
+﻿
+@{
+    Layout = null;
+}
+<table id="myTable" class="table table-striped mytable" style="background-color:white">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                عنوان
+            </th>
+            <th>
+                عنوان معین
+            </th>
+            <th>تنظیمات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (ViewBag.list != null)
+            {
+                int rowc = 0;
+                foreach (var item in ViewBag.list)
+                {
+                    rowc = rowc + 1;
+                    <tr>
+                        <td>@rowc</td>
+                        <td>
+                            @item.Title
+                        </td>
+                        <td>
+                            @item.Moin.K.Codekol -
+                            @item.Moin.Codemoin -
+                            @item.Moin.K.Namekol -
+                            @item.Moin.Namemoin
+                        </td>
+                        <td class="text-center">
+                            <div class="dropdown">
+                                <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="mb-2 mr-2 dropdown-toggle btn btn-info"><i class="fa fa-cog"></i></button>
+
+                                <div class="dropdown-menu">
+                                    <a href="#" class="dropdown-item" onclick="Edit(@item.Mid)">
+                                        ویرایش
+                                    </a>
+                                    <a href="#" onclick="Delete(@item.Mid)" class="dropdown-item">
+                                        حذف
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+
+            }
+        }
+
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>تعداد ردیف</td>
+            <td data-math="col-count"></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
+
+</table>
+<script src="~/scripts/script.js"></script>

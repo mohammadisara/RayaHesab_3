@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewData["Title"] = " لیست خرید";
+    Layout = null;
+}
+<div class="modal fade" id="MyModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl " role="document">
+        <div class="modal-content" style="overflow-x:scroll">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalTittle2">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ModalBody2">
+                ...
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="background-color:white">
+    @{if (ViewBag.err != null)
+        {
+            <div class="col-md-12">
+                <a href="#" class="alert-danger">
+                    <i class="fa fa-warning fa-2x" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>@ViewBag.err
+                </a>
+            </div>
+        }
+    }
+    <div class="col-md-12">
+        <h4 style="padding-bottom:1em" class="text-center">@ViewBag.Tittle</h4>
+        <hr />
+    </div>
+    <table id="myTable" class="table mytable">
+        <thead>
+            <tr>
+                <th>
+                    ردیف
+                </th>
+                <th>
+                    شماره فاکتور
+                </th>
+                <th>
+                    تاریخ فاکتور
+                </th>
+                <th class="filter-select" data-placeholder="نوع فاکتور">
+                    نوع فاکتور
+                </th>
+                <th class="filter-select" data-placeholder="فروشگاه">
+                    فروشگاه
+                </th>
+                <th>
+                    حساب / شخص
+                </th>
+                <th>
+                    توضیحات
+                </th>
+                <th class="sorter-currency">
+                    جمع کل
+                </th>
+                <th class="sorter-currency">
+                    جمع تخفیف
+                </th>
+                <th class="sorter-currency">
+                    مجموع خالص فاکتور
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int r = 0;
+            }
+            @if (ViewBag.list != null)
+            {
+                @foreach (var item in ViewBag.list)
+                {
+                    r = r + 1;
+                    <tr style="cursor:pointer" onclick='showfact(@item.Mid)' >
+                        <td>
+                            @r
+                        </td>
+                        <td>
+                            @item.Nofact
+                        </td>
+                        <td>
+                            @item.Datec
+                        </td>
+                        <td>
+                            @{string str = "";
+                                switch (item.Typec)
+                                {
+                                    case 0: { str = "فاکتور خرید"; break; }
+                                    case 1: { str = "فاکتور فروش "; break; }
+                                    case 3: { str = "فاکتور تحویلی فروش"; break; }
+                                    case 4: { str = "فاکتور درخواست خرید"; break; }
+                                    case 5: { str = "فاکتور سفارش فروش"; break; }
+                                    case 6: { str = "فاکتور برگشت از خرید"; break; }
+                                    case 7: { str = "فاکتور برگشت از فروش"; break; }
+                                    case 8: { str = "فاکتور تحویلی خرید"; break; }
+                                }
+                                @str
+                            }
+
+
+                        </td>
+                        <td>
+                            @item.Nameanbar
+                        </td>
+                        <td>
+                            @item.Namekamel
+                        </td>
+                        <td>
+                            @item.Note
+                        </td>
+                        <td>
+                            @string.Format("{0:n0}", item.Pkol)
+                        </td>
+                        <td>
+                            @string.Format("{0:n0}", item.Takh)
+                        </td>
+                        <td>
+                            @string.Format("{0:n0}", item.Pkhales)
+                        </td>
+                    </tr>
+                    }
+                    }
+                </tbody>
+        <tfoot id="tfoot">
+            <tr>
+                <td>تعداد ردیف</td>
+                <td data-math="col-count"></td>
+                <td></td>
+                <td colspan="4"> جمع کل</td>
+                <td data-math="col-sum">above-sum</td>
+                <td data-math="col-sum">above-sum</td>
+                <td data-math="col-sum">above-sum</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+
+<script>
+
+    $("#exp").click(function () {
+         
+        $("#myTable").table2excel({
+            exclude: ".noExl",
+            name: "Worksheet Name",
+            filename: "SomeFile.xls",//do not include extension
+            fileext: ".xls" // file extension
+        });
+    });
+
+</script>

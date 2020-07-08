@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html style="height:90%;">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] </title>
+    <link rel="stylesheet" href="~/ray/dash1/dist/css/icono.min.css" />
+    <link rel="stylesheet" href="~/ray/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/ray/dash1/dist/css/site.css" />
+</head>
+
+<body style="overflow:hidden">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="container">
+                    <div style="background-color:transparent;text-align:center;padding:2em 0 1em 0">
+                        <img src="~/ray/images/mylogo.png" alt="Raymon Group" class="ImgLogo" />
+                    </div>
+                    @(ViewBag.err != null ? Html.Raw("<div class='login alert-danger' style='background-color:#f8d7da;margin:0 auto'>" + ViewBag.err + "</div>") : "")
+                    <div class="login" style="background-color:white;margin-top:1em">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fntlat text-center">
+                    © 2018 Raymon Group All Rights Reserved.<br />
+                    Design By: Raymon Group
+                    <div id="divinfo">Version 1.0.0</div>
+                    <br /><br /><br /><br />
+                </div>
+            </div>
+            <div class="col-lg-6 bgleftlogin">
+
+            </div>
+        </div>
+    </div>
+
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/ray/js/site.js"></script>
+    
+
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

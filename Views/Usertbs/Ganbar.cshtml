@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewData["Title"] = "دسترسی به فروشگاه ها";
+    Layout = null;
+}
+<div class="row" style="background-color:white">
+    <div class="col-md-6">
+        <div class="col-md-12">
+            لیست فروشگاه
+            <input type="hidden" id="hfmid" value="@ViewBag.uid" />
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>عنوان </th>
+                    <th>انتخاب</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ if (ViewBag.list != null)
+                    {
+                        foreach (var item in ViewBag.list)
+                        {
+                            <tr>
+                                <td> @item.Namec </td>
+                                <td>
+                                    <input type="button" onclick="saveganbar(@item.Mid)" class="btn btn-primary" value="انتخاب" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        لیست فروشگاه های مجاز کاربر  --- @ViewBag.nameu
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>عنوان فروشگاه</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+</div>
+<script>
+    function refreshpage(id) {
+        $("#modalform div.modal-body").html(lmsg);
+        $.ajax({
+            url: "/Usertbs/Ganbar?id=" + id,
+            type: "Get"
+        }).done(function (result) {
+            $("#modalform h5.header-title").html("ایجاد");
+            $("#modalform div.modal-body").html(result);
+            getanbaruser();
+        });
+    }
+    $(function () {
+        getanbaruser();
+    });
+    function getanbaruser() {
+        var mform = new FormData();
+        mform.append("uid", $("#hfmid").val())
+        $.ajax({
+            url: "/Usertbs/getganbar",
+            data: mform,
+            type: "POST",
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                $("#tbody").html("");
+                if (data == "0")
+                    alert("خطا مجدد تلاش نمایید");
+                else {
+                    var s = "";
+
+                    for (var i = 0; i < data.length; i++) {
+                        s = "<tr>"
+                            + "<td>" + data[i]["Title"] + "</td>"
+                            + "<td><input type='button' class='btn btn-primary' value='حذف' onclick='delg(" +
+                            data[i]["Mid"] + ")' /></td ><tr>"
+                        $("#tbody").append(s);
+                    }
+                }
+            }
+        })
+    }
+
+
+    function delg(mid) {
+        var i = confirm('ایا مطمئن هستید؟');
+        if (i) {
+            var mform = new FormData();
+            mform.append("mid", mid);
+            $.ajax({
+                url: "/Usertbs/delg",
+                data: mform,
+                type: "POST",
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data == "1")
+                        refreshpage($("#hfmid").val());
+                    else {
+                        alert(data);
+                    }
+                }
+            })
+        }
+    }
+    function saveganbar(mid) {
+        var mform = new FormData();
+        mform.append("mid", mid);
+        mform.append("uid", $("#hfmid").val())
+        $.ajax({
+            url: "/Usertbs/saveganbar",
+            data: mform,
+            type: "POST",
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data == "1")
+                    //refreshpage($("#hfmid").val());
+                    getanbaruser();
+                else {
+                    alert(data);
+                }
+            }
+        })
+    }
+</script>

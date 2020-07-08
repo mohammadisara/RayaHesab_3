@@ -1,0 +1,380 @@
+﻿@model IEnumerable<RayaHesab.Models.Daftar>
+
+@{
+    ViewData["Title"] = "گزارش دفاتر";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+
+<div class="row DMMenu">
+    @*<div class="col-md-12">
+        <br />
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User"><i class="fa fa-home" aria-hidden="true" style="-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);"></i></a></li>
+                <li class="breadcrumb-item"><a href="/User/ReportMali">&nbsp; گزارشات مالی</a></li>
+                <li class="breadcrumb-item active" aria-current="page">&nbsp; دفاتر</li>
+            </ol>
+        </nav>
+    </div>*@
+    <div class="col-md-12">
+        <div class="SecContent">
+            @{if (ViewBag.err != null)
+                {
+                    <div class="alert-danger">@ViewBag.err</div>
+                }
+            }
+            <h2 class="myh2">@ViewBag.Tittle</h2>
+            <form asp-action="Index" class="row" style="background-color:antiquewhite;padding:1em 0;margin-top:-1.5em;">
+                <div class="form-group col-sm-2">
+                    از تاریخ
+                    <input id="fdate" autocomplete="off" name="fdate" class="form-control DateText" type="text" value="@ViewBag.fdate" />
+                </div>
+                <div class="form-group col-sm-2">
+                    تا تاریخ
+                    <input id="tdate" autocomplete="off" name="tdate" class="form-control DateText" type="text" value="@ViewBag.tdate" />
+                </div>
+                <div class="form-group col-sm-2" style="@((ViewBag.TCode == "1" || ViewBag.TCode == "2" || ViewBag.TCode == "3" || ViewBag.TCode == "4") ? "display:block;" : "display:none;")">
+                    کد کل
+                    <br /><select id="codekol" onchange="getmoin()" name="codekol" class="myselect2 form-control " style="" asp-items="ViewBag.Kol">
+                        <option value="0"> -- انتخاب کنید --</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2" style="@((ViewBag.TCode == "2" || ViewBag.TCode == "3" || ViewBag.TCode == "4") ? "display:block;" : "display:none;")">
+                    کد معین
+                    <select id="codemoin" onchange="gettaf()" name="codemoin" class="myselect2 form-control">
+                        <option value="0"> -- انتخاب کنید --</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2" style="@((ViewBag.TCode == "3" || ViewBag.TCode == "4") ? "display:block;" : "display:none;")">
+                    کد تفصیلی
+                    <select id="codetaf" name="codetaf" class="myselect2 form-control">
+                        <option value="0"> -- انتخاب کنید --</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-3" style="@((ViewBag.TCode == "4" || ViewBag.TCode == "5") ? "display:block;" : "display:none;")">
+                    مشتری
+                    <select id="codeperson" name="codeperson" class="myselect2 form-control" asp-items="@ViewBag.Person">
+                        <option value="0"> -- انتخاب کنید --</option>
+                    </select>
+                </div>
+                <div class="form-group col-sm-2">
+                    @{if (ViewBag.isfact == 0)
+                        {
+                            <input style="margin-top:2em" type="checkbox" id="chbox" onclick="ch()" />
+                            @Html.Raw("گردش با ریز فاکتور");
+                        }
+                        else
+                        {
+                            <input style="margin-top:2em" type="checkbox" id="chbox" checked="checked" onclick="ch()" />
+                            @Html.Raw("گردش با ریز فاکتور");
+                        }
+                    }
+                    <input type="hidden" name="isfact" id="hfisfact" value="@ViewBag.isfact" />
+
+                </div>
+                <div class="form-group col-sm-2">
+                    فروشگاه
+                    <select asp-items="@ViewBag.listanbar" name="anbar" class="form-control">
+                        <option value="0">انتخاب کنید</option>
+                    </select>
+                </div>
+
+                <div class="form-group col-sm-2">
+                    <input type="hidden" name="typec" value="@ViewBag.id" />
+                    @*<input type="submit" value="تهیه گزارش" class="btn btn-success" />*@
+                    <input type='hidden' id="hftypec" name='print' value="0" />
+
+                    <a class="btn btn-success" style="color:white;margin-top:1.5em" onclick="sendprint(0)">تهیه گزارش</a>
+
+                    <a class="btn btn-primary" style="color:white;margin-top:1.5em" onclick="sendprint(1)">چاپ</a>
+
+                </div>
+                @*<div class="form-group col-sm-6">
+            <a class="btn btn-success" onclick="sendform(0)">دفتر کل</a>
+            <a class="btn btn-success" onclick="sendform(1)">دفتر معین</a>
+            <a class="btn btn-success" onclick="sendform(2)">دفتر تفصیلی</a>
+            <a class="btn btn-success" onclick="sendform(3)">گردش حساب یک فرد</a>
+            <a class="btn btn-success" onclick="sendform(4)">گردش یک فرد</a>
+        </div>*@
+            </form>
+
+            <div class="table-responsive-lg">
+                <hr />
+                <table id="myTable" class="table table-striped">
+                    <thead>
+                        <tr style="background-color:brown;color:white">
+                            <th data-sort="int" id="nosanad">
+                                شماره سند
+                            </th>
+                            <th data-sort="string" id="datesanad">
+                                تاریخ سند
+                            </th>
+                            <th data-sort="string" id="note">
+                                توضیحات
+                            </th>
+                            <th data-sort="float" id="bed">
+                                بدهکار
+                            </th>
+                            <th data-sort="float" id="bes">
+                                بستانکار
+                            </th>
+                            <th data-sort="float" id="m">
+                                مانده
+                            </th>
+                            <th data-sort="string" id="mah">
+                                ماهیت حساب
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ decimal m = 0, bed = 0, bes = 0;
+                            string s = "بد";
+                            int r = 0;
+                        }
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                r = r + 1;
+                                <tr>
+                                    <td>
+                                        <a asp-action="Index" title="نمایش سند" target="_blank" asp-controller="Sanadtbs" asp-route-id="@item.Nosanad" >@item.Nosanad</a>
+                                    </td>
+                                    <td>
+                                        <a title="نمایش سند" asp-action="Index" target="_blank" asp-controller="Sanadtbs" asp-route-id="@item.Nosanad">@item.Datec</a>
+</td>
+                                    <td>
+                                        <span style="display:block">
+                                            @{if (item.Factid != null)
+                                                {
+                                                    <a title="نمایش فاکتور" asp-action="Index" target="_blank" asp-controller="Factkalatbs"
+                                                       asp-route-id="@item.Factid" >@item.Note</a>
+                                                }
+                                                else
+                                                {
+                                                    @item.Note
+                                                }
+                                            }
+
+
+
+                                        </span>
+                                        <span style="display:block;font-size:12px" id="sp_@item.Mid">
+                                            @{ if (item.Factid != null && item.Note.IndexOf("تخفیف")<0)
+                                                {
+                                                    <script src="/lib/jquery/dist/jquery.js"></script>
+                                                    <script>
+                                                        setfact(@item.Mid , @item.Factid)
+                                                        function setfact(mid , idfact) {
+                                                            if ($("#hfisfact").val() == "1") {
+                                                                var span = "#sp_"+mid;
+                                                                var mform = new FormData();
+                                                                mform.append("idfact", idfact);
+                                                                $.ajax({
+                                                                    url: "/GozareshDaftar/getfact",
+                                                                    data: mform,
+                                                                    processData: false,
+                                                                    contentType: false,
+                                                                    type: "POST",
+                                                                    dataType: "json",
+                                                                    success: function (data) {
+                                                                         
+                                                                        var srr = "";
+                                                                        for (var i = 0; i < data.length; i++) {
+                                                                            if (data[i]["act"] != 1)
+                                                                                srr += "<span style='color:red'><b>غیر قطعی</b></span>";
+                                                                            srr += "<span style='display:block;'>" + data[i]["Namekala"]
+                                                                                + " مقدار / مقدار درخواست : " + data[i]["Tedadv"]
+                                                                                + " قیمت : " + formatMoney(data[i]["Price"], 0, "", ",")
+                                                                                + " قیمت کل : " + formatMoney(data[i]["Pricekol"], 0, "", ",")
+                                                                                + " تخفیف : " + formatMoney(data[i]["takhfif"], 0, "", ",") + "</span>";
+                                                                        }
+                                                                        $(span).html(srr);
+                                                                    }
+                                                                })
+                                                            }
+                                                        }
+                                                    </script>
+                                                }
+                                            }
+
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @{ if (@item.Bed >= 0)
+                                            {
+                                                @string.Format("{0:n0}", @item.Bed)
+                                                bed += (decimal)@item.Bed;
+                                            }
+                                            else
+                                            {
+                                                var line = "0";
+                                                @line
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{ if (@item.Bes >= 0)
+                                            {
+                                                @string.Format("{0:n0}", @item.Bes)
+                                                bes += (decimal)@item.Bes;
+                                            }
+                                            else
+                                            {
+                                                var line = "0";
+                                                @line
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @{ m = bed - bes;
+                                            if (m < 0)
+                                            {
+
+                                                s = "بس";
+                                                @Html.Raw("<span style='color:green'>" + string.Format("{0:n0}", System.Math.Abs(m)) + "</span>");
+                                            }
+                                            else if (m > 0)
+                                            {
+                                                s = "بد";
+                                                @Html.Raw("<span style='color:black'>" + string.Format("{0:n0}", m) + "</span>");
+                                            }
+                                            else
+                                            {
+                                                s = "بی حساب";
+                                                @Html.Raw("<span style='color:black'>0</span>");
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        @s
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr style="background-color:brown;color:white">
+                            <td>تعداد ردیف : @r</td>
+                            <td colspan="2" class="text-left">جمع کل</td>
+                            <td>@string.Format("{0:n0}", bed)</td>
+                            <td>@string.Format("{0:n0}", bes)</td>
+                            <td>@string.Format("{0:n0}", System.Math.Abs((decimal)m))</td>
+                            <td>@s</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="hidemo" value="@ViewBag.mo" />
+    <input type="hidden" id="hideta" value="@ViewBag.ta" />
+    <input type="hidden" id="hidepe" value="@ViewBag.pe" />
+</div>
+@section Scripts{
+
+    <script>
+        function ch() {
+            $("#hfisfact").val("0");
+            if ($("#chbox").prop("checked") == true)
+                $("#hfisfact").val("1");
+        }
+        function sendprint(typec) {
+            $("#hftypec").val(typec)
+            if (typec == 1)
+                $("form").attr("target", "_blank");
+            else
+                $("form").attr("target", "_self");
+            $("form").submit();
+
+        }
+        $(document).ready(function () {
+            getmoin();
+        });
+        $(function () {
+            $("table").tablesorter({
+                 
+                showProcessing: true,
+                theme: 'blue',
+                // initialize zebra and filter widgets
+                widgets: ["zebra", "filter"],
+                widgetOptions: {
+                    filter_reset: '.reset'
+                }
+            })
+                //.bind('sortBegin sortEnd', function (e) {
+                //    vis = e.type === "sortBegin";
+                //})
+                //.bind('filterStart filterEnd', function (e, filter) {
+                //    if (e.type === 'filterStart') {
+                //        start = e.timeStamp;
+                //        vis = true;
+                //        t = '<li>Filter Started: [' + filter + ']</li>';
+                //    } else if (start) {
+                //        vis = false;
+                //        t = '<li>Filter Ended after ' + ((e.timeStamp - start) / 1000).toFixed(2) + ' seconds</li>';
+                //        start = 0;
+                //    } else {
+                //        return;
+                //    }
+                //    $("#display").append(t).find('li:first').remove();
+                //});
+        })
+
+        function getmoin() {
+            var sel = parseInt($("#hidemo").val());
+            var pel = parseInt($("#hidepe").val());
+
+            var mform = new FormData();
+            mform.append("kid", $("#codekol").children("option:selected").val());
+            $.ajax({
+                type: "POST",
+                url: "/Main/getmoinwithkol",
+                contentType: false,
+                processData: false,
+                data: mform,
+                success: function (result) {
+                    var res = JSON.parse(result);
+                    $("#codemoin option").remove();
+                    $("#codetaf option").remove();
+                    $("#codetaf").append("<option value='0' selected>-- انتخاب کنید --</option>");
+                    $("#codemoin").append("<option value='0' selected>-- انتخاب کنید --</option>");
+                    for (var i = 0; i < res.length; i++) {
+                        $("#codemoin").append("<option value=" + res[i]["Mid"] + ">" + res[i]["Namemoin"] + "</option>");
+                    }
+                    $("#codemoin").val(sel);
+                    gettaf();
+                    $("#codeperson").val(pel);
+                }
+            });
+        }
+
+        function gettaf() {
+            var sel = parseInt($("#hideta").val());
+            var pel = parseInt($("#hidepe").val());
+
+            var mform = new FormData();
+            mform.append("moinid", $("#codemoin").children("option:selected").val());
+            $.ajax({
+                type: "POST",
+                url: "/Main/gettafwithmoin",
+                contentType: false,
+                processData: false,
+                data: mform,
+                success: function (result) {
+                    var res = JSON.parse(result);
+                    $("#codetaf option").remove();
+                    $("#codetaf").append("<option value='0'>-- انتخاب کنید --</option>");
+                    for (var i = 0; i < res.length; i++) {
+                        $("#codetaf").append("<option value=" + res[i]["Mid"] + ">" + res[i]["Nametaf"] + "</option>");
+                    }
+                    $("#codetaf").val(sel);
+                    $("#codeperson").val(pel);
+
+                }
+            });
+        }
+    </script>
+}

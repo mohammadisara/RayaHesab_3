@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="refresh" content="1200" />
+    <title>@ViewData["Title"] </title>
+
+    <link href="~/js/theme.default.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/icono.min.css" />
+    <link href="/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="/css/jquery-ui.css" />
+    <link href="~/Select2/select2.css" rel="stylesheet" />
+    <link href="~/DatePicker/persian-datepicker.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/richtext.min.css" />
+
+
+
+
+
+    @*<link rel="stylesheet" href="~/css/treeview.css">*@
+    @*<link rel="stylesheet" href="https://cdn.metroui.org.ua/v4/css/metro-all.min.css">*@
+
+</head>
+<body>
+
+    <div class="container-fluit">
+        <div class="Aheader">
+            <div class="AUser">
+                <i class="fa fa-user" aria-hidden="true" style="-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);"></i>
+                &nbsp; <span>کاربر محترم <b style="color:blue"> @ViewBag.Admin </b> خوش آمدید</span> &nbsp;
+                <i class="fa fa-calendar" aria-hidden="true" style="padding:0 1em; -moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);">
+                </i>
+                <span>
+                    امروز : <b style="color:blue" id="dateem">
+                    </b>
+                    <b id="time" style="color:red;padding:0 1em"></b>
+                </span>
+            </div>
+            <div class="ALout">
+                <a asp-area="" asp-action="LogOut" asp-controller="User" class="btn btn-danger btload">
+                    خروج
+                    <span class="Timer"></span>
+                </a>
+            </div>
+        </div>
+
+        <div class="AMenu" onmouseover="menuon()" onmouseout="menuoff()">
+            <div class="btnshow">
+                <img src="/images/arrow.png" alt="Arzcome">
+            </div>
+            <div class="MenuHeader ">
+                <img src="/images/Logo.jpg" alt="RayaHesab" class="ImgLogoA" />
+            </div>
+            <ul>
+
+                @*@using Microsoft.AspNetCore.Http
+                    @inject IHttpContextAccessor HttpContextAccessor*@
+
+
+                @*@if (@HttpContextAccessor.HttpContext.Session.GetString("a1") != null)
+                    {*@
+                <li class="Mli @((ViewBag.MID == 5) ? "MActive" : "") btload">
+                    <a asp-route-menuid="1" asp-controller="User" asp-action="Index"><span class="icono-document MyIcon Myscale"></span>&nbsp; اطلاعات پایه</a>
+                </li>
+                <li class="Mli @((ViewBag.MID == 1) ? "MActive" : "") btload">
+                    <a asp-route-menuid="2" asp-controller="User" asp-action="Index"><span class="icono-document MyIcon Myscale"></span>&nbsp; حسابداری و خزانه</a>
+                </li>
+                <li class="Mli @((ViewBag.MID == 6) ? "MActive" : "") btload">
+                    <a asp-route-menuid="4" asp-controller="User" asp-action="Index"><span class="icono-document MyIcon Myscale"></span>&nbsp; گزارشات مالی</a>
+                </li>
+                <li class="Mli @((ViewBag.MID == 3) ? " MActive" : "") btload">
+                    <a asp-route-menuid="3" asp-controller="User" asp-action="Index"><span class="icono-document MyIcon Myscale"></span>&nbsp; خرید / فروش / انبار</a>
+                </li>
+                <li class="Mli @((ViewBag.MID == 7) ? " MActive" : "") btload">
+                    <a asp-route-menuid="5" asp-controller="User" asp-action="Index"><span class="icono-document MyIcon Myscale"></span>&nbsp; گزارشات انبار و فروش</a>
+                </li>
+                @*                }*@
+                <li class="Mli @((ViewBag.MID == 8) ? " MActive" : "") btload">
+                    <a asp-route-menuid="6" asp-controller="User" asp-action="Index">
+                        <span class="icono-document MyIcon Myscale"></span>&nbsp; تولید
+                    </a>
+                </li>
+                @*@if (@HttpContextAccessor.HttpContext.Session.GetString("a6") != null)
+                    {*@
+                <li class="Mli @((ViewBag.MID == 4) ? " MActive" : "") btload">
+                    <a asp-route-menuid="7" asp-controller="User" asp-action="Index">
+                        <span class="icono-document MyIcon Myscale"></span>&nbsp; امکانات
+                    </a>
+                </li>
+                @*}*@
+            </ul>
+        </div>
+        <div class="AContent">
+            @RenderBody()
+        </div>
+    </div>
+    @*<partial name="_CookieConsentPartial" />*@
+
+    <script src="/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery-3.3.1.js"></script>
+    <script src="~/lib/jquery/dist/jquery-ui.js"></script>
+    <script src="~/lib/bootstrap/dist/js/popper.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/my.js"></script>
+    <script src="/js/site.js"></script>
+    <script src="/js/autocomplete.js"></script>
+    <script src="~/Select2/select2.js"></script>
+    <script src="~/DatePicker/persian-date.min.js"></script>
+    <script src="~/DatePicker/persian-datepicker.min.js"></script>
+    <script src="~/js/sort.js"></script>
+    <script src="~/js/jquery.richtext.js"></script>
+    <script type="text/javascript" src="~/js/pdate.min.js"></script>
+    @*<script src="~/js/metro.min.js"></script>*@
+
+    <script src="~/js/jquery.tablesorter.min.js"></script>
+    <script src="~/js/jquery.tablesorter.widgets.min.js"></script>
+
+
+    <script>
+        var start = new Date;
+        var j = 1200;
+        setInterval(function () {
+            var q = Math.floor((new Date - start) / 1000);
+            var t = j - q;
+            if (t <= 0) {
+                 
+                $.ajax({
+                    type: "POST",
+                    url: "/User/LogOut",
+                    success: function () {
+                        location.reload();
+                    }
+                })
+            }
+            else $('.Timer').text(t);
+
+        }, 1000);
+        $(document).ready(function () {
+            $('.myselect2').select2();
+            $(".DateText,.DateTextE").pDatepicker({
+                initialValueType: 'persian',
+                calendar: {
+                    persian: {
+                        locale: 'en'
+                    }
+                },
+                autoClose: true,
+                format: 'YYYY/MM/DD'
+            });
+        });
+        function startTime() {
+            var today = new Date();
+            var h = today.getHours();
+            var m = today.getMinutes();
+            var s = today.getSeconds();
+            // add a zero in front of numbers<10
+            m = checkTime(m);
+            s = checkTime(s);
+            //$("#time").html(h + ":" + m + ":" + s);
+            var s = 123456.123456;
+            //$("#time").html(formatMoney(s,4,".",""));
+            $("#time").html(h + ":" + m);
+
+            t = setTimeout(function () {
+                startTime()
+            }, 1000);
+        }
+        function checkTime(i) {
+            if (i < 10) {
+                i = "0" + i;
+            }
+            return i;
+        }
+        //$(function () {
+        //    $('table').tablesorter({
+        //        widgets: ['zebra', 'columns'],
+        //        usNumberFormat: false,
+        //        sortReset: true,
+        //        sortRestart: true
+        //    });
+
+        //})
+        AMIB.showPDate('dateem');
+        startTime();
+
+    </script>
+
+    <div class="loading">
+        <button class="lc">×</button>
+    </div>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

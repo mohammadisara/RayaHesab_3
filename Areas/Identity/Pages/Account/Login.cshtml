@@ -1,0 +1,70 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "ورود به پنل کاربری";
+    Layout = ViewBag.layoutlogin;
+
+}
+
+<form method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    @*<div class="form-group ">
+            ورود به پنل کاربری
+        </div>*@
+    <div class="form-group">
+        <input asp-for="Input.Email" autofocus class="form-control" placeholder="نام کاربری" />
+    </div>
+    <div class="form-group">
+        <input asp-for="Input.Password" class="form-control" placeholder="کلمه عبور" />
+    </div>
+    @*<p id="otpTrigger" class="otp-trigger active">
+            <a href="javascript:void(0)" data-target="#otpTarget" class="text-primary otp-trigger-link"> ارسال رمز یک‌بار مصرف</a>
+        </p>*@
+    @*<div id="otpTarget" class="otp-holder">
+            <a href="javajavascript:void(0)" class="otp-close" data-trigger="#otpTrigger">
+                <img src="./images/icons/otp-close.svg" alt="icon">
+            </a>
+            <div class="form-group has-btn">
+                <label for="mobileNumber">رمز یک‌بار مصرف</label>
+                <input type="text" id="mobileNumber" name="mobile_number" class="form-control" placeholder="شماره موبایل">
+                <a href="javascript:void(0)" class="btn">ارسال</a>
+            </div>
+            <div class="otp-content clearfix">
+                <p class="otp-desc text-success">رمز  به ۰۹۱۵۷۶۰۵۰۳۰ ارسال شد</p>
+                <a href="javajavascript:void(0)" class="otp-send">ارسال مجدد</a>
+            </div>
+        </div>*@
+
+    <div class="form-group form-inline">
+        <span style="width:60%!important;float:right">
+            <input type="text" style="width:100%" class="form-control" placeholder="کد را وارد نمایید" asp-for="Input.CaptchaCode" maxlength="4" />
+            <span asp-validation-for="Input.CaptchaCode" class="text-danger"></span>
+        </span>
+        <span style="width:40%!important;float:left">
+            <img id="img-captcha" style="width:100%;cursor:pointer" src="/home/GetCaptchaImage" />
+        </span>
+    </div>
+    <div class="form-group">
+        <p class="forgot-password"><a asp-page="ForgotPassword" class="forgot-password-link text-primary">فراموشی رمز عبور</a></p>
+    </div>
+    <div class="btns-holder">
+        <button type="submit" class="btn btn-dark btn-block btn-login">ورود</button>
+        @*        <a href="javajavascript:void(0)" class="btn btn-white btn-block btn-register">ساخت حساب کاربری</a>*@
+    </div>
+
+</form>
+
+
+@section Scripts{
+    <script>
+        $("#img-captcha").click(function () {
+            resetCaptchaImage();
+        });
+
+        function resetCaptchaImage() {
+            d = new Date();
+            $("#img-captcha").attr("src", "/home/GetCaptchaImage?" + d.getTime());
+        }
+
+    </script>
+}

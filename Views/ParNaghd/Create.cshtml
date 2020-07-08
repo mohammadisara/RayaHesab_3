@@ -1,0 +1,69 @@
+﻿@model RayaHesab.Models.Pardartb
+@{
+    ViewData["Title"] = "اسناد دریافتنی";
+    Layout = null;
+}
+
+<form asp-action="Create" id="formaction">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="Noghabz" class="control-label">شماره قبض</label>
+            <input asp-for="Noghabz" id="txtTitleC" onkeypress="handle(event,'txtmoin')" class="form-control" />
+            <span asp-validation-for="Noghabz" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Datec" class="control-label">تاریخ</label>
+            <input asp-for="Datec" value="@ViewBag.datec" id="txtdate" onkeypress="handle(event,'txtmoin')" class="form-control DateText" type="text" />
+            <span asp-validation-for="Datec" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label class="control-label">فروشگاه</label>
+            <select asp-for="Idanbar" asp-items="@ViewBag.listanbar" class="form-control">
+            </select>
+        </div>
+        </div>
+        <hr />
+        <div class="row">
+        <div class="form-group col-sm-6 px-3">
+            <label asp-for="Sanbes" class="control-label">صندوق پرداخت کننده</label>
+            <select asp-for="Sanbes" id="san" onkeypress="handle(event,'btn')" class="form-control select2" asp-items="ViewBag.San"></select>
+        </div>
+        <input asp-for="Typec" class="form-control" value="4" type="hidden" />
+        @if (ViewBag.type == 1)
+        {
+            <div class="form-group col-sm-6">
+                <label asp-for="Moinbed" style="display:block" class="control-label">حساب دریافت کننده</label>
+                <div class="autocomplete" style="display:block;">
+                    <input onkeypress="handle(event,'txtperson')" onkeyup="hesabchange()" id="txtmoin" type="text" class="form-control" name="txtmoin">
+                </div>
+                <span class="spanzir" id="namemoin">*</span>
+                <input asp-for="Moinbed" type="hidden" id="hfmoinid" />
+                <input asp-for="Tafbed" type="hidden" id="hftafid" />
+            </div>
+        }
+        else
+        {<div class="form-group col-sm-6">
+                <label style="display:block" asp-for="Pidbed" class="control-label">شخص دریافت کننده</label>
+                <div asp-for="Pid" onkeypress="handle(event,'mab')" class="autocomplete form-group" style="display:block">
+                    <input id="txtperson" type="text" class="form-control" onkeyup="hesabchange()" name="txtperson">
+                </div>
+                <input type="hidden" asp-for="Pidbed" id="hfpersonid" />
+            </div>
+        }
+        <div class="form-group col-sm-4">
+            <label asp-for="Mablagh" class="control-label">مبلغ بریال</label>
+            <input asp-for="Mablagh" id="mab" onkeypress="handle(event,'not')" class="form-control TNPrice" />
+            <span asp-validation-for="Mablagh" class="text-danger"></span>
+        </div>
+        <div class="form-group col-sm-8">
+            <label asp-for="Note" class="control-label">یادداشت</label>
+            <input asp-for="Note" id="not" onkeypress="handle(event,'san')" class="form-control" />
+            <span asp-validation-for="Note" class="text-danger"></span>
+        </div>
+    </div>
+    <hr />
+    <div class="form-group col-sm-12">
+        <input type="button" onclick="actionrow()" value="ثبت" id="btn" class="btn btn-primary" />
+    </div>
+</form>

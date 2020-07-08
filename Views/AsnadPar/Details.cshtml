@@ -1,0 +1,122 @@
+﻿@model RayaHesab.Models.Pardartb
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pardartb</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Datec)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Datec)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Note)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Note)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nocheckq)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nocheckq)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Datecheck)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Datecheck)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Noghabz)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Noghabz)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Typec)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Typec)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Mablagh)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Mablagh)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Userid)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Userid)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdanbarNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdanbarNavigation.Namec)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoinbedNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoinbedNavigation.Mid)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.MoinbesNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MoinbesNavigation.Mid)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PidbedNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PidbedNavigation.Namec)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PidbesNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PidbesNavigation.Namec)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SanbedNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SanbedNavigation.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.SanbesNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SanbesNavigation.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TafbedNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TafbedNavigation.Mid)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TafbesNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TafbesNavigation.Mid)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Mid">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

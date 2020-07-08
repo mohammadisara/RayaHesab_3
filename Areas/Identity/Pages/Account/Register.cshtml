@@ -1,0 +1,34 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = null;
+}
+
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h4>ایجاد کاربر</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Email">نام کاربری (ترجیحاً ایمیل یا تلفن همراه )</label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"> کلمه عبور )</label>
+                <input asp-for="Input.Password" class="form-control" id="password"
+                        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="(شامل حروف کوچک ، حروف بزرگ ، بیشتر از 6 کاراکترو اعداد و نماد باشد" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <hr />
+            <button type="submit" class="btn btn-primary">ثبت</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

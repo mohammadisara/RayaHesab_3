@@ -1,0 +1,140 @@
+﻿
+@{
+    ViewData["Title"] = "پنل کاربری";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+@*@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor*@
+
+<div class="row DMMenu">
+    @*<div class="col-md-12">
+        <br />
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User"><i class="fa fa-home" aria-hidden="true" style="-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);"></i></a></li>
+                <li class="breadcrumb-item active" aria-current="page">&nbsp; خزانه</li>
+            </ol>
+        </nav>
+    </div>*@
+
+    @*@if (@HttpContextAccessor.HttpContext.Session.GetString("a23") != null)
+        {*@
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="DarNaghd" asp-route-id="1">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                <p>
+                    دریافت نقد از حساب
+                </p>
+            </div>
+        </a>
+    </div>
+    @*}
+        @if (@HttpContextAccessor.HttpContext.Session.GetString("a24") != null)
+        {*@
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="DarNaghd" asp-route-id="2">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                <p>
+                    دریافت نقد از شخص
+                </p>
+            </div>
+        </a>
+    </div>
+    @*}
+        @if (@HttpContextAccessor.HttpContext.Session.GetString("a25") != null)
+        {*@
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="ParNaghd" asp-route-id="1">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                <p>
+                    پرداخت نقد به حساب
+                </p>
+            </div>
+        </a>
+    </div>
+    @*}
+        @if (@HttpContextAccessor.HttpContext.Session.GetString("a26") != null)
+            {*@
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="ParNaghd" asp-route-id="2">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-sitemap" style="color:white"></span></div>
+                <p>
+                    پرداخت نقد به شخص
+                </p>
+            </div>
+        </a>
+    </div>
+    @*}
+        @if (@HttpContextAccessor.HttpContext.Session.GetString("a27") != null)
+        {*@
+
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="Pardartbs">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-document" style="color:white"></span></div>
+                <p>
+                    @*typec = 0*@
+                    اسناد انتقالی
+                </p>
+            </div>
+        </a>
+    </div>
+    @*}
+        @if (@HttpContextAccessor.HttpContext.Session.GetString("a28") != null)
+        {*@
+
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="AsnadDar">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-document" style="color:white"></span></div>
+                <p>
+                    @*typec = 1*@
+                    اسناد دریافتنی
+                </p>
+            </div>
+        </a>
+    </div>
+    @*}
+        @if (@HttpContextAccessor.HttpContext.Session.GetString("a29") != null)
+        {*@
+    <div class="col-md-6 col-lg-3">
+        <a class="DMMA" asp-action="Index" asp-controller="AsnadPar">
+            <div class="SecContent">
+                <div class="DSpan"><span class="icono-document" style="color:white"></span></div>
+                <p>
+                    @*typec = 2*@
+                    اسناد پرداختی
+                </p>
+            </div>
+        </a>
+    </div>
+    @*}
+        @if (@HttpContextAccessor.HttpContext.Session.GetString("a30") != null)
+        {*@
+    <div class="col-md-6 col-lg-3" style="display:none">
+        <div class="SecContent">
+            <div class="DSpan"><span class="icono-calendar" style="color:white"></span></div>
+            <p>
+                گزارشات اسناد دریافتی
+            </p>
+        </div>
+    </div>
+    @*}
+        @if (@HttpContextAccessor.HttpContext.Session.GetString("a31") != null)
+        {*@
+    <div class="col-md-6 col-lg-3" style="display:none">
+        <div class="SecContent">
+            <div class="DSpan"><span class="icono-calendar" style="color:white"></span></div>
+            <p>
+                گزارشات اسناد پرداختی
+            </p>
+        </div>
+    </div>
+    @*    }*@
+</div>

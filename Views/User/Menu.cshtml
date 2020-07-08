@@ -1,0 +1,37 @@
+﻿
+@{
+    Layout = null;
+}
+<ul>
+    @foreach (var item in ViewBag.mmenu)
+    {
+        <li>
+            <a href="#" title="">@item.Title</a>
+            @if (item.Menutb.Count > 0)
+            {
+            <ul>
+                @foreach (var itemc in item.Menutb)
+                {
+                    if (itemc.Msort == null)
+                    {
+                        continue;
+                    }
+                    if (itemc.Rout1 != null)
+                    {
+                        var parms = new Dictionary<string, string>
+                            {
+                                { itemc.Rout1 , itemc.Valrout1 }
+                            };
+                        <li><a asp-all-route-data="@parms" asp-action="@itemc.Actionname" asp-controller="@itemc.Controller">@itemc.Title</a></li>
+                    }
+                    else
+                    {
+                        <li><a  asp-action="@itemc.Actionname" asp-controller="@itemc.Controller">@itemc.Title</a></li>
+                    }
+                }
+            </ul>
+            }
+        </li>
+    }
+
+</ul>

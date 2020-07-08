@@ -1,0 +1,144 @@
+﻿@{
+    ViewData["Title"] = "UserMenu";
+    Layout = null;
+}
+<input type="hidden" value="@ViewBag.uid" id="hfuid" />
+<div class="row">
+    <div class="col-md-12" style="z-index:10">
+        <div class="SecContent row">
+            <div class="col-md-3">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>منو</td>
+                            <td>انتخاب</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{if (ViewBag.mastermenu != null)
+                            {
+                                foreach (var item in ViewBag.mastermenu)
+                                {
+                                    <tr>
+                                        <td> @Html.Raw(item.Title)</td>
+                                        <td>
+                                            <a onclick="getsubmenu(@item.Mid , @ViewBag.uid)" href="#" class="btn btn-info">انتخاب</a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-3">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>منو</td>
+                            <td>انتخاب</td>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodymenu"></tbody>
+                </table>
+            </div>
+            <div class="col-md-1"></div>
+            <div class="col-md-4">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                منو
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbodyusermenu">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function savemcut(menuid, uid) {
+        var msort = $("#in_" + menuid).val();
+         
+        $.post("/Usertbs/savemcut?menuid=" + menuid + "&uid=" + uid + "&msort=" + msort, function (data) {
+             
+            if (data.msg != "") {
+                alert(data.msg + " ** " + data.err);
+            }
+            else
+                getusermenu(uid);
+        });
+    }
+    function getsubmenu(mid, uid ) {
+        $.post("/Usertbs/getsubmenucut?mid=" + mid + "&uid=" + uid, function (data) {
+             
+            $("#tbodymenu").html("");
+            if (data.res.length > 0) {
+                for (var i = 0; i < data.res.length; i++) {
+                    var s = "<tr>"
+                        + "<td>" + data.res[i].title 
+                        + "<input placeholder='اولویت' type='number' id='in_" + data.res[i].mid +"' class='form-control' /> </td>"
+                        + "<td><input type='button' onclick='savemcut(" + data.res[i].mid + " , @ViewBag.uid)' value='انتخاب' class='btn btn-info' /></td></tr>";
+                    $("#tbodymenu").append(s);
+                }
+            }
+            else
+                $("#tbodymenu").html("<tr><td colspan='2'>هیچ داده ای برای نمایش موجود نمی باشد</td></tr>");
+        });
+    }
+    function delmenu(mid) {
+        var i = confirm("ایا برای حذف مطمئن هستید ؟ ");
+        if (i) {
+            var mform = new FormData();
+            mform.append("mid", mid);
+            $.ajax({
+                type: "POST",
+                url: "/Usertbs/Deletemenucut",
+                data: mform,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                     
+                    if (data.state == 1) {
+                        getusermenu(@ViewBag.uid);
+                    }
+                    else
+                        alert(data.msg);
+                }
+            })
+        }
+    }
+    function getusermenu(uid) {
+        $.post("/Usertbs/getusermenucut?uid=" + uid, function (data) {
+             
+            if (data.msg != null) {
+                alert(data.msg + " ** " + data.err);
+            }
+            else {
+                $("#tbodyusermenu").html("");
+                if (data.res.length > 0) {
+                    for (var i = 0; i < data.res.length; i++) {
+                        var s = "<tr><td>" + data.res[i].title + " </td> <td>"
+                            + "<a class='btn btn-danger' onclick='delmenu(" + data.res[i].mid + ")'>حذف</a>"
+                            + "</td></tr>";
+                        $("#tbodyusermenu").append(s);
+                    }
+                }
+                else
+                    $("#tbodyusermenu").html("<tr><td colspan='2'>هیچ داده ای برای نمایش موجود نمی باشد</td></tr>");
+
+                }
+        });
+    }
+    $(function () {
+        getusermenu(@ViewBag.uid);
+    })
+</script>

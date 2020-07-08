@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "وضعیت یک شخص";
+    Layout = null;
+}
+@if (string.IsNullOrEmpty(ViewBag.err) != true)
+{
+    <div class="alert-danger alert"> @ViewBag.err</div>
+}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table mytable table-striped table-responsive-lg">
+            <thead>
+                <tr>
+                    <th>مشتری</th>
+                    <th data-math-mask="#,##0.">فاکتور درخواست خرید</th>
+                    <th data-math-mask="#,##0.">فاکتور خرید</th>
+                    <th data-math-mask="#,##0.">فاکتور پیش فاکتور فروش</th>
+                    <th data-math-mask="#,##0.">فاکتور سفارش فروش</th>
+                    <th data-math-mask="#,##0.">فاکتور تحویلی فروش</th>
+                    <th data-math-mask="#,##0.">فاکتور فروش</th>
+                    <th data-math-mask="#,##0.">فاکتور برگشت از خرید</th>
+                    <th data-math-mask="#,##0.">فاکتور برگشت از فروش</th>
+                    <th data-math-mask="#,##0.">سود مشتری</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.list != null)
+                {
+                    foreach (var item in ViewBag.list)
+                    {
+                        <tr>
+                            <td>
+                                @item.namec
+                            </td>
+                            <td>
+                                @string.Format("{0:n0}", item.dkh )
+                            </td>
+                            <td>
+                                @string.Format("{0:n0}", item.kh )
+                            </td>
+                            <td>
+                                @string.Format("{0:n0}", item.pfforosh )
+                            </td>
+                            <td>
+                                @string.Format("{0:n0}", item.sforosh )
+                            </td>
+                            <td>
+                                @string.Format("{0:n0}", item.tahvilforosh )
+                            </td>
+                            <td>
+                                @string.Format("{0:n0}", item.forosh )
+                            </td>
+                            <td>
+                                @string.Format("{0:n0}", item.backkh )
+                            </td>
+                            <td>
+                                @string.Format("{0:n0}", item.backf )
+                            </td>
+                            <td>
+                                @string.Format("{0:n0}", item.sood )
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td  data-math-mask="#,##0." data-math="col-count"></td>
+                    <td data-math-mask="#,##0." data-math="col-sum"></td>
+                    <td data-math-mask="#,##0." data-math="col-sum"></td>
+                    <td data-math-mask="#,##0." data-math="col-sum"></td>
+                    <td data-math-mask="#,##0." data-math="col-sum"></td>
+                    <td data-math-mask="#,##0." data-math="col-sum"></td>
+                    <td data-math-mask="#,##0." data-math="col-sum"></td>
+                    <td data-math-mask="#,##0." data-math="col-sum"></td>
+                    <td data-math-mask="#,##0." data-math="col-sum"></td>
+                    <td data-math-mask="#,##0." data-math="col-sum"></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

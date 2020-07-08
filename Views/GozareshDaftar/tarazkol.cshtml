@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewData["Title"] = "تراز کل";
+    Layout = null;
+}
+
+<div class="row" style="background-color:white">
+    @{if (ViewBag.err != null)
+        {
+            <div class="col-md-12">
+                <a href="#" class="alert-danger">
+                    <i class="fa fa-warning fa-2x" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>@ViewBag.err
+                </a>
+            </div>
+        }
+    }
+    <div class="col-md-12">
+        <h4 style="padding-bottom:1em" class="text-center">@ViewBag.Tittle</h4>
+        <hr />
+    </div>
+    <table id="myTable" class="table table-striped">
+        <thead>
+            <tr>
+                @if (ViewBag.gid > 0)
+                {
+
+                    <th class="filter-select" data-placeholder="فروشگاه">
+                        فروشگاه
+                    </th>
+                }
+
+                <th>
+                    کد حساب
+                </th>
+                <th>
+                    عنوان حساب
+                </th>
+                <th class="sorter-currency">
+                    بدهکار طی دوره
+                </th>
+                <th class="sorter-currency">
+                    بستانکار طی دوره
+                </th>
+                <th class="sorter-currency">
+                    بد
+                </th>
+                <th class="sorter-currency">
+                    بس
+                </th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ decimal m = 0;
+            }
+            @if (ViewBag.list != null)
+            {
+                @foreach (var item in ViewBag.list)
+                {
+                    m = m + 1;
+                    <tr>
+                        @if (ViewBag.gid > 0)
+                        {
+
+                            <td>
+                                @item.Nameanbar
+                            </td>
+                        }
+                        <td style="direction:ltr">
+                            @item.Codekol
+                        </td>
+                        <td class="text-right">
+                            @item.Namekol
+                        </td>
+                        <td>
+                            @{ if (@item.Bed >= 0)
+                                {
+                                    @string.Format("{0:n0}", @item.Bed)
+                                }
+                                else
+                                {
+                                    var line = "0";
+                                    @line
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{ if (@item.Bes >= 0)
+                                {
+                                    @string.Format("{0:n0}", @item.Bes)
+                                }
+                                else
+                                {
+                                    var line = "0";
+                                    @line
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{ if (@item.Bednow >= 0)
+                                {
+                                    @string.Format("{0:n0}", @item.Bednow)
+                                }
+                                else
+                                {
+                                    var line = "0";
+                                    @line
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{ if (@item.Besnow >= 0)
+                                {
+                                    @string.Format("{0:n0}", @item.Besnow)
+                                }
+                                else
+                                {
+                                    var line = "0";
+                                    @line
+                                }
+                            }
+                        </td>
+                        <td>
+                            <a onclick="getform(@item.Kid)" class="pbtnHIWarning" title="ریز مانده">
+                                <i class="fa fa-level-up-alt" aria-hidden="true"
+                                   data-toggle="tooltip" title="ریز مانده"></i>
+                            </a>
+                            <a  class="pbtnHIDetail" title="گردش حساب"  onclick="gardesh(@item.Kid)" >
+                                <i class="fa fa-sticky-note" aria-hidden="true"
+                                   data-toggle="tooltip" title="گردش حساب"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                @if (ViewBag.gid > 0)
+                {
+
+                    <td></td>
+                }
+                <td>تعداد ردیف</td>
+                <td data-math="col-count"></td>
+                <td data-math="col-sum">above-sum</td>
+                <td data-math="col-sum">above-sum</td>
+                <td data-math="col-sum">above-sum</td>
+                <td data-math="col-sum">above-sum</td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+
+
+
+<script>
+    $("#exp").click(function () {
+         
+        $("#myTable").table2excel({
+            exclude: ".noExl",
+            name: "Worksheet Name",
+            filename: "SomeFile.xls",//do not include extension
+            fileext: ".xls" // file extension
+        });
+    });
+
+</script>

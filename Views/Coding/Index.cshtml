@@ -1,0 +1,382 @@
+﻿@{
+    ViewData["Title"] = "مدیریت کدینگ";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+<input id="hfgid" type="hidden" />
+<input id="hfkid" type="hidden" />
+<input id="hfmoinid" type="hidden" />
+<input id="hftafid" type="hidden" />
+<div class="row DMMenu">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-3" id="divgroup">
+            </div>
+            <div class="col-md-3" id="divkol">
+
+            </div>
+            <div class="col-md-3" id="divmoin">
+
+            </div>
+            <div class="col-md-3" id="divtaf">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+@section Scripts{
+    <script>
+        //loadgroup();
+        $(function () {
+            loadgroup();
+        })
+        function loadgroup() {
+            $("#divgroup").html(lmsg);
+            $.ajax({
+                url: "/Gorohtbs/Index",
+                type: "Get"
+            }).done(function (result) {
+                $("#divgroup").html(result);
+            });
+        }
+        function CreateGroup() {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered modal-sm");
+            $("#MyModal").modal("show");
+            //$("#modalform div.modal-body").html("در حال بارگذاری . لطفا منتظر بمانید ...");
+            $.ajax({
+                url: "/Gorohtbs/Create",
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ایجاد");
+                $("#ModalBody").html(result);
+                //$("#modalform h5.header-title").html("ایجاد");
+                //$("#modalform div.modal-body").html(result);
+            });
+        };
+        function EditGroup(id) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered modal-sm");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Gorohtbs/Edit/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ویرایش");
+                $("#ModalBody").html(result);
+            });
+        };
+        function DeleteGroup(id) {
+            var s = confirm('آیا مطمئن برای حذف هستید ؟ ');
+            if (s) {
+                $(".loading").show();
+                $.post("/Gorohtbs/Delete?id=" + id, function (data) {
+                    if (data.msg == "") {
+                        loadgroup();
+                    }
+                    else {
+                        alert(data.msg + " ** " + data.err);
+                        loadgroup();
+                    }
+                })
+            }
+        };
+        function submitg() {
+            $(".loading").show();
+            var data = $('#actionform').serialize();
+            $.post($("#actionform").attr("action"),
+                data,
+                function (data) {
+                    if (data.msg != "") {
+                        alert(data.msg + " ** " + data.err);
+                    }
+                    else {
+                        loadgroup();
+                        CreateGroup();
+                    }
+                }
+            );
+        }
+
+        function submite(t) {
+            if (t == 1)
+                $("#divgroup").html(lmsg);
+            if (t == 2)
+                $("#divkol").html(lmsg);
+            if (t == 3)
+                $("#divmoin").html(lmsg);
+            if (t == 4)
+                $("#divtaf").html(lmsg);
+            var data = $('#actionform').serialize();
+            $.post($("#actionform").attr("action"),
+                data,
+                function (data) {
+                    if (data.msg != "") {
+                        if (t == 1)
+                            loadgroup();
+                        if (t == 2)
+                            loadkol($("#hfgid").val());
+                        if (t == 3)
+                            loadmoin($("#hfkid").val());
+                        if (t == 4)
+                            loadtaf($("#hfmoinid").val());
+                        alert(data.msg + " ** " + data.err);
+                    }
+                    else {
+                        if (t == 1)
+                            loadgroup();
+                        if (t == 2)
+                            loadkol($("#hfgid").val());
+                        if (t == 3)
+                            loadmoin($("#hfkid").val());
+                        if (t == 4)
+                            loadtaf($("#hfmoinid").val());
+                        alert('ویرایش انجام شد');
+                    }
+                }
+            );
+        }
+
+
+        function Createtaf() {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered modal-sm");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Submointbs/Create?id=" + $("#hfmoinid").val(),
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ایجاد");
+                $("#ModalBody").html(result);
+            });
+        };
+        function Edittaf(id) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered modal-sm");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Submointbs/Edit/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ویرایش");
+                $("#ModalBody").html(result);
+            });
+        };
+        function loadtaf(moinid) {
+            $("#hfmoinid").val(moinid);
+            $("#divtaf").html(lmsg);
+            $.ajax({
+                url: "/Submointbs/Index?moinid=" + moinid,
+                type: "Get"
+            }).done(function (result) {
+                $("#divtaf").html(result);
+            });
+        }
+        function Deletetaf(id) {
+            var s = confirm('آیا مطمئن برای حذف هستید ؟ ');
+            if (s) {
+                $("#divtaf").html(lmsg);
+                $.post("/Submointbs/Delete?id=" + id, function (data) {
+                    if (data.msg == "") {
+                        loadtaf($("#hfmoinid").val());
+                    }
+                    else {
+                        alert(data.msg + " ** " + data.err);
+                        loadtaf($("#hfmoinid").val());
+                    }
+                })
+            }
+        };
+        function submittaf() {
+            var data = $('#actionform').serialize();
+            $.post($("#actionform").attr("action"),
+                data,
+                function (data) {
+                    if (data.msg != "") {
+                        $(".errmsg").html(data.msg);
+                        $(".errdetail").html(data.err);
+                        $("#err").modal('show');
+                    }
+                    else {
+                        loadtaf($("#hfmoinid").val());
+                        Createtaf();
+                    }
+                }
+            );
+        }
+
+        function Createmoin() {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered modal-sm");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Mointbs/Create?id=" + $("#hfkid").val(),
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ایجاد");
+                $("#ModalBody").html(result);
+            });
+        };
+        function Editmoin(id) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered modal-sm");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Mointbs/Edit/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ویرایش");
+                $("#ModalBody").html(result);
+            });
+        };
+        function loadmoin(kid) {
+            $("#hfkid").val(kid);
+            $("#divmoin").html(lmsg);
+            $.ajax({
+                url: "/Mointbs/Index?kid=" + kid,
+                type: "Get"
+            }).done(function (result) {
+                $("#divmoin").html(result);
+            });
+        }
+        function Deletemoin(id) {
+            var s = confirm('آیا مطمئن برای حذف هستید ؟ ');
+            if (s) {
+                $.post("/Mointbs/Delete?id=" + id, function (data) {
+                    if (data.msg == "") {
+                        loadmoin($("#hfkid").val());
+                    }
+                    else {
+                        alert(data.msg + " ** " + data.err);
+                        loadmoin($("#hfkid").val());
+                    }
+                })
+            }
+        };
+        function submitmoin() {
+            var data = $('#actionform').serialize();
+            $.post($("#actionform").attr("action"),
+                data,
+                function (data) {
+                    if (data.msg != "") {
+                        alert(data.msg + " ** " + data.err);
+                    }
+                    else {
+                        loadmoin($("#hfkid").val());
+                        Createmoin();
+                    }
+                });
+        }
+
+        function Createkol() {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Koltbs/Create?id=" + $("#hfgid").val(),
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ایجاد");
+                $("#ModalBody").html(result);
+            });
+        };
+        function Editkol(id) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Koltbs/Edit/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ویرایش");
+                $("#ModalBody").html(result);
+            });
+        };
+        function loadkol(gid) {
+            $("#hfgid").val(gid);
+            $("#divkol").html(lmsg);
+            $.ajax({
+                url: "/Koltbs/Index?gid=" + gid,
+                type: "Get"
+            }).done(function (result) {
+                $("#divkol").html(result);
+                $("#divmoin").html("");
+                $("#divtaf").html("");
+                $(".loading").hide();
+            });
+        }
+        function Deletekol(id) {
+            var s = confirm('آیا مطمئن برای حذف هستید ؟ ');
+            if (s) {
+                $("#divkol").html(lmsg);
+                $.post("/Koltbs/Delete?id=" + id, function (data) {
+                    if (data.msg == "") {
+                        loadkol($("#hfgid").val());
+                    }
+                    else {
+                        alert(data.msg + " ** " + data.err);
+                        loadkol($("#hfgid").val());
+                    }
+                })
+            }
+        };
+        function submitkol() {
+            $(".loading").show();
+            var data = $('#actionform').serialize();
+            $.post($("#actionform").attr("action"),
+                data,
+                function (data) {
+                    if (data.msg != "") {
+                        alert(data.msg + " ** " + data.err);
+                    }
+                    else {
+                        loadkol($("#hfgid").val());
+                        Createkol();
+                    }
+                }
+            );
+        }
+
+        function maxkol(gid, kcontrol) {
+            var mform = new FormData();
+            mform.append("gid", gid);
+            $.ajax({
+                url: "/Main/getmaxkol",
+                data: mform,
+                type: "POST",
+                contentType: false,
+                processData: false,
+                dataType: 'json',
+                success: function (data) {
+                    $(kcontrol).val(data);
+                }
+            })
+        }
+        function maxcode(kid) {
+            var mform = new FormData();
+            mform.append("kid", kid);
+            $.ajax({
+                url: "/Main/getmaxmoin",
+                data: mform,
+                type: "POST",
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    $("#cmoin").val(data);
+                }
+            })
+        }
+
+    </script>
+}

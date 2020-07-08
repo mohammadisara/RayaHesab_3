@@ -1,0 +1,32 @@
+﻿@model RayaHesab.Models.Sanadtb
+
+<div class="container-fluid">
+    <dl class="dl-horizontal">
+
+        <dt>
+            توضیحات :
+            <span>
+                @Html.DisplayFor(model => model.Note)
+            </span>
+        </dt>
+        <dt>
+            شماره فاکتور :
+            <span>
+                @Html.DisplayFor(model => model.Factid)
+            </span>
+        </dt>
+        <dt>
+            شماره انبار :
+            <span>
+                @Html.DisplayFor(model => model.Idanbar)
+            </span>
+
+        </dt>
+        <dt>
+            تاریخ ثبت :
+            <span>
+                @Html.DisplayFor(model => model.Datemiladi)
+            </span>
+        </dt>
+    </dl>
+</div>

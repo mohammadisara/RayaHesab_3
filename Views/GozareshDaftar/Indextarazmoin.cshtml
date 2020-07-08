@@ -1,0 +1,167 @@
+﻿
+
+@{
+    ViewData["Title"] = ViewBag.Tittle;
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+<div class="row" style="background-color:white">
+    @{if (ViewBag.err != null)
+        {
+            <div class="col-md-12">
+                <a href="#" class="alert-danger">
+                    <i class="fa fa-warning fa-2x" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>@ViewBag.err
+                </a>
+            </div>
+        }
+    }
+    <form asp-action="tarazmoin" id="formdkol">
+        <div class="row">
+            <div class="form-group col-sm-4 form-inline">
+                <link href="~/DatePicker/persian-datepicker.min.css" rel="stylesheet" />
+                <div style="display:block;padding-bottom:0.5em">
+                    <span style="padding-left:1em"> از تاریخ</span>
+                    <input id="fdate" autocomplete="off" name="fdate" class="form-control DateText" type="text" value="@ViewBag.fdate" />
+                </div>
+                <div style="display:block">
+                    <span style="padding-left:1em"> تا تاریخ</span>
+                    <input id="tdate" autocomplete="off" name="tdate" class="form-control DateText" type="text" value="@ViewBag.tdate" />
+                </div>
+            </div>
+            <div class="form-group col-sm-5 form-inline">
+                <div style="display:block;padding-bottom:0.5em">
+                    <select name="gid" id="gid" class="form-control">
+                        <option value="0">گروه بندی نشده</option>
+                        <option value="1">گروه بندی </option>
+                    </select>
+                </div>
+                <div style="display:block;padding-bottom:0.5em">
+                    <select asp-items="@ViewBag.listanbar" name="anbar" class="form-control">
+                        <option value="0">فروشگاه را انتخاب کنید</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group col-sm-3 form-inline">
+                    <input type='hidden' id="hftypec" name='print' value="0" />
+                    <input type='hidden' id="idkol" name='kid' value="0" />
+                    <a class="btn btn-primary" onclick="sendprint(2 , 'formdkol')">تهیه گزارش</a>
+                    <a class="btn btn-primary" onclick="sendprint(1 , 'formdkol')">
+                        <i class="fa fa-print"></i>
+                    </a>
+
+            </div>
+        </div>
+    </form>
+    <div id="table">
+
+    </div>
+</div>
+<script>
+    function gardesh(mid) {
+         
+        $(".loading").show();
+        var fdate = $("#fdate").val();
+        var tdate = $("#tdate").val();
+        var idkol = mid;
+        var anbar = $("#anbar").val();
+        $.ajax({
+            url: "/GozareshDaftar/Indexmoin",
+            type: "Get"
+        }).done(function (result) {
+            fmenu[indextab] = result;
+            $('#' + smenu[indextab]).html(fmenu[indextab]);
+            setTimeout(function () {
+                 
+                var l = "/GozareshDaftar/daftarmoin?fdate=" + fdate + "&tdate=" + tdate + "&idkol=" + mid + "&anbar=" + anbar;
+                $.ajax({
+                    url: l,
+                    type: "Get"
+                }).done(function (result) {
+                    $("#table").html(result);
+                    var colCount = 0;
+                    $("table").tablesorter({
+                        theme: 'blue',
+                        // initialize zebra and filter widgets
+                        widgets: ["filter", "math"],
+                        widgetOptions: {
+                            math_mask: '#,##0.',
+                            filter_reset: '.reset'
+                        }
+                    })
+                    $("#fdate").val(fdate);
+                    $("#tdate").val(tdate);
+                    $("#idkol").val(idkol);
+                    $("#anbarmoin").val(anbar);
+                    $(".loading").hide();
+                });
+            }, 2000);
+        });
+
+    }
+    function getform(mid) {
+         
+        $(".loading").show();
+        var fdate = $("#fdate").val();
+        var tdate = $("#tdate").val();
+        var gid = $("#gid").val();
+        var anbar = $("#anbar").val();
+        $.ajax({
+            url: "/GozareshDaftar/Indextaraztaf",
+            type: "Get"
+        }).done(function (result) {
+            fmenu[indextab] = result;
+            $('#' + smenu[indextab]).html(fmenu[indextab]);
+            var l = "/GozareshDaftar/taraztaf?fdate=" + fdate + "&tdate=" + tdate + "&idmoin=" + mid + "&anbar=" + anbar + "&gid=" + gid;
+            $.ajax({
+                url: l,
+                type: "Get"
+            }).done(function (result) {
+                $("#table").html(result);
+                var colCount = 0;
+                $("table").tablesorter({
+                    theme: 'blue',
+                    widgets: ["filter", "math"],
+                    widgetOptions: {
+                        math_mask: '#,##0.',
+                        filter_reset: '.reset'
+                    }
+                })
+                $("#fdate").val(fdate);
+                $("#tdate").val(tdate);
+                $("#gid").val(gid);
+                $("#anbar").val(anbar);
+                $(".loading").hide();
+            });
+        });
+    }
+
+    function sendprint(typec, frm) {
+        $("#hftypec").val(typec)
+        if (typec == 1)
+            $("#" + frm).attr("target", "_blank");
+        else
+            $("#" + frm).attr("target", "_self");
+        $(".loading").show();
+        $.ajax({
+            url: $("#formdkol").attr("action"),
+            data: $("#formdkol").serialize(),
+            type: "Get"
+        }).done(function (result) {
+             
+            $("#table").html(result);
+            var colCount = 0;
+            $("table").tablesorter({
+                theme: 'blue',
+                // initialize zebra and filter widgets
+                widgets: ["filter", "math"],
+                widgetOptions: {
+                    math_mask: '#,##0.',
+                    filter_reset: '.reset'
+                }
+            })
+            $(".loading").hide();
+        });       
+    }
+
+</script>

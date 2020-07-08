@@ -1,0 +1,25 @@
+﻿@model RayaHesab.Models.Gorohtb
+
+<div class="row">
+    <div class="col-md-12 DRight">
+
+        <form asp-action="Edit" id="actionform">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Mid" />
+            <div class="form-group">
+                <label asp-for="Mid" class="control-label">کد گروه</label>
+                <input asp-for="Mid" class="form-control" onkeypress="handle(event,'nNameC')" autofocus required />
+                <span asp-validation-for="Mid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Namec" class="control-label">نام گروه</label>
+                <input id="nNameC" asp-for="Namec" class="form-control" onkeypress="handle(event,'btnSave')" required />
+            </div>
+            <hr />
+            <div class="form-group">
+                <input type="button" onclick="submite(1)" id="btnSave" value="ویرایش" class="btn btn-primary"  />
+            </div>
+        </form>
+    </div>
+</div>
+

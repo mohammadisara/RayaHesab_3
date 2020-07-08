@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="5px" viewBox="0 0 8 5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>arrow-down-sign-to-navigate</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Dashboard-with-news-&amp;-Chat" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-1577.000000, -32.000000)">
+        <g id="Header" transform="translate(-2.000000, -1.000000)" fill="#757575" fill-rule="nonzero">
+            <g id="Avatar" transform="translate(1493.000000, 16.000000)">
+                <g id="arrow-down-sign-to-navigate" transform="translate(86.000000, 17.000000)">
+                    <path d="M3.91690626,4.46793927 C3.77650839,4.46793927 3.63612786,4.41433218 3.52908706,4.30734339 L0.16071724,0.938938896 C-0.053555076,0.72466658 -0.053555076,0.377260749 0.16071724,0.16307512 C0.374902869,-0.0511105095 0.722239351,-0.0511105095 0.936529004,0.16307512 L3.91690626,3.14362575 L6.89730085,0.163179144 C7.11157316,-0.0510064854 7.45887497,-0.0510064854 7.67304326,0.163179144 C7.8874196,0.377364773 7.8874196,0.724770604 7.67304326,0.93904292 L4.30472545,4.30744742 C4.19763264,4.41445354 4.05725211,4.46793927 3.91690626,4.46793927 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

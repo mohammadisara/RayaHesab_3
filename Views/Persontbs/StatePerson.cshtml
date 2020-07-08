@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "وضعیت یک شخص";
+    Layout = null;
+}
+
+<div class="row form-group">
+    <div class="col-md-4">
+        <select class="form-control" asp-items="@ViewBag.listperson" id="personid">
+            <option>شخص را انتخاب کنید</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <select class="form-control" asp-items="@ViewBag.listanbar" id="anbarid">
+            <option>همه فروشگاه ها</option>
+        </select>
+    </div>
+    <div class="col-md-4 form-inline">
+        <input type="button" value="تهیه گزارش" class="btn btn-success" onclick="submitstate()" />
+    </div>
+</div>
+<div id="table"></div>
+<script>
+    $(function () {
+        $('select').select2();
+    })
+    function submitstate() {
+        $('.loading').show();
+        $.ajax({
+            url: "/Persontbs/liststate?pid=" + $("#personid").val() + "&anbar=" + $("#anbarid").val(),
+            type: "Get"
+        }).done(function (result) {
+            $("#table").html(result);
+            $(".mytable").tablesorter({
+                theme: 'blue',
+                widgets: ["filter", "math"],
+                widgetOptions: {
+                    math_mask: '#,##0.0000',
+                    filter_reset: '.reset'
+                }
+            })
+            $('.loading').hide();
+
+        });
+
+    }
+</script>

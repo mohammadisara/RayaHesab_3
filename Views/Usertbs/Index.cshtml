@@ -1,0 +1,239 @@
+﻿
+@{
+    ViewData["Title"] = "مدیریت کاربران";
+    Layout = Context.Request.Cookies["layoutmain"];
+}
+
+<p>
+    <a href="#" id="pbtn" onclick="Create()">
+        <i class="fa fa-plus-square fa-2x" title="  جدید"></i>
+    </a>
+</p>
+<div id="divlist"></div>
+
+
+
+@section Scripts{
+    <script>
+        function load() {
+            $("#divlist").html(lmsg);
+            $.ajax({
+                url: "/Usertbs/List",
+                type: "Get"
+            }).done(function (result) {
+                $("#divlist").html(result);
+                $("table").tablesorter({
+                    widthFixed: false,                // initialize zebra and filter widgets
+                    widgets: ["zebra", "filter", "math"],
+                    widgetOptions: {
+                        math_mask: '#,##0.',
+                        filter_reset: '.reset'
+                    }
+                })
+            });
+        }
+        $(function () {
+            load();
+        })
+        function gorohkala(id) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Usertbs/Gkala?id=" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("حق دسترسی برای گروه های کالا");
+                $("#ModalBody").html(result);
+            });
+        }
+        function ganbar(id) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Usertbs/Ganbar?id=" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("حق دسترسی برای  فروشگاه ها");
+                $("#ModalBody").html(result);
+            });
+        }
+
+        function gperson(id) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Usertbs/Gperson?id=" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("دسترسی به گروه های اشخاص");
+                $("#ModalBody").html(result);
+                loadcoding();
+            });
+        }
+
+        function Delete(id) {
+            var s = confirm('ایا مطمئن هستید ؟ ');
+            if (s) {
+                $.post("/Usertbs/Delete?id=" + id, function (data) {
+                    if (data.msg == "") {
+                        load();
+                    }
+                    else {
+                        alert(data.msg + " ** " + data.err);
+                    }
+                });
+            }
+        }
+        function Edit(id) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Usertbs/Edit?id=" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ویرایش");
+                $("#ModalBody").html(result);
+            });
+        }
+        function chpas() {
+            $("#chpass").submit();
+        }
+
+        function Create() {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Identity/Account/Register?returnUrl=/Usertbs/Index",
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ایجاد");
+                $("#ModalBody").html(result);
+            });
+        }
+
+        function menu(id) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/Usertbs/UserMenu?id=" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("دسترسی به منوها");
+                $("#ModalBody").html(result);
+                getusermenu($("#hfuid").val());
+
+            });
+        }
+
+        function actionrow() {
+            $.post($("#formaction").attr("action"), $("#formaction").serialize(), function (data) {
+                if (data.msg == "") {
+                    load();
+                }
+                else {
+                    alert(data.msg + " ** " + data.err);
+                }
+            });
+        }
+        function listsandogh(uid) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                type: "GET",
+                url: "/Usertbs/sandogh?uid=" + uid
+            }).done(function (result) {
+                $("#Modaltitle").html("دسترسی به صندوق ها");
+                $("#ModalBody").html(result);
+            });
+        }
+        function delsandogh(mid , uid) {
+            $("#modalform div.modal-body").html(lmsg);
+            $.post("/Usertbs/delsandogh?mid=" + mid , function (data) {
+                if (data.msg != "") {
+                    alert(data.msg + " ** " + data.err);
+                }
+                else {
+                    listsandogh(uid);
+                }
+            });
+        }
+        function selsandogh(mid, uid) {
+            $("#modalform div.modal-body").html(lmsg);
+            $.post("/Usertbs/selsandogh?mid=" + mid + "&uid=" + uid, function (data) {
+                if (data.msg != "") {
+                    alert(data.msg + " ** " + data.err);
+                }
+                else {
+                    listsandogh(uid);
+                }
+            });
+        }
+        function savem(menuid, uid) {
+            $.post("/Usertbs/savem?menuid=" + menuid + "&uid=" + uid, function (data) {
+                if (data.msg != "") {
+                    alert(data.msg + " ** " + data.err);
+                }
+                else {
+                    getsubmenu($("#hfmastermenuid").val(), uid)
+                    getusermenu(uid);
+                }
+            });
+        }
+
+        function getsubmenu(mid, uid) {
+            $("#hfmastermenuid").val(mid);
+            $("#submenu").html(lmsg);
+            $.post("/Usertbs/getsubmenu?mid=" + mid + "&uid=" + uid, function (data) {
+                $("#submenu").html(data);
+            });
+        }
+        function getusermenu(uid) {
+            $("#usermenu").html(lmsg);
+            $.ajax({
+                type: "GET",
+                url: "/Usertbs/AllMenu?uid=" + uid
+            }).done(function (data) {
+                $("#usermenu").html(data);
+            });
+        }
+        function delmenu(menuid) {
+            var i = confirm("ایا برای حذف مطمئن هستید ؟ ");
+            if (i) {
+                var mform = new FormData();
+                mform.append("menuid", menuid);
+                mform.append("uid", $("#hfuid").val());
+                $.ajax({
+                    type: "POST",
+                    url: "/Usertbs/Deletemenu",
+                    data: mform,
+                    dataType: "json",
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if (data.state == 1) {
+                            getusermenu($("#hfuid").val());
+                            getsubmenu($("#hfmastermenuid").val(), $("#hfuid").val())
+                        }
+                        else
+                            alert(data.msg);
+                    }
+                })
+            }
+        }
+
+    </script>
+}

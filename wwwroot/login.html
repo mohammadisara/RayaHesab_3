@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>شهر ساعت | ورود - ثبت نام</title>
+    <link rel="stylesheet" href="styles/fonts.css">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="styles/style.css">
+    
+    <link rel="stylesheet" href="styles/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" href="vendor/select2/css/select2.min.css">
+    <link rel="stylesheet" href="vendor/jquery-nice-select/css/nice-select.css">    
+    <link rel="stylesheet" href="vendor/datepicker/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="vendor/tablesorter/css/theme.default.min.css">
+    <link rel="stylesheet" href="vendor/tagsinput/css/bootstrap-tagsinput.css">
+    <link rel="stylesheet" href="vendor/flexslider/css/flexslider.css">
+    <link rel="stylesheet" href="vendor/autocomplete/css/jquery.autocomplete.css">
+    
+    
+    <link rel="stylesheet" href="styles/custom.css">
+    <link rel="stylesheet" href="styles/login.css">
+</head>
+
+<body>
+    <div class="page page-login">
+        <div class="wrapper">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="box login-box">
+                            <div class="box-header clearfix">
+                                <div class="logo-holder">
+                                    <img class="logo" src="images/logo/Logo.png" alt="شهر ساعت" >
+                                </div>
+                                <h2 class="box-header-title text-center">ورود به حساب کاربری</h2>                                
+                            </div><!-- .header -->
+                            <div class="box-body">
+                                <form id="formLogin" name="form_login" method="post" action="#">
+                                    <div class="form-group">
+                                        <input type="text" name="username" class="form-control" placeholder="نام کاربری">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <input type="password" name="password" class="form-control" placeholder="رمز عبور">
+                                    </div>
+                                    <p id="otpTrigger" class="otp-trigger active">
+                                        <a href="javascript:void(0)" data-target="#otpTarget" class="text-primary otp-trigger-link"> ارسال رمز یک‌بار مصرف</a>
+                                    </p>
+                                    <div id="otpTarget" class="otp-holder">
+                                        <a href="javajavascript:void(0)" class="otp-close" data-trigger="#otpTrigger">
+                                            <img src="./images/icons/otp-close.svg" alt="icon">
+                                        </a>
+                                        <div class="form-group has-btn">
+                                            <label for="mobileNumber">رمز یک‌بار مصرف</label>
+                                            <input type="text" id="mobileNumber" name="mobile_number" class="form-control" placeholder="شماره موبایل">
+                                            <a href="javascript:void(0)" class="btn">ارسال</a>
+                                            <!-- <button type="button" class="btn btn-link">ارسال</button> -->                                            
+                                        </div>
+                                        <div class="otp-content clearfix">
+                                            <p class="otp-desc text-success">رمز  به ۰۹۱۵۷۶۰۵۰۳۰ ارسال شد</p>
+                                            <a href="javajavascript:void(0)" class="otp-send">ارسال مجدد</a>
+                                            <!-- <button type="button" class="otp-send btn-link">ارسال مجدد</button> -->
+                                        </div>                                        
+                                    </div>
+                                    
+                                    <div class="captcha-holder clearfix">
+                                        <div class="form-group">
+                                            <input type="text" name="captcha" class="form-control" placeholder="حروف امنیتی">
+                                        </div>
+                                        <div class="security-holder">
+                                            <span>6104</span>
+                                        </div>
+                                        <div class="icon-holder">
+                                            <a href="#" class="icon-link">
+                                                <img class="icon" src="./images/icons/refresh-captcha.svg" alt="icon">
+                                            </a>                                                                        
+                                        </div>
+                                    </div>
+                                    <p class="forgot-password"><a href="javajavascript:void(0)" class="forgot-password-link text-primary">فراموشی رمز عبور</a></p>
+                                    <div class="btns-holder">
+                                        <button type="button" class="btn btn-dark btn-block btn-login">ورود</button>
+                                        <a href="javajavascript:void(0)" class="btn btn-white btn-block btn-register">ساخت حساب کاربری</a>
+                                    </div>
+
+                                </form>
+                            </div><!-- /.body -->
+                        </div>
+                    </div><!-- /.col -->
+                    <div class="col-8">
+                        <div class="news-slider-holder">
+                            <div class="flexslider news-slider">
+                                <ul class="slides">
+                                    <li>
+                                        <div class="caption">
+                                            <div class="caption-header">
+                                                <h2 class="caption-header-title">
+                                                    <a href="javascript:void(0)">عنوان اطلاعیه / خبر در اینجا قرار میگیرد</a>
+                                                </h2>
+                                                <p class="caption-header-meta">
+                                                    <span class="caption-header-meta-date">۱۱ تیر ماه ۱۳۹۸</span>
+                                                </p>
+                                            </div><!-- /.header -->
+                                            <div class="caption-body">
+                                                <div class="caption-content">
+                                                    <p>
+                                                        لورم ایپسوم یا طرح‌نما  به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید، تا از نظر گرافیکی نشانگر چگونگی نوع و اندازه فونت و ظاهر متن باشد. 
+                                                    </p>
+                                                </div>
+                                            </div><!-- /.body -->
+                                        </div>
+                                        <div class="image">
+                                            <a href="javascript:void(0)">
+                                                <img src="./images/login-slider/1.jpg" alt="image">
+                                            </a>
+                                        </div>                                
+                                    </li><!-- /.item -->
+    
+                                    <li>
+                                        <div class="caption">
+                                            <div class="caption-header">
+                                                <h2 class="caption-header-title">
+                                                    <a href="javascript:void(0)">عنوان اطلاعیه / خبر در اینجا قرار میگیرد</a>
+                                                </h2>
+                                                <p class="caption-header-meta">
+                                                    <span class="caption-header-meta-date">۱۱ تیر ماه ۱۳۹۸</span>
+                                                </p>
+                                            </div><!-- /.header -->
+                                            <div class="caption-body">
+                                                <div class="caption-content">
+                                                    <p>
+                                                        لورم ایپسوم یا طرح‌نما  به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید، تا از نظر گرافیکی نشانگر چگونگی نوع و اندازه فونت و ظاهر متن باشد. 
+                                                    </p>
+                                                </div>
+                                            </div><!-- /.body -->
+                                        </div>
+                                        <div class="image">
+                                            <a href="javascript:void(0)">
+                                                <img src="./images/login-slider/2.jpg" alt="image">
+                                            </a>
+                                        </div>                                
+                                    </li><!-- /.item -->
+
+                                    <li>
+                                        <div class="caption">
+                                            <div class="caption-header">
+                                                <h2 class="caption-header-title">
+                                                    <a href="javascript:void(0)">عنوان اطلاعیه / خبر در اینجا قرار میگیرد</a>
+                                                </h2>
+                                                <p class="caption-header-meta">
+                                                    <span class="caption-header-meta-date">۱۱ تیر ماه ۱۳۹۸</span>
+                                                </p>
+                                            </div><!-- /.header -->
+                                            <div class="caption-body">
+                                                <div class="caption-content">
+                                                    <p>
+                                                        لورم ایپسوم یا طرح‌نما  به متنی آزمایشی و بی‌معنی در صنعت چاپ، صفحه‌آرایی و طراحی گرافیک گفته می‌شود. طراح گرافیک از این متن به عنوان عنصری از ترکیب بندی برای پر کردن صفحه و ارایه اولیه شکل ظاهری و کلی طرح سفارش گرفته شده استفاده می نماید، تا از نظر گرافیکی نشانگر چگونگی نوع و اندازه فونت و ظاهر متن باشد. 
+                                                    </p>
+                                                </div>
+                                            </div><!-- /.body -->
+                                        </div>
+                                        <div class="image">
+                                            <a href="javascript:void(0)">
+                                                <img src="./images/login-slider/3.jpg" alt="image">
+                                            </a>
+                                        </div>                                
+                                    </li><!-- /.item -->
+                                  
+                                </ul>
+                            </div>
+                            <div class="custom-navigation">
+                                <a href="javascript:void(0)" class="flex-prev">
+                                    <img src="./images/icons/news-slider-right-arrow.svg" alt="icon">
+                                    <span>قبلی</span>                                    
+                                </a>
+                                <div class="custom-controls-container"></div>
+                                <a href="javascript:void(0)" class="flex-next">
+                                    <span>بعدی</span>
+                                    <img src="./images/icons/news-slider-left-arrow.svg" alt="icon">
+                                </a>
+                            </div>
+                        </div>                        
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div><!-- /.wrapper -->
+    </div><!-- /.page -->
+
+
+    <script src="scripts/jquery-3.2.1.min.js"></script>
+    <script src="scripts/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="vendor/jquery-nice-select/js/prism.js"></script>    
+    <script src="vendor/select2/js/select2.full.min.js"></script>    
+    <script src="vendor/datepicker/js/bootstrap-datepicker.min.js"></script>   
+    <script src="vendor/datepicker/js/bootstrap-datepicker.fa.min.js"></script>   
+    <script src="vendor/tablesorter/js/jquery.tablesorter.min.js"></script>   
+    <script src="vendor/tablesorter/js/jquery.tablesorter.widgets.min.js"></script>   
+    <script src="vendor/tagsinput/js/bootstrap-tagsinput.min.js"></script>   
+    <script src="vendor/flexslider/js/jquery.flexslider-min.js"></script>   
+    <script src="vendor/flexslider/js/jquery.easing.js"></script>   
+    <script src="vendor/flexslider/js/jquery.mousewheel.js"></script>   
+    <script src="vendor/autocomplete/js/jquery.autocomplete.js"></script> 
+    <script src="scripts/script.js"></script>
+</body>
+
+</html>

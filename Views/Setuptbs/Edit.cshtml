@@ -1,0 +1,99 @@
+﻿@model RayaHesab.Models.Setuptb
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+<div class="row DMMenu">
+    @*<div class="col-md-12">
+        <br />
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User"><i class="fa fa-home" aria-hidden="true" style="-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);"></i></a></li>
+                <li class="breadcrumb-item"><a href="/User/Setting">&nbsp; امکانات</a></li>
+                <li class="breadcrumb-item"><a href="/Setuptbs">&nbsp; تنظیمات سال مالی</a></li>
+                <li class="breadcrumb-item active" aria-current="page">&nbsp; ویرایش تنظیمات سال مالی</li>
+            </ol>
+        </nav>
+    </div>*@
+
+    <div class="col-md-12">
+        <div class="SecContent">
+            <h4>ویرایش تنظیمات سال مالی</h4>
+            <hr />
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Mid" />
+                <input type="hidden" asp-for="Idanbar" />
+                <input type="hidden" asp-for="Addlogo" />
+                <div class="form-group col-sm-3">
+                    <label asp-for="Sarbarg" class="control-label">سربرگ شرکت</label>
+                    <input asp-for="Sarbarg" class="form-control" />
+                    <span asp-validation-for="Sarbarg" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label asp-for="Fsal" class="control-label">شروع سال مالی</label>
+                    <input asp-for="Fsal" class="form-control" />
+                    <span asp-validation-for="Fsal" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-3">
+                    <label asp-for="Tsal" class="control-label">پایان سال مالی</label>
+                    <input asp-for="Tsal" class="form-control" />
+                    <span asp-validation-for="Tsal" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group col-sm-12">
+                    <label asp-for="Fforosh" class="control-label">توضیحات انتهای فاکتور فروش</label>
+                    <textarea asp-for="Fforosh" class="content1"></textarea>
+                    <span asp-validation-for="Fforosh" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-12">
+                    <label asp-for="Fkharid" class="control-label">توضیحات انتهای فاکتور خرید</label>
+                    <textarea asp-for="Fkharid" class="content2"></textarea>
+                    <span asp-validation-for="Fkharid" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-12">
+                    <label asp-for="Sfforosh" class="control-label">توضیحات انتهای فاکتور سفارش فروش</label>
+                    <textarea asp-for="Sfforosh" class="content3"></textarea>
+                    <span asp-validation-for="Sfforosh" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-12">
+                    <label asp-for="Sfkharid" class="control-label">توضیحات انتهای فاکتور سفارش خرید</label>
+                    <textarea asp-for="Sfkharid" class="content4"></textarea>
+                    <span asp-validation-for="Sfkharid" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-12">
+                    <label asp-for="Pfforosh" class="control-label">توضیحات انتهای فاکتور پیش فاکتور فروش</label>
+                    <textarea asp-for="Pfforosh" class="content5"></textarea>
+                    <span asp-validation-for="Pfforosh" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-12">
+                    <label asp-for="Bfforosh" class="control-label">توضیحات انتهای فاکتور برگشت از فروش</label>
+                    <textarea asp-for="Bfforosh" class="content6"></textarea>
+                    <span asp-validation-for="Bfforosh" class="text-danger"></span>
+                </div>
+                <div class="form-group col-sm-12 modal-footer">
+                    <br />
+                    <input type="submit" value="ذخیره" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(function () {
+            $('.content1').richText();
+            $('.content2').richText();
+            $('.content3').richText();
+            $('.content4').richText();
+            $('.content5').richText();
+            $('.content6').richText();
+
+        })
+    </script>
+}

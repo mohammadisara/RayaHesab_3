@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "حساب معین";
+    Layout = null;
+}
+
+    <table class="table table-striped" >
+        <thead>
+            <tr>
+                <th>
+                    کد و عنوان معین
+                </th>
+                <th>
+                    <a href="#" onclick="Createmoin()" class="show-modal" data-id="modalform">
+                        <i class="fa fa-plus-square fa-2x" aria-hidden="true" data-toggle="tooltip" title=" جدید"></i>
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{ if (ViewBag.moin != null)
+                {
+                    foreach (var item in ViewBag.moin)
+                    {
+                        <tr>
+                            <td>
+                                <a href="#" onclick="loadtaf(@item.Mid)"  >
+                                    @item.Codemoin - @item.Namemoin
+                                </a>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" class="mb-2 mr-2 dropdown-toggle btn btn-info"><i class="fa fa-cog"></i></button>
+
+                                    <div class="dropdown-menu">
+                                        <a href="#" class="dropdown-item" onclick="Editmoin(@item.Mid)">
+                                            ویرایش
+                                        </a>
+                                        <a href="#" onclick="Deletemoin(@item.Mid)" class="dropdown-item">
+                                            حذف
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>

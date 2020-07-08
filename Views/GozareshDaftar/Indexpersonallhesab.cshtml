@@ -1,0 +1,163 @@
+﻿
+
+@{
+    ViewData["Title"] = ViewBag.Tittle;
+    Layout = null;
+}
+
+<div class="row" style="background-color:white" id="DivIdToPrint">
+    @{if (ViewBag.err != null)
+        {
+        <div class="col-md-12">
+            <a href="#" class="alert-danger">
+                <i class="fa fa-warning fa-2x" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>@ViewBag.err
+            </a>
+        </div>
+        }
+    }
+    <div class="col-md-12">
+        <h4 style="padding-bottom:1em" class="text-center">@ViewBag.Tittle</h4>
+        <hr />
+    </div>
+    <form asp-action="listhesaballperson" id="formdkol">
+        <div class="row">
+            <div class="form-group col-sm-4 form-inline">
+                <link href="~/DatePicker/persian-datepicker.min.css" rel="stylesheet" />
+                <div style="display:block;padding-bottom:0.5em">
+                    <span style="padding-left:1em"> از تاریخ</span>
+                    <input id="fdate" autocomplete="off" name="fdate" class="form-control DateText" type="text" value="@ViewBag.fdate" />
+                </div>
+                <div style="display:block">
+                    <span style="padding-left:1em"> تا تاریخ</span>
+                    <input id="tdate" autocomplete="off" name="tdate" class="form-control DateText" type="text" value="@ViewBag.tdate" />
+                </div>
+            </div>
+            <div class="form-group col-sm-8 form-inline">
+                <div style="display:block">
+                    <input type="hidden" name="typec" value="@ViewBag.id" />
+                    <input type='hidden' id="hftypec" name='print' value="0" />
+                    <a class="btn btn-success" onclick="sendprint(2 , 'formdkol')">تهیه گزارش</a>
+                    @*<a class="btn btn-primary" onclick="sendprint(1 , 'formdkol')">
+            <i class="fa fa-print"></i>
+        </a>*@
+                    <iframe id="txtArea1" style="display:none"></iframe>
+                    <a class="btn btn-warning" href="#" id="exp">
+                        <i class="fa fa-file-excel"></i>
+                    </a>
+                    <a class="btn btn-info print" href="#"  onclick="print()">
+                        <i class="fa fa-print"></i>
+                    </a>
+                    <div class="columnSelectorWrapper button">
+                        <input id="colSelect1" type="checkbox" class="hidden">
+                        <label class="columnSelectorButton" for="colSelect1">انتخاب ستون</label>
+                        <div id="columnSelector" class="columnSelector">
+                            <!-- this div is where the column selector is added -->
+                        </div>
+                    </div>
+                    <input type="search" class="search" data-column="all" placeholder="جستجو در همه ستون ها"><sup class="results xsmall"></sup>
+
+                </div>
+            </div>
+        </div>
+    </form>
+    <div id="table">
+
+    </div>
+</div>
+
+
+<script>
+    //$(function () {
+    //    $('select').select2();
+    //});
+    function sendprint(typec, frm) {
+        $("#hftypec").val(typec)
+        if (typec == 1) {
+            var tmp = "<form target='_blank' action='/GozareshDaftar/Printdaftarperson' id='frmtmp'></form>";
+            $('body').append(tmp);
+            $("#frmtmp").append("<input type='hidden' name='fdate' value='" + $("#fdate").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='tdate' value='" + $("#tdate").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='idkol' value='" + $("#idkol").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='gid' value='" + $("#gid").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='isfact' value='" + $("#isfact").val() + "'>");
+            $("#frmtmp").append("<input type='hidden' name='anbar' value='" + $("#anbaru").val() + "'>");
+             
+            $("#frmtmp").submit();
+            $("#frmtmp").remove();
+
+        }
+        else {
+            $("#" + frm).attr("target", "_self");
+            $(".loading").show();
+            $.ajax({
+                url: $("#formdkol").attr("action"),
+                data: $("#formdkol").serialize(),
+                type: "POST"
+            }).done(function (result) {
+                 
+                $("#table").html(result);
+                $(".loading").hide();
+                //$('.myselect2').select2();
+                //     $('.tablesorter-childRow td').hide();
+                $.tablesorter.language.button_print = "Print";
+                $.tablesorter.language.button_close = "Close";
+                $('#myTable').tablesorter({
+                    widthFixed: true,
+                    headerTemplate: '{content} {icon}',
+                    widgets: ['uitheme' , 'zebra', 'stickyHeaders', 'filter', 'math', 'print', 'columnSelector'],
+                    widgetOptions: {
+                        math_mask: '#,##0.00',
+                        //math_complete: function ($cell, wo, result) {
+                        //    if ($cell.attr('data-math') === 'col-count') {
+                        //        return 'تعداد ردیف : ' + result;
+                        //    }
+                        //    if ($cell.attr('data-math') === 'col-sum') {
+                        //        return  result;
+                        //    }
+                            
+                        //},
+                        columnSelector_container: $('#columnSelector'),
+                        columnSelector_name: 'data-name',
+
+                        print_title: 'مانده حساب اشخاص',          // this option > caption > table id > "table"
+                        print_dataAttrib: 'data-name', // header attrib containing modified header name
+                        print_rows: 'f',         // (a)ll, (v)isible, (f)iltered, or custom css selector
+                        print_columns: 's',         // (a)ll, (v)isible or (s)elected (columnSelector widget)
+                        print_extraCSS: '',          // add any extra css definitions for the popup window here
+                        print_styleSheet: '../css/style.css', // add the url of your print stylesheet
+                        print_now: true,        // Open the print dialog immediately if true
+                        // callback executed when processing completes - default setting is null
+                        print_callback: function (config, $table, printStyle) {
+                            // do something to the $table (jQuery object of table wrapped in a div)
+                            // or add to the printStyle string, then...
+                            // print the table using the following code
+                            //$.tablesorter.printTable.printOutput(config, $table.html(), printStyle);
+                                $.tablesorter.printTable.printOutput(config, $("#tprint").html(), printStyle);
+                        },
+
+
+                        // Use the $.tablesorter.storage utility to save the most recent filters
+                        filter_external: 'input.search',
+                        filter_saveFilters: false,
+                        // jQuery selector string of an element used to reset the filters
+                        //filter_reset: 'button.reset',
+                        // add custom selector elements to the filter row
+                        filter_formatter: {
+                            // Alphanumeric (match)
+                            0: function ($cell, indx) {
+                                return $.tablesorter.filterFormatter.select2($cell, indx, {
+                                    //match: true,         // adds "filter-match" to header
+                                    //width: '85%',         // adjusted width to allow for cell text
+                                });
+                            },
+                        },
+                    }
+
+                });
+            });
+        }
+    }
+    function print () {
+        $('.tablesorter').trigger('printTable');
+    };
+</script>

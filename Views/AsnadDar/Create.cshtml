@@ -1,0 +1,114 @@
+﻿@model RayaHesab.Models.Pardartb
+<form id="formaction" asp-action="Create" onsubmit="return validatecoding">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <label asp-for="Noghabz" class="control-label">شماره قبض</label>
+            <input asp-for="Noghabz" id="txtTitleC" onkeypress="handle(event,'txtmoinB')" class="form-control" />
+            <span asp-validation-for="Noghabz" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="Datec" class="control-label">تاریخ</label>
+            <input asp-for="Datec"  value="@ViewBag.datec"  id="txtdate" onkeypress="handle(event,'txtmoinB')" class="form-control DateText" type="text" />
+            <span asp-validation-for="Datec" class="text-danger"></span>
+
+        </div>
+        <div class="form-group col-md-4">
+            <label class="control-label">فروشگاه</label>
+            <select asp-for="Idanbar" asp-items="@ViewBag.listanbar" class="form-control">
+                <option value="0">انتخاب کنید</option>
+            </select>
+        </div>
+        <input asp-for="Typec" class="form-control" value="1" type="hidden" />
+    </div>
+    <div class="row">
+    <div class="col-sm-12 headcreate">
+        <label class="control-label">کدینگ بدهکار</label>
+    </div>
+    <div class="form-group col-sm-6" style="background-color:lightyellow">
+        <label asp-for="Moinbed" style="display:block" class="control-label">کد حساب (کل و معین و تفصیلی)</label>
+        <div class="autocomplete" style="display:block;">
+            <input onkeypress="handle(event,'txtpersonB')" id="txtmoin" onkeyup="hesabchange()" type="text" class="form-control">
+        </div>
+        <span class="spanzir" id="namemoin">*</span>
+        <input asp-for="Moinbed" type="hidden" id="hfmoinid" />
+        <input asp-for="Tafbed" type="hidden" id="hftafid" />
+    </div>
+    @*<div class="form-group col-sm-4">
+            <label asp-for="Tafbed" style="display:block" class="control-label">کد تفصیلی</label>
+            <div class="autocomplete" style="display:block;">
+                <input onkeypress="handle(event,'txtpersonB')" id="txttafB" type="text" class="form-control" name="txttafB">
+            </div>
+            <span class="spanzir" id="nametafB">*</span>
+        </div>*@
+    <div class="form-group col-sm-6" style="background-color:lightyellow">
+        <label style="display:block" asp-for="Pidbed" class="control-label">صاحب حساب</label>
+        <div asp-for="Pid" class="autocomplete form-group" style="display:block">
+            <input id="txtperson" onkeypress="handle(event,'txtmoinS')" type="text" onkeyup="hesabchange()" class="form-control">
+        </div>
+        <input type="hidden" asp-for="Pidbed" id="hfpersonid" />
+    </div>
+    <div class="col-sm-12 headcreate">
+        <label class="control-label">کدینگ بستانکار</label>
+    </div>
+    <div class="form-group col-sm-6" style="background-color:lightcyan">
+        <label asp-for="Moinbes" style="display:block" class="control-label">کد حساب (کل و معین و تفصیلی)</label>
+        <div class="autocomplete" style="display:block;">
+            <input onkeypress="handle(event,'txtpersonS')" id="txtmoinS" type="text" onkeyup="hesabchange()" class="form-control" name="txtmoinS">
+        </div>
+        <span class="spanzir" id="namemoinS">*</span>
+        <input asp-for="Moinbes" type="hidden" id="hfmoinidS" />
+        <input asp-for="Tafbes" type="hidden" id="hftafidS" />
+    </div>
+    @*<div class="form-group col-sm-4">
+            <label asp-for="Tafbes" style="display:block" class="control-label">کد تفصیلی</label>
+            <div class="autocomplete" style="display:block;">
+                <input onkeypress="handle(event,'txtpersonS')" id="txttafS" type="text" class="form-control" name="txttafS">
+            </div>
+            <span class="spanzir" id="nametafS">*</span>
+        </div>*@
+    <div class="form-group col-sm-6" style="background-color:lightcyan">
+        <label style="display:block" asp-for="Pidbes" class="control-label">صاحب حساب</label>
+        <div asp-for="Pid" onkeypress="handle(event,'mab')" class="autocomplete form-group" style="display:block">
+            <input id="txtpersonS" type="text" class="form-control" onkeyup="hesabchange()" name="txtpersonS">
+        </div>
+        <input type="hidden" asp-for="Pidbes" id="hfpersonidS" />
+    </div>
+        </div>
+    <hr />
+    <div class="row">
+    <div class="form-group col-sm-4">
+        <label asp-for="Mablagh" class="control-label">مبلغ بریال</label>
+        <input asp-for="Mablagh" id="mab" onkeypress="handle(event,'not')" class="form-control TNPrice" />
+        <span asp-validation-for="Mablagh" class="text-danger"></span>
+    </div>
+    <div class="form-group col-sm-8">
+        <label asp-for="Note" class="control-label">یادداشت</label>
+        <input asp-for="Note" id="not" onkeypress="handle(event,'txtchek')" class="form-control" />
+        <span asp-validation-for="Note" class="text-danger"></span>
+    </div>
+    <div class="form-group col-sm-3">
+        <label asp-for="Nocheckq" class="control-label">شماره چک</label>
+        <input asp-for="Nocheckq" id="txtchek" onkeypress="handle(event,'txtDchek')" class="form-control" />
+        <span asp-validation-for="Nocheckq" class="text-danger"></span>
+    </div>
+    <div class="form-group col-sm-3">
+        <label asp-for="Datecheck" class="control-label">تاریخ چک</label>
+        <input asp-for="Datecheck" id="txtDchek" onkeypress="handle(event,'btn')" class="form-control DateTextE" />
+        <span asp-validation-for="Datecheck" class="text-danger"></span>
+    </div>
+    <div class="form-group col-sm-3">
+        <label class="control-label">حساب چک</label>
+        <input asp-for="Hesabdar" class="form-control" />
+    </div>
+    <div class="form-group col-sm-3">
+        <label class="control-label">بانک عامل</label>
+        <input asp-for="Bankdar" class="form-control" />
+    </div>
+    </div>
+
+    <hr />
+    <div class="form-group col-sm-12 ">
+        <input type="button" onclick="actionrow()" value="ثبت" id="btn" class="btn btn-primary" />
+    </div>
+</form>

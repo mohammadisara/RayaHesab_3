@@ -1,0 +1,24 @@
+﻿@model RayaHesab.Models.Gorohtb
+
+<div class="row">
+    <div class="col-md-12 DRight">
+        <form asp-action="Create"  id="actionform">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Mid" class="control-label ">کد گروه</label>
+                <input asp-for="Mid" value="@ViewBag.maxid"  class="form-control"  onkeypress="handle(event,'NameC')"   oninvalid="this.setCustomValidity('کد یکتا را وارد کنید')" oninput="setCustomValidity('')" required />
+                <span asp-validation-for="Mid" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Namec" class="control-label">نام گروه</label>
+                <input id="NameC" asp-for="Namec"  onkeypress="handle(event,'btnSave')"  class="form-control"  oninvalid="this.setCustomValidity('نام گروه را وارد کنید')" oninput="setCustomValidity('')" required />
+                <span asp-validation-for="Namec" class="text-danger"></span>
+            </div>
+            <hr />
+            <div class="form-group">
+                <input type="button" onclick="submitg()" id="btnSave" value="ثبت" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,134 @@
+﻿@model IEnumerable<RayaHesab.Models.Daftar>
+
+@{
+    ViewData["Title"] = "صورت حساب مشتری";
+    Layout = "~/Views/Shared/_printtaraz.cshtml";
+}
+<div class="row " style="padding: 0 2em">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-5" style="padding-top:3em">
+                <br />
+                <p>از تاریخ : @ViewBag.fdate</p>
+                <p>تا تاریخ : @ViewBag.tdate</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <p class="text-center">
+                    <img src="~/images/Logop.png" class="imagep" />
+                </p>
+                <p class="text-center"><h4>@ViewData["Title"]</h4>
+</p>
+            </div>
+            <div class="col-md-4" style="padding-top:5em">
+                <p>عنوان حساب : @ViewBag.namec</p>
+                <p>کد  حساب : @ViewBag.code</p>
+
+            </div>
+        </div>
+        <div class="row">
+
+        </div>
+        <div class="row">
+
+        </div>
+
+        <table id="myTable" class="table  borderbold">
+            <thead>
+                <tr>
+                    <th>
+                        ردیف
+                    </th>
+                    <th>
+                        شماره سند
+                    </th>
+                    <th>
+                        تاریخ سند
+                    </th>
+                    <th>
+                        توضیحات
+                    </th>
+                    <th>
+                        بدهکار
+                    </th>
+                    <th>
+                        بستانکار
+                    </th>
+                    <th>
+                        مانده
+                    </th>
+                    <th>
+                        ماهیت حساب
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ 
+                    int i = 0;
+                    string s = "بد";
+                    decimal bed = 0, bes = 0, m = 0;
+                    foreach (var item in Model)
+                    {
+                        i = i + 1;
+                <tr>
+                    <td>
+                        @Html.Raw(i.ToString())
+                    </td>
+                    <td>
+                        @Html.Raw(item.Nosanad)
+                    </td>
+                    <td>
+                        @Html.Raw(item.Datec)
+                    </td>
+                    <td>
+                        @Html.Raw(item.Note)
+                    </td>
+                    <td>
+                        @string.Format("{0:n0}", item.Bed)
+                        @if (item.Bed != null) { bed = bed + (decimal)item.Bed; }
+                    </td>
+                    <td>
+                        @string.Format("{0:n0}", item.Bes)
+                        @if (item.Bes != null) { bes = bes + (decimal)item.Bes; }
+                    </td>
+                    <td>
+                        @{ m = bed - bes;
+                            if (m < 0)
+                            {
+
+                                s = "بس";
+                                @Html.Raw("<span style='color:red'>" + string.Format("{0:n0}", System.Math.Abs((decimal)m)) + "</span>");
+                            }
+                            else if (m > 0)
+                            {
+                                s = "بد";
+                                @Html.Raw("<span style='color:black'>" + string.Format("{0:n0}", m) + "</span>");
+                            }
+                            else
+                            {
+                                s = "بی حساب";
+                                @Html.Raw("<span style='color:black'>0</span>");
+                            }
+                        }
+                    </td>
+                    <td>
+                        @s
+                    </td>
+                </tr>
+                    }
+
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-left">جمع کل</td>
+                    <td>@string.Format("{0:n0}", bed)</td>
+                    <td>@string.Format("{0:n0}", bes)</td>
+                    <td>@string.Format("{0:n0}", m)</td>
+                    <td>@s</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+

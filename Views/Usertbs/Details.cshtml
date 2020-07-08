@@ -1,0 +1,90 @@
+﻿@model IEnumerable<RayaHesab.Models.Hesabusertb>
+
+@{
+    ViewData["Title"] = "مدیریت حساب های مجاز کاربر";
+    Layout = Context.Request.Cookies["layoutmain"];
+}
+
+<div class="row DMMenu">
+    @*<div class="col-md-12">
+        <br />
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/User"><i class="fa fa-home" aria-hidden="true" style="-moz-transform: scale(1.5);-ms-transform: scale(1.5);-o-transform: scale(1.5);-webkit-transform: scale(0.8);transform: scale(1.5);"></i></a></li>
+                <li class="breadcrumb-item"><a href="/User/Setting">&nbsp; امکانات</a></li>
+                <li class="breadcrumb-item active" aria-current="page">&nbsp; مدیریت کاربران</li>
+            </ol>
+        </nav>
+    </div>*@
+    <div class="col-md-12">
+        <div class="SecContent">
+            @{ if (ViewBag.errormsg != null)
+                {
+                    <div class="alert alert-danger">@ViewBag.errormsg</div>
+                }
+            }
+            <div>
+                <span>کاربر </span>
+                <span>@ViewBag.username </span>
+            </div>
+            <form asp-action="savehesab">
+                <input type="hidden" value="@ViewBag.Userid" name="userid" />
+                <div>
+                    نوع حساب
+                    <select class="form-control" name="typec">
+                        <option value="1">صندوق</option>
+                        <option value="2">باجه</option>
+                    </select>
+                    لیست حساب
+                    <select asp-items="@ViewBag.listbank" name="bankid" class="form-control"></select>
+                    <select class="form-control" name="chdef">
+                        <option value="0">حالت عادی</option>
+                        <option value="1">حالت پیش فرض</option>
+                    </select>
+                    <input type="submit" class="btn btn-success" value="ذخیره" />
+                </div>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>نوع حساب </th>
+                        <th>حساب </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @switch (item.Typehesab)
+                                    {
+                                        case 1:
+                                            <div> صندوق </div >
+                                            break;
+                                        case 2:
+                                            <div>باجه</div>
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                </td>
+                                <td>
+                                    @Html.Raw("")
+                                </td>
+                                <td>
+                                    <a asp-action="Deleteuserhesab" asp-route-id="@item.Mid" class="pbtnHID">
+                                        <i class="fa fa-trash" aria-hidden="true" data-toggle="tooltip" title="حذف"></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        }}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts {
+
+}

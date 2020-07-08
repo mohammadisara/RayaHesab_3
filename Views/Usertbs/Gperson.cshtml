@@ -1,0 +1,134 @@
+﻿
+@{
+    ViewData["Title"] = "دسترسی به فروشگاه ها";
+    Layout = null;
+}
+<div class="row" style="background-color:white">
+    <div class="col-md-6">
+        <div class="col-md-12">
+            لیست گروه های اشخاص
+            <input type="hidden" id="hfmid" value="@ViewBag.uid" />
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>عنوان </th>
+                    <th>انتخاب</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ if (ViewBag.list != null)
+                    {
+                        foreach (var item in ViewBag.list)
+                        {
+                            <tr>
+                                <td> @item.Title </td>
+                                <td>
+                                    <input type="button" onclick="savegperson(@item.Mid)" class="btn btn-success" value="انتخاب" />
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        لیست  گروه های مجاز کاربر  --- @ViewBag.nameu
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>عنوان گروه</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+        </table>
+    </div>
+</div>
+<script>
+    function refreshpage(id) {
+        $(".loading").show();
+        $.ajax({
+            url: "/Usertbs/Gperson?id=" + id,
+            type: "Get"
+        }).done(function (result) {
+            $("#ModalTittle").html("حق دسترسی برای گروه های اشخاص");
+            $("#ModalBody").html(result);
+            $(".loading").hide();
+        });
+    }
+    $(function () {
+        getanbaruser();
+    });
+    function getanbaruser() {
+        var mform = new FormData();
+        mform.append("uid", $("#hfmid").val())
+        $.ajax({
+            url: "/Usertbs/getgperson",
+            data: mform,
+            type: "POST",
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                $("#tbody").html("");
+                if (data == "0")
+                    alert("خطا مجدد تلاش نمایید");
+                else {
+                    var s = "";
+
+                    for (var i = 0; i < data.length; i++) {
+                        s = "<tr>"
+                            + "<td>" + data[i]["Title"] + "</td>"
+                            + "<td><input type='button' class='btn btn-danger' value='حذف' onclick='delg(" +
+                            data[i]["Mid"] + ")' /></td ><tr>"
+                        $("#tbody").append(s);
+                    }
+                }
+            }
+        })
+    }
+    function delg(mid) {
+        var i = confirm('ایا مطمئن هستید؟');
+        if (i) {
+            var mform = new FormData();
+            mform.append("mid", mid);
+            $.ajax({
+                url: "/Usertbs/delg",
+                data: mform,
+                type: "POST",
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if (data == "1")
+                        refreshpage($("#hfmid").val());
+                    else {
+                        alert(data);
+                    }
+                }
+            })
+        }
+    }
+    function savegperson(mid) {
+        var mform = new FormData();
+        mform.append("mid", mid);
+        mform.append("uid", $("#hfmid").val())
+        $.ajax({
+            url: "/Usertbs/savegperson",
+            data: mform,
+            type: "POST",
+            dataType: "json",
+            processData: false,
+            contentType: false,
+            success: function (data) {
+                if (data == "1")
+                    refreshpage($("#hfmid").val());
+                else {
+                    alert(data);
+                }
+            }
+        })
+    }
+</script>

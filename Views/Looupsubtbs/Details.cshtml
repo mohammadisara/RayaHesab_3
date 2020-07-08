@@ -1,0 +1,38 @@
+﻿@model RayaHesab.Models.Looupsubtb
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Looupsubtb</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Grp)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Grp)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Mid">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

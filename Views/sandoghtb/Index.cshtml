@@ -1,0 +1,97 @@
+﻿@{
+    ViewData["Title"] = "مدیریت صندوق";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+<a href="#" id="pbtn" onclick="Create()">
+    <i class="fa fa-plus-square fa-2x" title="تعریف صندوق جدید"></i>
+</a>
+
+<div id="divlist"></div>
+
+
+<!-- Modal -->
+@*<script src="~/scripts/script.js"></script>
+    <script src="~/js/my.js"></script>*@
+@section Scripts{
+
+    <script>
+        function load() {
+            $("#divlist").html(lmsg);
+            $.ajax({
+                url: "/sandoghtb/List",
+                type: "Get"
+            }).done(function (result) {
+                $("#divlist").html(result);
+                $("table").tablesorter({
+                    widthFixed: false,                // initialize zebra and filter widgets
+                    widgets: ["zebra", "filter", "math"],
+                    widgetOptions: {
+                        math_mask: '#,##0.',
+                        filter_reset: '.reset'
+                    }
+                })
+                //$(".tablesorter-filter").attr("style", "width:100%");
+            });
+        }
+        function Create() {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/sandoghtb/Create",
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ایجاد");
+                $("#ModalBody").html(result);
+                loadcoding();
+            });
+        };
+        function Edit(id) {
+            $("#Modaltitle").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#ModalBody").html("در حال بارگذاری لطفاً منتظر بمانید");
+            $("#modaldoc").attr("class", "modal-dialog modal-dialog-centered");
+            $("#MyModal").modal("show");
+            $.ajax({
+                url: "/sandoghtb/Edit/" + id,
+                type: "Get"
+            }).done(function (result) {
+                $("#Modaltitle").html("ویرایش");
+                $("#ModalBody").html(result);
+                loadcoding();
+            });
+        };
+        $(function () {
+            load();
+        })
+        function Delete(id) {
+            var s = confirm('ایا مطمئن هستید ؟ ');
+            if (s) {
+                $("#divlist").html(lmsg);
+                $.post("/sandoghtb/Delete?id=" + id, function (data) {
+                    if (data.msg == "") {
+                        load();
+                    }
+                    else {
+                        alert(data.msg + " ** " + data.err);
+                        load();
+                    }
+                });
+            }
+        };
+        function actionrow() {
+            $.post($("#formaction").attr("action"), $("#formaction").serialize(), function (data) {
+                load();
+                if (data.msg == "") {
+                    Create();
+                }
+                else {
+                    alert(data.msg + " ** " + data.err);
+                }
+            });
+
+        }
+
+    </script>
+}

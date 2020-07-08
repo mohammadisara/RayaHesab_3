@@ -1,0 +1,77 @@
+﻿@model RayaHesab.Models.Setuptb
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = Context.Request.Cookies["layoutmain"];
+
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Setuptb</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Sarbarg)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sarbarg)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fsal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fsal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Tsal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Tsal)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fforosh)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fforosh)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Fkharid)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Fkharid)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sfforosh)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sfforosh)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sfkharid)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sfkharid)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Pfforosh)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Pfforosh)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Bfforosh)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Bfforosh)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Mid" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

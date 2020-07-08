@@ -1,0 +1,54 @@
+﻿@model RayaHesab.Models.Mastersanadtb
+
+<div class="row">
+    <div class="col-md-12 DRight">
+        <form asp-action="Create" id="formaction">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Nosanad" class="control-label">شماره سند</label>
+                <input asp-for="Nosanad" onkeypress="handle(event,'tittle')" class="form-control" oninvalid="this.setCustomValidity('کد یکتای سند را وارد کنید')" oninput="setCustomValidity('')" required value="@ViewData["maxid"]" />
+                <span asp-validation-for="Nosanad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label">عنوان</label>
+                <input asp-for="Title" id="tittle" onkeypress="handle(event,'type')" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Datec" class="control-label">تاریخ</label>
+                <input asp-for="Datec" id="txtdate" autocomplete="off" class="form-control DateText" type="text" />
+                <span asp-validation-for="Datec" class="text-danger"></span>
+                <link href="~/DatePicker/persian-datepicker.min.css" rel="stylesheet" />
+                <script src="~/DatePicker/persian-date.min.js"></script>
+                <script src="~/DatePicker/persian-datepicker.min.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        $(".DateText").pDatepicker({
+                            initialValueType: 'persian',
+                            calendar: {
+                                persian: {
+                                    locale: 'en'
+                                }
+                            },
+                            autoClose: true,
+                            format: 'YYYY/MM/DD'
+                        });
+                    });
+                </script>
+            </div>
+            <div class="form-group">
+                <label asp-for="Typec" class="control-label">نوع سند</label>
+                <select asp-for="Typec" id="type" onkeypress="handle(event,'btn')" class="form-control">
+                    <option value="0">ویرایش</option>
+                    <option value="1">موقت</option>
+                    @*<option value="2">دائم</option>*@
+                </select>
+                <span asp-validation-for="Typec" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="button" onclick="actionrow()" value="ثبت" id="btn" class="btn btn-success btload" />
+            </div>
+        </form>
+    </div>
+</div>
+
